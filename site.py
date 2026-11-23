@@ -661,6 +661,8 @@ def cgi_body(t, arrow, ext, U):
 
 # ---------------------------------------------------------------------- page shell
 def shell(L, page, title, desc, body, NAV, t, ext):
+    import hashlib
+    CSSV = hashlib.md5(open('assets/site.css', 'rb').read()).hexdigest()[:8]
     rtl = L == 'ar'
     hreflang = ''.join(f'<link rel="alternate" hreflang="{l}" href="{BASE}{url(l, page)}">\n' for l in LANGS)
     langnav = ''.join(f'<a href="{url(l, page)}" hreflang="{l}"{" class=on aria-current=page" if l == L else ""}>{l.upper()}</a>' for l in LANGS)
@@ -684,7 +686,7 @@ def shell(L, page, title, desc, body, NAV, t, ext):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500;600&display=swap{'&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500;600' if rtl else ''}" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v={CSSV}">
 </head>
 <body>
 
