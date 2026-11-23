@@ -85,7 +85,6 @@ def page(L):
             ('thermos', t('Thermos', 'Termos', 'ترمس'), t('Drinkware', 'Termos ve matara', 'أدوات الشرب')),
             ('vase', t('Ceramics', 'Seramik', 'خزفيات'), t('Home & decor', 'Ev ve dekorasyon', 'المنزل والديكور')),
             ('drone', t('FPV drone, exploded', 'FPV drone, patlatılmış', 'طائرة FPV مفككة'), t('Technical CGI', 'Teknik CGI', 'CGI تقني')),
-            ('lightroom', t('Light room', 'Işık odası', 'غرفة الضوء'), t('Spaces & interiors', 'Mekân ve iç mekân', 'المساحات والتصميم الداخلي')),
             ('basin', t('Stone basin', 'Taş lavabo', 'حوض حجري'), t('Bathroom', 'Banyo', 'الحمّامات'))]
     work_html = ''.join(f'''
       <figure>{vid(v, name)}<figcaption><span>{i+1:02d} · {name}</span><span>{cat}</span></figcaption></figure>'''
