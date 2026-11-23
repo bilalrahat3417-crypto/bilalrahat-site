@@ -63,6 +63,13 @@ html[lang=ar] .hero::before{background:linear-gradient(270deg,rgba(11,9,7,.94) 0
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
 .credit{margin-top:40px;font-size:13px;color:var(--mute)}
 /* work */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:40px}
+.grid figure{margin:0}
+.grid .shot{aspect-ratio:16/10;overflow:hidden;border-radius:6px;background:var(--bg2)}
+.grid .shot img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.grid figure:hover .shot img{transform:scale(1.04)}
+.grid figcaption{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:13px;color:var(--mute)}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .work{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:end;margin-top:48px}
 .work figure{margin:0}
 .work .shot{aspect-ratio:16/10;overflow:hidden;border-radius:6px;background:var(--bg2)}
@@ -154,7 +161,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 <section class="band" id="work">
   <div class="wrap">
     <p class="label"><span class="en">Selected work</span><span class="ar">أعمال مختارة</span></p>
-    <h2><span class="en">Glass, liquid and metal under one warm light.</span><span class="ar">زجاج وسائل ومعدن تحت ضوء دافئ واحد.</span></h2>
+    <h2><span class="en">Glass, liquid, metal, stone and ceramic. Lit like a campaign.</span><span class="ar">زجاج وسائل ومعدن وحجر وخزف، بإضاءة الحملات الإعلانية.</span></h2>
     <div class="work">
       <figure>
         <div class="shot"><img src="assets/study-01-amber.jpg" alt="Amber perfume CGI study" loading="lazy"></div>
@@ -165,10 +172,44 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
         <p class="lead"><span class="en">A self-initiated lighting study: thick refractive glass, an amber liquid and a brushed gold cap, lit like a fragrance campaign.</span><span class="ar">دراسة إضاءة ذاتية: زجاج سميك عاكس وسائل عنبري وغطاء ذهبي مصقول، بإضاءة تشبه حملات العطور.</span></p>
         <div class="meta">
           <div><span class="en">Software</span><span class="ar">البرنامج</span><span>Blender · Cycles</span></div>
-          <div><span class="en">Category</span><span class="ar">الفئة</span><span><span class="en">Fragrance</span><span class="ar">العطور</span></span></div>
+          <div><span class="en">Category</span><span class="ar">الفئة</span><span><span class="en">Fragrance, beauty, beverage, home, watches</span><span class="ar">العطور والتجميل والمشروبات والمنزل والساعات</span></span></div>
           <div><span class="en">More studies</span><span class="ar">المزيد من الدراسات</span><span><a href="https://www.instagram.com/bilalrahat_art/">@bilalrahat_art</a></span></div>
         </div>
       </div>
+    </div>
+    <div class="grid">
+      <figure>
+        <div class="shot"><img src="assets/study-02-serum-800.jpg" alt="Serum CGI product study" loading="lazy"></div>
+        <figcaption><span><span class="en">Study 02 · Serum</span><span class="ar">دراسة 02 · سيروم</span></span><span><span class="en">Skincare</span><span class="ar">العناية بالبشرة</span></span></figcaption>
+      </figure>
+      <figure>
+        <div class="shot"><img src="assets/study-03-watch-800.jpg" alt="Steel watch CGI product study" loading="lazy"></div>
+        <figcaption><span><span class="en">Study 03 · Steel watch</span><span class="ar">دراسة 03 · ساعة فولاذية</span></span><span><span class="en">Watches</span><span class="ar">الساعات</span></span></figcaption>
+      </figure>
+      <figure>
+        <div class="shot"><img src="assets/study-04-can-800.jpg" alt="Cold can CGI product study" loading="lazy"></div>
+        <figcaption><span><span class="en">Study 04 · Cold can</span><span class="ar">دراسة 04 · علبة باردة</span></span><span><span class="en">Beverage</span><span class="ar">المشروبات</span></span></figcaption>
+      </figure>
+      <figure>
+        <div class="shot"><img src="assets/study-05-cream-800.jpg" alt="Cream jars CGI product study" loading="lazy"></div>
+        <figcaption><span><span class="en">Study 05 · Cream jars</span><span class="ar">دراسة 05 · برطمانات كريم</span></span><span><span class="en">Beauty</span><span class="ar">التجميل</span></span></figcaption>
+      </figure>
+      <figure>
+        <div class="shot"><img src="assets/study-06-vase-800.jpg" alt="Ceramics CGI product study" loading="lazy"></div>
+        <figcaption><span><span class="en">Study 06 · Ceramics</span><span class="ar">دراسة 06 · خزفيات</span></span><span><span class="en">Home & decor</span><span class="ar">المنزل والديكور</span></span></figcaption>
+      </figure>
+      <figure>
+        <div class="shot"><img src="assets/study-07-basin-800.jpg" alt="Stone basin CGI product study" loading="lazy"></div>
+        <figcaption><span><span class="en">Study 07 · Stone basin</span><span class="ar">دراسة 07 · حوض حجري</span></span><span><span class="en">Bathroom</span><span class="ar">الحمّامات</span></span></figcaption>
+      </figure>
+      <figure>
+        <div class="shot"><img src="assets/study-08-paint-800.jpg" alt="Paint tins CGI product study" loading="lazy"></div>
+        <figcaption><span><span class="en">Study 08 · Paint tins</span><span class="ar">دراسة 08 · علب طلاء</span></span><span><span class="en">DIY & coatings</span><span class="ar">الدهانات</span></span></figcaption>
+      </figure>
+      <figure>
+        <div class="shot"><img src="assets/study-09-glass-800.jpg" alt="Tumbler CGI product study" loading="lazy"></div>
+        <figcaption><span><span class="en">Study 09 · Tumbler</span><span class="ar">دراسة 09 · كأس</span></span><span><span class="en">Spirits & glassware</span><span class="ar">الزجاجيات</span></span></figcaption>
+      </figure>
     </div>
   </div>
 </section>
