@@ -133,7 +133,7 @@ def build(L, page):
             'Ferat Dalgıç Pompa', 'İmbo Boru', 'Korkmaz Süt', 'Canoğlu Grup', 'Yetimoğlu Grup', 'Rima Grup', 'Gapsan Tekstil',
             'Bahçeşehir Koleji', 'TED Koleji', 'Çamlıca Koleji', 'Endülüs Koleji', 'Nissan · Erik Otomotiv', 'Pirelli · Badıllı',
             'Ceramo Seramik', 'Öztiryakiler', 'Mutfacto', 'Miroğlu Künefe', 'Taşsaray', 'Tatvera', 'Maharet', 'Minik Dehalar',
-            'Zarifzade Baklava', 'Esomed', 'Saudi Halsa', 'Durrah App', 'IYGO Lojistik', 'Maxima Paradise Resort']
+            'Zarifzade Baklava', 'Esomed', 'Saudi Halsa', 'Durrah App', 'IYGO Lojistik', 'Uluyıl İnşaat']
 
     def L3(x):
         return t(*x) if isinstance(x, tuple) else x
