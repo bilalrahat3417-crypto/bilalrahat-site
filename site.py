@@ -1,62 +1,469 @@
-# Generates three single-language pages: /index.html (EN), /tr/index.html, /ar/index.html
+# Generates the multi-page site in three languages.
+#   /            home (hub)          /tr/ , /ar/
+#   /cgi/        3D product CGI      /tr/cgi/ , /ar/cgi/
+#   /film/       commercials & brand films
+#   /drone/      FPV drone & aerial
+#   /photo/      product & venue photography
+#   /digital/    web, ads & social
+#   /references/ reference portfolio
+# Styles live in assets/site.css.
+# Real footage: drop assets/work/<slug>.mp4 (+ .jpg poster) or assets/work/<slug>.jpg
+# and re-run `python3 site.py`; the typographic tile is replaced automatically.
 import os
 
-LANGS = {'en': '/', 'tr': '/tr/', 'ar': '/ar/'}
 BASE = 'https://bilalrahat.com.tr'
+LANGS = ['en', 'tr', 'ar']
+PAGES = ['home', 'cgi', 'film', 'drone', 'photo', 'digital', 'references']
+EMAIL = 'studio@bilalrahat.com.tr'
+WA = 'https://wa.me/905306264363'
 
-def page(L):
+
+def url(L, page):
+    pre = '/' if L == 'en' else f'/{L}/'
+    return pre if page == 'home' else f'{pre}{page}/'
+
+
+def media(slug, alt, eager=False, fallback=None):
+    """Video if assets/work/<slug>.mp4 or assets/video/<slug>.mp4 exists, image if .jpg exists, else a typographic tile."""
+    for d in ('work', 'video'):
+        mp4 = f'assets/{d}/{slug}.mp4'
+        if os.path.exists(mp4):
+            poster = f'/assets/{d}/{slug}.jpg'
+            if eager:
+                return f'<video src="/{mp4}" poster="{poster}" autoplay muted loop playsinline preload="auto" aria-label="{alt}"></video>'
+            return f'<video data-src="/{mp4}" poster="{poster}" muted loop playsinline preload="none" aria-label="{alt}"></video>'
+    for d in ('work', 'video'):
+        jpg = f'assets/{d}/{slug}.jpg'
+        if os.path.exists(jpg):
+            return f'<img src="/{jpg}" alt="{alt}" loading="lazy">'
+    label, title = fallback or ('', alt)
+    return f'<div class="tile" role="img" aria-label="{alt}"><i>{label}</i><b>{title}</b></div>'
+
+
+def build(L, page):
     def t(en, tr, ar):
         return {'en': en, 'tr': tr, 'ar': ar}[L]
-    A = '' if L == 'en' else '../'          # asset prefix
     rtl = L == 'ar'
     arrow = '←' if rtl else '→'
     ext = '↖' if rtl else '↗'
+    U = lambda p: url(L, p)
 
-    title = t('Bilal Rahat · Film, CGI & AI Director',
-              'Bilal Rahat · Film, CGI ve Yapay Zekâ Yönetmeni',
-              'بلال راحت · مخرج أفلام وCGI وذكاء اصطناعي')
-    desc = t('Product films, loops and campaign visuals made with live action, photoreal CGI and AI, for brands in Europe, the US and the Gulf.',
-             "Avrupa, ABD ve Körfez'deki markalar için canlı çekim, foto-gerçekçi CGI ve yapay zekâ ile ürün filmleri, döngü videolar ve kampanya görselleri.",
-             'أفلام منتجات ولقطات متكررة وصور حملات بالتصوير الحي وCGI الواقعي والذكاء الاصطناعي، لعلامات تجارية في أوروبا والولايات المتحدة والخليج.')
+    NAV = {
+        'cgi': t('3D CGI', '3D CGI', 'CGI ثلاثي الأبعاد'),
+        'film': t('Film', 'Film', 'الأفلام'),
+        'drone': t('Drone', 'Drone', 'الدرون'),
+        'photo': t('Photo', 'Fotoğraf', 'التصوير'),
+        'digital': t('Web & Ads', 'Web ve Reklam', 'الويب والإعلانات'),
+        'references': t('References', 'Referanslar', 'المراجع'),
+    }
+    DISC = {  # discipline labels for project meta and chips
+        'cgi': t('3D CGI', '3D CGI', 'CGI'),
+        'film': t('Film & video', 'Film ve video', 'أفلام وفيديو'),
+        'drone': t('Drone', 'Drone', 'درون'),
+        'photo': t('Photography', 'Fotoğraf', 'تصوير فوتوغرافي'),
+        'digital': t('Web & ads', 'Web ve reklam', 'ويب وإعلانات'),
+    }
 
-    hreflang = ''.join(f'<link rel="alternate" hreflang="{l}" href="{BASE}{p}">\n' for l, p in LANGS.items())
-    langnav = ''.join(f'<a href="{p}" hreflang="{l}"{" class=on aria-current=page" if l == L else ""}>{l.upper()}</a>' for l, p in LANGS.items())
+    # ------------------------------------------------------------------ references data
+    projects = [
+        dict(slug='cgi-studies', discs=['cgi'], client='Bilal Rahat Studio',
+             sector=t('Product CGI', 'Ürün CGI', 'CGI للمنتجات'),
+             title=t('Ten product studies in Blender', "Blender'da on ürün çalışması", 'عشر دراسات منتجات في Blender'),
+             text=t('Glass, liquid, metal, stone and ceramic, each lit like a campaign. Loops, stills and an exploded-view technical film.',
+                    'Cam, sıvı, metal, taş ve seramik; her biri bir kampanya gibi ışıklandırıldı. Döngüler, görseller ve patlatılmış görünümlü teknik film.',
+                    'زجاج وسائل ومعدن وحجر وخزف، كلٌّ منها بإضاءة حملة. لقطات متكررة وصور وفيلم تقني بمشهد مفكك.'),
+             media='amber', link='cgi'),
+        dict(slug='erik-nissan', discs=['film', 'digital'], client='Erik Otomotiv · Nissan',
+             sector=t('Automotive', 'Otomotiv', 'السيارات'),
+             title=t('TV spot and Reels campaigns', 'TV reklamı ve Reels kampanyaları', 'إعلان تلفزيوني وحملات Reels'),
+             text=t('A Kurban Bayramı film cut for TV and Reels, plus Reels campaigns for Juke, Townstar, Qashqai and X-Trail, scripted scene by scene.',
+                    'TV ve Reels için kurgulanan Kurban Bayramı filmi; Juke, Townstar, Qashqai ve X-Trail için sahne sahne yazılmış Reels kampanyaları.',
+                    'فيلم لعيد الأضحى بنسختين للتلفزيون وReels، وحملات Reels لطرازات Juke وTownstar وQashqai وX-Trail، مكتوبة مشهدًا بمشهد.')),
+        dict(slug='festival', discs=['film', 'digital'], client=t('Şanlıurfa Sports, Life & Entertainment Festival', 'Şanlıurfa Spor, Yaşam ve Eğlence Festivali', 'مهرجان شانلي أورفا للرياضة والحياة والترفيه'),
+             sector=t('Events', 'Etkinlik', 'الفعاليات'),
+             title=t('12 films and 30 designs for one festival', 'Bir festival için 12 film ve 30 tasarım', '12 فيلمًا و30 تصميمًا لمهرجان واحد'),
+             text=t('A two-phase campaign: stand sales to exhibitors first, then public attendance, with second-by-second scripts and music direction.',
+                    'İki aşamalı kampanya: önce katılımcılara stant satışı, ardından halkın katılımı; saniye saniye senaryolar ve müzik yönü.',
+                    'حملة على مرحلتين: بيع الأجنحة للعارضين أولًا، ثم جذب الجمهور، مع نصوص ثانية بثانية وتوجيه موسيقي.')),
+        dict(slug='sembol', discs=['drone', 'film'], client='Mutfacto × Sembol Ocakbaşı',
+             sector=t('Industrial kitchens', 'Endüstriyel mutfak', 'المطابخ الصناعية'),
+             title=t('Drone fly-through of a restaurant kitchen', 'Restoran mutfağında drone uçuşu', 'جولة بالدرون داخل مطبخ مطعم'),
+             text=t('One continuous flight through the industrial kitchen Mutfacto built for Sembol Ocakbaşı, from the dining room to the grill.',
+                    "Mutfacto'nun Sembol Ocakbaşı için kurduğu endüstriyel mutfakta, salondan ocağa kesintisiz tek uçuş.",
+                    'رحلة متواصلة واحدة داخل المطبخ الصناعي الذي أنشأته Mutfacto لمطعم Sembol، من الصالة حتى الشواية.')),
+        dict(slug='turbo-atom', discs=['film'], client='Mutfacto × Turbo Atom',
+             sector=t('Industrial kitchens', 'Endüstriyel mutfak', 'المطابخ الصناعية'),
+             title=t('Presenter-led customer story', 'Sunuculu müşteri hikâyesi', 'قصة عميل يقدّمها مذيع'),
+             text=t('A testimonial film with a presenter intro, interview and product visuals, made for social media on the supplier\'s behalf.',
+                    'Tedarikçi adına sosyal medya için çekilen; sunucu girişi, röportaj ve ürün görselleri içeren referans filmi.',
+                    'فيلم شهادة عميل بمقدمة مذيع ومقابلة وصور للمنتجات، أُنتج لوسائل التواصل نيابةً عن المورّد.')),
+        dict(slug='maharet', discs=['film', 'drone', 'cgi', 'digital'], client='Maharet Ocakbaşı',
+             sector=t('Restaurant', 'Restoran', 'مطعم'),
+             title=t('Reels series, 3D logo and Meta ads', 'Reels serisi, 3D logo ve Meta reklamları', 'سلسلة Reels وشعار ثلاثي الأبعاد وإعلانات Meta'),
+             text=t('Fast natural-sound Reels with drone openers and speed ramps, a looping brushed-metal 3D logo, and the restaurant\'s Meta ad campaigns.',
+                    'Drone açılışlı, hız rampalı, doğal sesli hızlı Reels; fırçalanmış metal 3D logo döngüsü ve restoranın Meta reklam kampanyaları.',
+                    'مقاطع Reels سريعة بالصوت الطبيعي وافتتاحيات بالدرون، وشعار معدني ثلاثي الأبعاد متكرر، وحملات Meta الإعلانية للمطعم.')),
+        dict(slug='minik-dehalar', discs=['film', 'digital'], client='Minik Dehalar',
+             sector=t('Education', 'Eğitim', 'التعليم'),
+             title=t('Reels series, ads and print for a preschool', 'Bir anaokulu için Reels, reklam ve basılı işler', 'Reels وإعلانات ومطبوعات لروضة أطفال'),
+             text=t('A seven-part Reels series mixing real class footage with illustration, WhatsApp-objective Meta ads and printed brochures.',
+                    'Gerçek sınıf görüntülerini illüstrasyonla birleştiren yedi bölümlük Reels serisi, WhatsApp hedefli Meta reklamları ve broşürler.',
+                    'سلسلة Reels من سبعة أجزاء تمزج لقطات الصفوف الحقيقية بالرسوم، وإعلانات Meta بهدف واتساب، وكتيبات مطبوعة.')),
+        dict(slug='zarifzade', discs=['digital'], client='Zarifzade Baklava',
+             sector=t('Food retail', 'Gıda perakende', 'تجزئة الأغذية'),
+             title=t('E-commerce site and store-opening ads', 'E-ticaret sitesi ve mağaza açılış reklamları', 'متجر إلكتروني وإعلانات افتتاح فرع'),
+             text=t('zarifzade.com.tr on ikas, rebuilt so orders land in WhatsApp with cash on delivery, plus Meta ads for the Sancaktepe opening.',
+                    "ikas üzerinde zarifzade.com.tr; siparişler WhatsApp'a düşecek, kapıda ödeme alınacak şekilde kurgulandı. Sancaktepe açılışı için Meta reklamları.",
+                    'موقع zarifzade.com.tr على منصة ikas، أُعيد بناؤه لتصل الطلبات إلى واتساب مع الدفع عند الاستلام، وإعلانات Meta لافتتاح فرع سنجق تبه.')),
+        dict(slug='home-art-bistro', discs=['digital', 'photo'], client='Home Art Bistro',
+             sector=t('Café & interiors', 'Kafe ve iç mimari', 'مقهى وتصميم داخلي'),
+             title=t('Content strategy with photo and video scripts', 'Fotoğraf ve video senaryolu içerik stratejisi', 'استراتيجية محتوى مع نصوص للتصوير والفيديو'),
+             text=t('A minimal, editorial direction replacing generic posts: a 14-piece calendar with a shot plan for every photo and video.',
+                    'Sıradan paylaşımların yerine minimal, editoryal bir yön: her fotoğraf ve video için çekim planı olan 14 içerikli takvim.',
+                    'توجه بسيط وتحريري بدل المنشورات العامة: تقويم من 14 محتوى مع خطة تصوير لكل صورة وفيديو.')),
+        dict(slug='natgeo', discs=['film', 'drone'], client='National Geographic',
+             sector=t('Documentary', 'Belgesel', 'وثائقي'),
+             title=t('Location production in Southeast Turkey', "Güneydoğu Türkiye'de yerinde prodüksiyon", 'إنتاج ميداني في جنوب شرق تركيا'),
+             text=t('Filming and production support on location for National Geographic.',
+                    'National Geographic için yerinde çekim ve prodüksiyon desteği.',
+                    'تصوير ودعم إنتاجي في الموقع لصالح ناشيونال جيوغرافيك.')),
+        dict(slug='mozaik-series', discs=['film', 'digital'], client='Mozaik Film',
+             sector=t('Own brand', 'Kendi markamız', 'علامتنا'),
+             title=t('Motion-collage ad series', 'Hareketli kolaj reklam serisi', 'سلسلة إعلانات بأسلوب الكولاج المتحرك'),
+             text=t('Short narrated films in a torn-paper collage style explaining to local businesses why planned content and paid ads matter.',
+                    'Yırtık kâğıt kolaj tarzında, yerel işletmelere planlı içeriğin ve sponsorlu reklamın neden önemli olduğunu anlatan kısa seslendirmeli filmler.',
+                    'أفلام قصيرة بتعليق صوتي وأسلوب كولاج الورق الممزق، تشرح للشركات المحلية أهمية المحتوى المخطط والإعلانات المدفوعة.')),
+    ]
+    wall = [('National Geographic', t('Documentary', 'Belgesel', 'وثائقي')),
+            ('Bahçeşehir Koleji', t('Education', 'Eğitim', 'التعليم')),
+            ('Öztiryakiler', t('Industrial kitchens', 'Endüstriyel mutfak', 'المطابخ الصناعية')),
+            ('Gapsan Tekstil', t('Textile', 'Tekstil', 'النسيج')),
+            ('Transfomax', t('Energy', 'Enerji', 'الطاقة')),
+            ('Ferat Dalgıç Pompa', t('Industry', 'Sanayi', 'الصناعة')),
+            ('Nissan · Erik Otomotiv', t('Automotive', 'Otomotiv', 'السيارات')),
+            ('Mutfacto', t('Industrial kitchens', 'Endüstriyel mutfak', 'المطابخ الصناعية')),
+            ('Maharet Ocakbaşı', t('Restaurant', 'Restoran', 'مطعم')),
+            ('Minik Dehalar', t('Education', 'Eğitim', 'التعليم')),
+            ('Zarifzade Baklava', t('Food retail', 'Gıda perakende', 'تجزئة الأغذية')),
+            ('Home Art Bistro', t('Café & interiors', 'Kafe ve iç mimari', 'مقهى وتصميم داخلي'))]
 
-    def vid(name, alt, cls='', eager=False):
-        src = f'{A}assets/video/{name}.mp4'
-        poster = f'{A}assets/video/{name}.jpg'
-        if eager:
-            return f'<video class="{cls}" src="{src}" poster="{poster}" autoplay muted loop playsinline preload="auto" aria-label="{alt}"></video>'
-        return f'<video class="{cls}" data-src="{src}" poster="{poster}" muted loop playsinline preload="none" aria-label="{alt}"></video>'
+    def proj_card(p):
+        m = media(p['slug'] if p.get('media') is None else p['media'], f"{p['client']} · {p['title']}",
+                  fallback=(p['sector'], p['client']))
+        tags = ''.join(f'<span>{DISC[d]}</span>' for d in p['discs'])
+        link = f'<a class="tlink" href="{U(p["link"])}">{t("See the work", "İşi gör", "شاهد العمل")} {arrow}</a>' if p.get('link') else ''
+        return f'''
+      <article class="proj" data-d="{' '.join(p['discs'])}">
+        <div class="m">{m}</div>
+        <div class="meta"><span>{p['client']}</span><span>{p['sector']}</span></div>
+        <h3>{p['title']}</h3>
+        <p>{p['text']}</p>
+        <div class="meta">{tags}</div>{link}
+      </article>'''
+
+    def projs_for(d, limit=6):
+        sel = [p for p in projects if d in p['discs']][:limit]
+        return ''.join(proj_card(p) for p in sel)
+
+    # ------------------------------------------------------------------ shared pieces
+    def block_html(blocks):
+        out = ''
+        for i, (h, line, items) in enumerate(blocks):
+            lis = ''.join(f'<li>{x}</li>' for x in items)
+            out += f'''
+      <article class="block"><span class="num">{i+1:02d}</span><h3>{h}</h3><p class="lead">{line}</p><ul>{lis}</ul></article>'''
+        return out
+
+    def steps_html(steps):
+        return ''.join(f'<li><span class="num">{i+1:02d}</span><h3>{h}</h3><p>{p}</p></li>' for i, (h, p) in enumerate(steps))
+
+    generic_steps = [
+        (t('Brief', 'Brief', 'الملخص'), t('Tell me what you sell, where it will run and when you need it.', 'Ne sattığınızı, nerede yayınlanacağını ve ne zaman lazım olduğunu anlatın.', 'أخبرني ماذا تبيع وأين سيُعرض ومتى تحتاجه.')),
+        (t('Plan', 'Plan', 'الخطة'), t('Script, shot list and schedule, approved by you before a camera moves.', 'Kamera çalışmadan önce sizin onayınızla senaryo, çekim listesi ve takvim.', 'نص وقائمة لقطات وجدول، توافق عليها قبل أن تتحرك الكاميرا.')),
+        (t('Shoot & edit', 'Çekim ve kurgu', 'التصوير والمونتاج'), t('Production, edit, colour and sound by the same team, with previews along the way.', 'Çekim, kurgu, renk ve ses aynı ekipten; süreç boyunca önizlemelerle.', 'التصوير والمونتاج والألوان والصوت من الفريق نفسه، مع معاينات خلال العمل.')),
+        (t('Delivery', 'Teslim', 'التسليم'), t('Masters in every format you need: TV, web, Reels, stories and ads.', 'İhtiyacınız olan her formatta final dosyalar: TV, web, Reels, hikâye ve reklam.', 'نسخ نهائية بكل الصيغ التي تحتاجها: تلفزيون وويب وReels وقصص وإعلانات.')),
+    ]
+
+    def page_hero(eyebrow, h1, sub, lead):
+        return f'''
+<section class="phero">
+  <div class="wrap">
+    <p class="crumbs"><a href="{U('home')}">Bilal Rahat</a> / {eyebrow}</p>
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{h1}<span class="sub">{sub}</span></h1>
+    <p class="lead">{lead}</p>
+  </div>
+</section>'''
+
+    def band(id_, eyebrow, h2, sub, inner, cls=''):
+        sub = f'<span class="sub">{sub}</span>' if sub else ''
+        idattr = f' id="{id_}"' if id_ else ''
+        return f'''
+<section class="band{cls}"{idattr}>
+  <div class="wrap">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2>{h2}{sub}</h2>{inner}
+  </div>
+</section>'''
+
+    def projects_band(d, h2):
+        return band('work', t('Selected references', 'Seçili referanslar', 'مراجع مختارة'), h2, '',
+                    f'<div class="projs">{projs_for(d)}\n    </div>'
+                    f'<p style="margin-top:40px"><a class="tlink" href="{U("references")}">{t("All references", "Tüm referanslar", "كل المراجع")} {arrow}</a></p>')
+
+    def process_band(steps):
+        return band('process', t('Process', 'Süreç', 'طريقة العمل'), t('How every project runs.', 'Her proje nasıl ilerler.', 'كيف يسير كل مشروع.'), '',
+                    f'<ol class="steps">{steps_html(steps)}</ol>')
+
+    quote_note = t('Every project is quoted to its scope. Send the brief and you get a written quote within one working day.',
+                   'Her proje kapsamına göre fiyatlandırılır. Brief gönderin, bir iş günü içinde yazılı teklif alın.',
+                   'يُسعَّر كل مشروع حسب نطاقه. أرسل الملخص وتصلك عرض سعر مكتوب خلال يوم عمل واحد.')
+
+    def cta_band():
+        return f'''
+<section class="band" id="start">
+  <div class="wrap cta">
+    <div>
+      <p class="eyebrow">{t('Your next project', 'Sıradaki projeniz', 'مشروعك القادم')}</p>
+      <h2>{t('Tell me what you need to sell.', 'Ne satmanız gerektiğini anlatın.', 'أخبرني ماذا تريد أن تبيع.')}</h2>
+      <p class="lead" style="margin-top:22px">{quote_note}</p>
+    </div>
+    <div class="ctas" style="margin-top:0">
+      <a class="box solid" href="mailto:{EMAIL}">{t('Email the brief', 'Brief gönderin', 'أرسل الملخص')} {ext}</a>
+      <a class="box" href="{WA}">WhatsApp {ext}</a>
+    </div>
+  </div>
+</section>'''
+
+    # ------------------------------------------------------------------ pages
+    if page == 'home':
+        title = t('Bilal Rahat · Film, CGI & AI Director', 'Bilal Rahat · Film, CGI ve Yapay Zekâ Yönetmeni', 'بلال راحت · مخرج أفلام وCGI وذكاء اصطناعي')
+        desc = t('Commercials, 3D product CGI, FPV drone films, photography, websites and ad campaigns, directed by Bilal Rahat, founder of Mozaik Film.',
+                 "Mozaik Film'in kurucusu Bilal Rahat'tan reklam filmleri, 3D ürün CGI, FPV drone filmleri, fotoğraf, web siteleri ve reklam kampanyaları.",
+                 'إعلانات وCGI ثلاثي الأبعاد للمنتجات وأفلام درون FPV وتصوير ومواقع وحملات إعلانية، بإخراج بلال راحت مؤسس موزاييك فيلم.')
+        discs = [
+            ('cgi', 'amber', t('3D product CGI', '3D ürün CGI', 'CGI ثلاثي الأبعاد للمنتجات'),
+             t('Photoreal product films, loops and stills made in Blender. No shoot needed.', "Blender'da foto-gerçekçi ürün filmleri, döngüler ve görseller. Çekime gerek yok.", 'أفلام ولقطات وصور واقعية للمنتجات في Blender، دون تصوير.')),
+            ('film', 'film', t('Commercials & brand films', 'Reklam ve tanıtım filmleri', 'الإعلانات وأفلام العلامات'),
+             t('TV spots, corporate films, Reels and presenter-led content, scripted to sell.', 'TV reklamları, kurumsal filmler, Reels ve sunuculu içerikler; satmak için yazılır.', 'إعلانات تلفزيونية وأفلام مؤسسية وReels ومحتوى بمذيع، مكتوبة لتبيع.')),
+            ('drone', 'drone-fpv', t('FPV drone & aerial', 'FPV drone ve hava çekimi', 'درون FPV وتصوير جوي'),
+             t('One-take FPV flights through venues, kitchens, factories and hotels.', 'Mekân, mutfak, fabrika ve otellerin içinden tek plan FPV uçuşlar.', 'رحلات FPV بلقطة واحدة داخل الأماكن والمطابخ والمصانع والفنادق.')),
+            ('photo', 'photo', t('Product & venue photography', 'Ürün ve mekân fotoğrafı', 'تصوير المنتجات والأماكن'),
+             t('Studio packshots, food and hospitality photography for menus, sites and ads.', 'Menü, site ve reklam için stüdyo ürün, yemek ve otel-mekân fotoğrafları.', 'صور استوديو للمنتجات والطعام والضيافة للقوائم والمواقع والإعلانات.')),
+            ('digital', 'digital', t('Web, ads & social', 'Web, reklam ve sosyal medya', 'الويب والإعلانات والتواصل'),
+             t('Websites, QR menus, Meta and Google ads, and the content plan behind them.', 'Web siteleri, QR menüler, Meta ve Google reklamları ve arkalarındaki içerik planı.', 'مواقع وقوائم QR وإعلانات Meta وGoogle وخطة المحتوى خلفها.')),
+            ('references', 'references', t('Reference portfolio', 'Referans portfolyosu', 'ملف المراجع'),
+             t('Projects for automotive, hospitality, education, events and industry.', 'Otomotiv, ağırlama, eğitim, etkinlik ve sanayi için yapılan projeler.', 'مشاريع للسيارات والضيافة والتعليم والفعاليات والصناعة.')),
+        ]
+        cards = ''
+        for i, (p, slug, h, line) in enumerate(discs):
+            m = media(slug, h, fallback=(t('Mozaik Film', 'Mozaik Film', 'موزاييك فيلم'), f'{i+1:02d}'))
+            cards += f'''
+      <a class="disc" href="{U(p)}"><div class="m">{m}</div><div class="b"><span class="num">{i+1:02d}</span><h3>{h}</h3><p>{line}</p><span class="tlink">{t('Open', 'Aç', 'افتح')} {arrow}</span></div></a>'''
+        clients = ['National Geographic', 'Nissan', 'Bahçeşehir Koleji', 'Öztiryakiler', 'Gapsan Tekstil', 'Transfomax', 'Ferat Dalgıç Pompa']
+        body = f'''
+<section class="hero">
+  {media('amber', t('Amber perfume bottle rendered in Blender', "Blender'da render edilmiş amber parfüm şişesi", 'زجاجة عطر عنبرية مصنوعة في Blender'), eager=True)}
+  <div class="wrap">
+    <p class="eyebrow">{t('Film · CGI · Drone · Photo · Digital', 'Film · CGI · Drone · Fotoğraf · Dijital', 'أفلام · CGI · درون · تصوير · رقمي')}</p>
+    <h1>{t('One director.', 'Tek yönetmen.', 'مخرج واحد.')}<span class="sub">{t('Every way a brand needs to be seen.', 'Bir markanın görünmesi gereken her yol.', 'بكل الطرق التي تحتاج العلامة أن تُرى بها.')}</span></h1>
+    <p class="lead">{t('Commercials, 3D product films, FPV drone, photography, websites and ad campaigns. Since 2009, with the Mozaik Film team behind every project.', "Reklam filmleri, 3D ürün filmleri, FPV drone, fotoğraf, web siteleri ve reklam kampanyaları. 2009'dan beri, her projenin arkasında Mozaik Film ekibiyle.", 'إعلانات وأفلام منتجات ثلاثية الأبعاد ودرون FPV وتصوير ومواقع وحملات إعلانية. منذ 2009، مع فريق موزاييك فيلم خلف كل مشروع.')}</p>
+    <a class="tlink" href="#disciplines">{t('See what I make', 'Neler ürettiğimi görün', 'شاهد ما أصنعه')} {arrow}</a>
+  </div>
+</section>
+
+<section class="clients" aria-label="{t('Productions for', 'Çalıştığımız markalar', 'إنتاجات لصالح')}">
+  <div class="wrap"><small>{t('Productions for', 'Çalıştığımız markalar', 'إنتاجات لصالح')}</small>{''.join(f'<span>{c}</span>' for c in clients)}</div>
+</section>
+''' + band('disciplines', t('What I make', 'Ne üretiyorum?', 'ماذا أصنع'),
+           t('Six ways to work together.', 'Birlikte çalışmanın altı yolu.', 'ست طرق للعمل معًا.'),
+           t('Each with its own page.', 'Her birinin kendi sayfası var.', 'لكلٍّ منها صفحته.'),
+           f'<div class="discs">{cards}\n    </div>') + \
+        band('work', t('Recent references', 'Son referanslar', 'أحدث المراجع'),
+             t('Work across every discipline.', 'Her disiplinden işler.', 'أعمال في كل التخصصات.'), '',
+             f'<div class="projs">{"".join(proj_card(p) for p in projects[:6])}\n    </div>'
+             f'<p style="margin-top:40px"><a class="tlink" href="{U("references")}">{t("All references", "Tüm referanslar", "كل المراجع")} {arrow}</a></p>') + \
+        studio_band(t, ext) + cta_band()
+
+    elif page == 'cgi':
+        title = t('3D Product CGI · Bilal Rahat', '3D Ürün CGI · Bilal Rahat', 'CGI ثلاثي الأبعاد للمنتجات · بلال راحت')
+        desc = t('Photoreal product films, loops and launch visuals made in Blender, for brands in Europe, the US and the Gulf.',
+                 "Avrupa, ABD ve Körfez'deki markalar için Blender'da foto-gerçekçi ürün filmleri, döngüler ve lansman görselleri.",
+                 'أفلام ولقطات متكررة وصور إطلاق واقعية للمنتجات في Blender، لعلامات في أوروبا والولايات المتحدة والخليج.')
+        body = cgi_body(t, arrow, ext, U)
+
+    elif page == 'film':
+        title = t('Commercials & Brand Films · Bilal Rahat', 'Reklam ve Tanıtım Filmleri · Bilal Rahat', 'الإعلانات وأفلام العلامات · بلال راحت')
+        desc = t('TV commercials, corporate films, Reels and presenter-led content, scripted, shot, edited and graded by one team.',
+                 'TV reklamları, kurumsal filmler, Reels ve sunuculu içerikler; tek ekip tarafından yazılır, çekilir, kurgulanır ve renklendirilir.',
+                 'إعلانات تلفزيونية وأفلام مؤسسية وReels ومحتوى بمذيع، يكتبها ويصورها ويمنتجها فريق واحد.')
+        blocks = [
+            (t('Commercials', 'Reklam filmleri', 'الإعلانات'), t('Spots built around one idea that sells.', 'Satan tek bir fikir etrafında kurulan reklamlar.', 'إعلانات مبنية حول فكرة واحدة تبيع.'),
+             [t('TV and cinema spots', 'TV ve sinema reklamları', 'إعلانات التلفزيون والسينما'), t('Seasonal and holiday campaigns', 'Sezon ve bayram kampanyaları', 'حملات المواسم والأعياد'),
+              t('Script and storyboard', 'Senaryo ve storyboard', 'النص ولوحة القصة'), t('Cast, location and crew', 'Oyuncu, mekân ve ekip', 'الممثلون والموقع والطاقم')]),
+            (t('Corporate & promo films', 'Kurumsal ve tanıtım filmleri', 'أفلام مؤسسية وترويجية'), t('Who you are, shown in a few minutes.', 'Kim olduğunuz, birkaç dakikada.', 'من أنت، في دقائق قليلة.'),
+             [t('Company and factory films', 'Firma ve fabrika filmleri', 'أفلام الشركات والمصانع'), t('Hotel, restaurant and venue films', 'Otel, restoran ve mekân filmleri', 'أفلام الفنادق والمطاعم والأماكن'),
+              t('Event and festival films', 'Etkinlik ve festival filmleri', 'أفلام الفعاليات والمهرجانات'), t('Documentary production', 'Belgesel prodüksiyon', 'إنتاج وثائقي')]),
+            (t('Reels & short-form', 'Reels ve kısa video', 'Reels والفيديو القصير'), t('Vertical content made for the first second.', 'İlk saniye için üretilmiş dikey içerik.', 'محتوى عمودي مصنوع للثانية الأولى.'),
+             [t('Monthly Reels series', 'Aylık Reels serileri', 'سلاسل Reels شهرية'), t('Hooks, captions and CTAs', 'Kanca, altyazı ve CTA', 'افتتاحيات وترجمات ودعوات للتفاعل'),
+              t('Motion graphics and collage', 'Motion grafik ve kolaj', 'موشن جرافيك وكولاج'), t('Cut-downs for ads', 'Reklam için kısa versiyonlar', 'نسخ قصيرة للإعلانات')]),
+            (t('Presenter & interview', 'Sunuculu ve röportaj', 'مذيع ومقابلات'), t('A face and a voice for your brand.', 'Markanız için bir yüz ve ses.', 'وجه وصوت لعلامتك.'),
+             [t('Presenter-led product films', 'Sunuculu ürün filmleri', 'أفلام منتجات بمذيع'), t('Customer testimonials', 'Müşteri referans filmleri', 'شهادات العملاء'),
+              t('Voice-over in Turkish, English, Arabic', 'Türkçe, İngilizce, Arapça seslendirme', 'تعليق صوتي بالتركية والإنجليزية والعربية'), t('Editing, colour grading and sound', 'Kurgu, renk ve ses', 'المونتاج والألوان والصوت')]),
+        ]
+        body = page_hero(NAV['film'], t('Commercials', 'Reklam filmleri', 'الإعلانات'),
+                         t('and brand films that sell.', 've satan tanıtım filmleri.', 'وأفلام علامات تبيع.'),
+                         t('TV spots, corporate films, Reels and presenter-led content. Written, shot, edited and graded by one team, from Mozaik Film since 2009.',
+                           "TV reklamları, kurumsal filmler, Reels ve sunuculu içerikler. 2009'dan beri Mozaik Film'de tek ekip tarafından yazılır, çekilir, kurgulanır ve renklendirilir.",
+                           'إعلانات تلفزيونية وأفلام مؤسسية وReels ومحتوى بمذيع. يكتبها ويصورها ويمنتجها فريق واحد في موزاييك فيلم منذ 2009.')) + \
+            band('services', t('Services', 'Hizmetler', 'الخدمات'), t('From the script to the final grade.', 'Senaryodan son renk düzenlemesine.', 'من النص حتى التصحيح اللوني الأخير.'), '',
+                 f'<div class="blocks">{block_html(blocks)}\n    </div>') + \
+            projects_band('film', t('Films we have made.', 'Çektiğimiz filmler.', 'أفلام صنعناها.')) + \
+            process_band(generic_steps) + cta_band()
+
+    elif page == 'drone':
+        title = t('FPV Drone & Aerial Films · Bilal Rahat', 'FPV Drone ve Hava Çekimi · Bilal Rahat', 'أفلام درون FPV والتصوير الجوي · بلال راحت')
+        desc = t('One-take FPV drone flights through venues, kitchens, factories and hotels, and aerial cinematography for commercials.',
+                 'Mekân, mutfak, fabrika ve otellerin içinden tek plan FPV drone uçuşları ve reklamlar için hava çekimi.',
+                 'رحلات درون FPV بلقطة واحدة داخل الأماكن والمطابخ والمصانع والفنادق، وتصوير جوي للإعلانات.')
+        blocks = [
+            (t('FPV one-take films', 'FPV tek plan filmler', 'أفلام FPV بلقطة واحدة'), t('One continuous flight that tours the whole place.', 'Tüm mekânı gezen kesintisiz tek uçuş.', 'رحلة متواصلة واحدة تجول في المكان كله.'),
+             [t('Restaurants and kitchens', 'Restoran ve mutfaklar', 'المطاعم والمطابخ'), t('Hotels and venues', 'Otel ve mekânlar', 'الفنادق والأماكن'),
+              t('Factories and showrooms', 'Fabrika ve showroomlar', 'المصانع وصالات العرض'), t('Planned route, rehearsed before the take', 'Çekim öncesi provası yapılan planlı rota', 'مسار مخطط يُتدرّب عليه قبل اللقطة')]),
+            (t('Aerial cinematography', 'Hava sinematografisi', 'التصوير السينمائي الجوي'), t('Scale and place for commercials and city films.', 'Reklam ve şehir filmleri için ölçek ve mekân hissi.', 'إحساس بالحجم والمكان للإعلانات وأفلام المدن.'),
+             [t('Openers with speed ramps', 'Hız rampalı açılışlar', 'افتتاحيات بتغيير السرعة'), t('Real estate and construction', 'Emlak ve inşaat', 'العقارات والإنشاءات'),
+              t('Events and festivals', 'Etkinlik ve festivaller', 'الفعاليات والمهرجانات'), t('Heritage and tourism', 'Tarih ve turizm', 'التراث والسياحة')]),
+        ]
+        body = page_hero(NAV['drone'], t('FPV drone', 'FPV drone', 'درون FPV'),
+                         t('One flight, the whole story.', 'Tek uçuş, bütün hikâye.', 'رحلة واحدة، القصة كلها.'),
+                         t('One-take FPV films that fly through a venue the way a guest walks it, and aerial shots that give a commercial its scale.',
+                           'Bir mekânın içinden, bir misafirin gezdiği gibi uçan tek plan FPV filmler ve bir reklama ölçeğini veren hava çekimleri.',
+                           'أفلام FPV بلقطة واحدة تطير داخل المكان كما يتجول فيه الضيف، ولقطات جوية تمنح الإعلان حجمه.')) + \
+            band('services', t('Services', 'Hizmetler', 'الخدمات'), t('Inside and above.', 'İçeride ve yukarıda.', 'في الداخل ومن الأعلى.'), '',
+                 f'<div class="blocks">{block_html(blocks)}\n    </div>') + \
+            projects_band('drone', t('Flights we have made.', 'Yaptığımız uçuşlar.', 'رحلات صوّرناها.')) + \
+            process_band(generic_steps) + cta_band()
+
+    elif page == 'photo':
+        title = t('Product & Venue Photography · Bilal Rahat', 'Ürün ve Mekân Fotoğrafı · Bilal Rahat', 'تصوير المنتجات والأماكن · بلال راحت')
+        desc = t('Studio product photography, food and hospitality photography for menus, websites, e-commerce and ads.',
+                 'Menü, web sitesi, e-ticaret ve reklam için stüdyo ürün, yemek ve otel-mekân fotoğrafçılığı.',
+                 'تصوير منتجات في الاستوديو وتصوير الطعام والضيافة للقوائم والمواقع والمتاجر والإعلانات.')
+        blocks = [
+            (t('Product & studio', 'Ürün ve stüdyo', 'المنتجات والاستوديو'), t('Clean packshots and styled key visuals.', 'Temiz ürün çekimleri ve kurgulanmış ana görseller.', 'صور منتجات نظيفة وصور رئيسية منسقة.'),
+             [t('White-background e-commerce', 'Beyaz fon e-ticaret', 'خلفية بيضاء للمتاجر'), t('Styled and lifestyle shots', 'Kurgulu ve yaşam tarzı kareler', 'لقطات منسقة وأسلوب حياة'),
+              t('Retouching and cut-outs', 'Rötuş ve dekupe', 'التنقيح والقص'), t('Or CGI when the product is not ready yet', 'Ürün hazır değilse CGI', 'أو CGI إن لم يكن المنتج جاهزًا')]),
+            (t('Food & hospitality', 'Yemek ve ağırlama', 'الطعام والضيافة'), t('Menus that make people order.', 'Sipariş verdiren menüler.', 'قوائم تجعل الناس يطلبون.'),
+             [t('Menu and QR-menu photography', 'Menü ve QR menü fotoğrafları', 'صور القوائم وقوائم QR'), t('Restaurant and hotel interiors', 'Restoran ve otel iç mekânları', 'التصميم الداخلي للمطاعم والفنادق'),
+              t('Chef and kitchen portraits', 'Şef ve mutfak portreleri', 'صور الطهاة والمطابخ'), t('Social media sets', 'Sosyal medya setleri', 'مجموعات لوسائل التواصل')]),
+        ]
+        body = page_hero(NAV['photo'], t('Photography', 'Fotoğraf', 'التصوير'),
+                         t('for menus, sites and ads.', 'menü, site ve reklam için.', 'للقوائم والمواقع والإعلانات.'),
+                         t('Product, food and venue photography shot with the same eye as our films, and delivered ready for e-commerce, print and paid social.',
+                           'Filmlerimizle aynı gözle çekilen; e-ticaret, baskı ve sponsorlu reklama hazır teslim edilen ürün, yemek ve mekân fotoğrafları.',
+                           'تصوير المنتجات والطعام والأماكن بالعين نفسها التي نصوّر بها أفلامنا، جاهزة للمتاجر والطباعة والإعلانات.')) + \
+            band('services', t('Services', 'Hizmetler', 'الخدمات'), t('Every picture with a job to do.', 'Her fotoğrafın bir görevi var.', 'لكل صورة مهمة.'), '',
+                 f'<div class="blocks">{block_html(blocks)}\n    </div>') + \
+            projects_band('photo', t('Recent photography.', 'Son fotoğraf işleri.', 'أحدث أعمال التصوير.')) + \
+            process_band(generic_steps) + cta_band()
+
+    elif page == 'digital':
+        title = t('Web, Ads & Social · Bilal Rahat', 'Web, Reklam ve Sosyal Medya · Bilal Rahat', 'الويب والإعلانات والتواصل · بلال راحت')
+        desc = t('Websites, e-commerce, QR menus, Meta and Google ads management, and social media content strategy.',
+                 'Web siteleri, e-ticaret, QR menüler, Meta ve Google reklam yönetimi ve sosyal medya içerik stratejisi.',
+                 'مواقع ومتاجر إلكترونية وقوائم QR وإدارة إعلانات Meta وGoogle واستراتيجية محتوى للتواصل الاجتماعي.')
+        blocks = [
+            (t('Websites & e-commerce', 'Web sitesi ve e-ticaret', 'المواقع والمتاجر الإلكترونية'), t('Sites that turn a visit into an order.', 'Ziyareti siparişe çeviren siteler.', 'مواقع تحوّل الزيارة إلى طلب.'),
+             [t('Company and portfolio sites', 'Kurumsal ve portfolyo siteleri', 'مواقع الشركات والملفات'), t('E-commerce on ikas and similar', 'ikas ve benzeri altyapılarda e-ticaret', 'متاجر على ikas وما يشبهها'),
+              t('WhatsApp ordering flows', 'WhatsApp sipariş kurgusu', 'الطلب عبر واتساب'), t('Domain, hosting and corporate email', 'Alan adı, barındırma ve kurumsal e-posta', 'النطاق والاستضافة والبريد المؤسسي')]),
+            (t('QR menus & sales pages', 'QR menü ve satış sayfaları', 'قوائم QR وصفحات البيع'), t('One scan from table to order.', 'Masadan siparişe tek okutma.', 'مسح واحد من الطاولة إلى الطلب.'),
+             [t('QR menus for restaurants and cafés', 'Restoran ve kafeler için QR menü', 'قوائم QR للمطاعم والمقاهي'), t('QR sales pages for products', 'Ürünler için QR satış sayfaları', 'صفحات بيع QR للمنتجات'),
+              t('Photographed and written by us', 'Fotoğrafı ve metni bizden', 'نصوّرها ونكتبها بأنفسنا'), t('Easy price updates', 'Kolay fiyat güncelleme', 'تحديث الأسعار بسهولة')]),
+            (t('Meta & Google ads', 'Meta ve Google reklamları', 'إعلانات Meta وGoogle'), t('Campaigns run by the people who make the creative.', 'Kreatifi üreten ekip tarafından yönetilen kampanyalar.', 'حملات يديرها من يصنعون المحتوى.'),
+             [t('Account and pixel setup', 'Hesap ve piksel kurulumu', 'إعداد الحساب والبكسل'), t('Message, traffic and awareness campaigns', 'Mesaj, trafik ve bilinirlik kampanyaları', 'حملات الرسائل والزيارات والوعي'),
+              t('Local targeting by neighbourhood', 'Mahalle bazında yerel hedefleme', 'استهداف محلي حسب الحي'), t('Google Business profile', 'Google İşletme profili', 'ملف Google التجاري')]),
+            (t('Social media content', 'Sosyal medya içeriği', 'محتوى التواصل الاجتماعي'), t('A plan first, then the posts.', 'Önce plan, sonra paylaşımlar.', 'الخطة أولًا، ثم المنشورات.'),
+             [t('Content strategy and calendar', 'İçerik stratejisi ve takvim', 'استراتيجية وتقويم المحتوى'), t('Page and cover redesign', 'Sayfa ve kapak yenileme', 'إعادة تصميم الصفحة والأغلفة'),
+              t('Graphics, stories and Reels', 'Grafik, hikâye ve Reels', 'تصاميم وقصص وReels'), t('Scheduling in Meta Business Suite', 'Meta Business Suite ile planlama', 'الجدولة عبر Meta Business Suite')]),
+        ]
+        body = page_hero(NAV['digital'], t('Web, ads', 'Web, reklam', 'الويب والإعلانات'),
+                         t('and the content behind them.', 've arkalarındaki içerik.', 'والمحتوى خلفها.'),
+                         t('Websites, QR menus and paid campaigns, built by the same team that shoots the content, so the site, the ad and the film say the same thing.',
+                           'İçeriği çeken ekip tarafından kurulan web siteleri, QR menüler ve sponsorlu kampanyalar; böylece site, reklam ve film aynı şeyi söyler.',
+                           'مواقع وقوائم QR وحملات مدفوعة يبنيها الفريق نفسه الذي يصوّر المحتوى، فيقول الموقع والإعلان والفيلم الشيء نفسه.')) + \
+            band('services', t('Services', 'Hizmetler', 'الخدمات'), t('Seen, then chosen.', 'Önce görünmek, sonra seçilmek.', 'أن تُرى، ثم تُختار.'), '',
+                 f'<div class="blocks">{block_html(blocks)}\n    </div>') + \
+            projects_band('digital', t('Digital work.', 'Dijital işler.', 'أعمال رقمية.')) + \
+            process_band(generic_steps) + cta_band()
+
+    elif page == 'references':
+        title = t('References · Bilal Rahat', 'Referanslar · Bilal Rahat', 'المراجع · بلال راحت')
+        desc = t('Reference portfolio of Bilal Rahat and Mozaik Film: commercials, CGI, drone, photography and digital work.',
+                 'Bilal Rahat ve Mozaik Film referans portfolyosu: reklam filmleri, CGI, drone, fotoğraf ve dijital işler.',
+                 'ملف مراجع بلال راحت وموزاييك فيلم: إعلانات وCGI ودرون وتصوير وأعمال رقمية.')
+        chips = f'<button type="button" data-f="all" aria-pressed="true">{t("All", "Tümü", "الكل")}</button>' + \
+            ''.join(f'<button type="button" data-f="{k}" aria-pressed="false">{v}</button>' for k, v in DISC.items())
+        wall_html = ''.join(f'<div><b>{n}</b><span>{s}</span></div>' for n, s in wall)
+        body = page_hero(NAV['references'], t('References', 'Referanslar', 'المراجع'),
+                         t('Brands we have filmed, built and run.', 'Çektiğimiz, kurduğumuz ve yönettiğimiz markalar.', 'علامات صوّرناها وبنيناها وأدرناها.'),
+                         t('500+ brand films since 2009, for companies in Turkey, Germany, Austria, Saudi Arabia and Dubai. A selection, by discipline.',
+                           "2009'dan beri Türkiye, Almanya, Avusturya, Suudi Arabistan ve Dubai'deki firmalar için 500'den fazla marka filmi. Disipline göre bir seçki.",
+                           'أكثر من 500 فيلم لعلامات تجارية منذ 2009، لشركات في تركيا وألمانيا والنمسا والسعودية ودبي. مختارات حسب التخصص.')) + f'''
+<section class="band" id="work" style="border-top:0">
+  <div class="wrap">
+    <p class="eyebrow">{t('Portfolio', 'Portfolyo', 'الملف')}</p>
+    <h2>{t('Selected projects.', 'Seçili projeler.', 'مشاريع مختارة.')}</h2>
+    <div class="chips" role="group" aria-label="{t('Filter by discipline', 'Disipline göre filtrele', 'تصفية حسب التخصص')}">{chips}</div>
+    <div class="projs" id="projs">{''.join(proj_card(p) for p in projects)}
+    </div>
+  </div>
+</section>''' + band('clients', t('Clients', 'Müşteriler', 'العملاء'), t('Who we have worked for.', 'Kimlerle çalıştık.', 'لمن عملنا.'), '',
+                     f'<div class="wall">{wall_html}</div>') + cta_band()
+
+    return shell(L, page, title, desc, body, NAV, t, ext)
+
+
+# ---------------------------------------------------------------------- studio band (home)
+def studio_band(t, ext):
+    return f'''
+<section class="band" id="studio">
+  <div class="wrap studio">
+    <div class="portrait"><img src="/assets/bilal-rahat.jpg" alt="Bilal Rahat" loading="lazy"></div>
+    <div>
+      <p class="eyebrow">{t('Studio', 'Stüdyo', 'الاستوديو')}</p>
+      <h2>{t('A director, backed by a production company.', 'Arkasında bir prodüksiyon şirketi olan yönetmen.', 'مخرج تدعمه شركة إنتاج.')}</h2>
+      <p class="lead">{t("I'm Bilal Rahat. I founded Mozaik Film in 2009 and have spent the years since filming and producing for brands, from corporate campaigns to productions for National Geographic. Today I direct commercials, CGI product films, drone work and digital campaigns, with the Mozaik team behind every project.", "Ben Bilal Rahat. 2009'da Mozaik Film'i kurdum; o günden bu yana kurumsal kampanyalardan National Geographic çekimlerine kadar markalar için film çekip prodüksiyon yapıyorum. Bugün reklam filmleri, CGI ürün filmleri, drone çekimleri ve dijital kampanyalar yönetiyorum; her projenin arkasında Mozaik ekibi var.", 'أنا بلال راحت. أسست موزاييك فيلم عام 2009، ومنذ ذلك الحين أصوّر وأنتج للعلامات التجارية، من الحملات المؤسسية إلى إنتاجات لصالح ناشيونال جيوغرافيك. اليوم أخرج الإعلانات وأفلام CGI للمنتجات وتصوير الدرون والحملات الرقمية، مع فريق موزاييك خلف كل مشروع.')}</p>
+      <p class="lead">{t('Offices in Istanbul and Şanlıurfa, GMT+3, the same working day as Europe and the Gulf. English, Turkish and Arabic.', 'İstanbul ve Şanlıurfa ofisleri, GMT+3; Avrupa ve Körfez ile aynı iş günü. İngilizce, Türkçe ve Arapça.', 'مكاتب في إسطنبول وشانلي أورفا، بتوقيت GMT+3، يوم العمل نفسه مع أوروبا والخليج. الإنجليزية والتركية والعربية.')}</p>
+      <div class="facts">
+        <div><b>2009</b><span>{t('Mozaik Film founded', "Mozaik Film'in kuruluşu", 'تأسيس موزاييك فيلم')}</span></div>
+        <div><b>500+</b><span>{t('Brand films', 'Marka filmi', 'فيلم لعلامات تجارية')}</span></div>
+        <div><b>10+</b><span>{t('Production team', 'Prodüksiyon ekibi', 'فريق الإنتاج')}</span></div>
+        <div><b>GMT+3</b><span>{t('Istanbul', 'İstanbul', 'إسطنبول')}</span></div>
+      </div>
+    </div>
+  </div>
+</section>'''
+
+
+# ---------------------------------------------------------------------- 3D CGI page (former home page)
+def cgi_body(t, arrow, ext, U):
+    def vid(name, alt):
+        return media(name, alt)
 
     services = [
-        ('01', 'amber',
-         t('CGI product films', 'CGI ürün filmleri', 'أفلام منتجات CGI'),
+        ('01', 'amber', t('CGI product films', 'CGI ürün filmleri', 'أفلام منتجات CGI'),
          t('Hero films that make a product feel worth its price.', 'Ürünü fiyatına layık hissettiren ana filmler.', 'أفلام رئيسية تجعل المنتج يبدو جديرًا بسعره.'),
          [t('Launch films', 'Lansman filmleri', 'أفلام الإطلاق'), t('Hero loops', 'Ana döngüler', 'لقطات رئيسية متكررة'),
           t('Campaign films', 'Kampanya filmleri', 'أفلام الحملات'), t('Paid social cut-downs', 'Reklam için kısa versiyonlar', 'نسخ قصيرة للإعلانات')]),
-        ('02', 'serum',
-         t('Launch visuals', 'Lansman görselleri', 'صور الإطلاق'),
+        ('02', 'serum', t('Launch visuals', 'Lansman görselleri', 'صور الإطلاق'),
          t('Stills and loops for e-commerce, social and press, without a photoshoot.', 'Fotoğraf çekimi olmadan e-ticaret, sosyal medya ve basın için görseller ve döngüler.', 'صور ولقطات متكررة للمتاجر الإلكترونية ووسائل التواصل والصحافة، دون جلسة تصوير.'),
          [t('Hero stills', 'Ana görseller', 'صور رئيسية'), t('E-commerce loops', 'E-ticaret döngüleri', 'لقطات للمتاجر الإلكترونية'),
           t('Packaging CGI', 'Ambalaj CGI', 'CGI للتغليف'), t('Social assets in 9:16, 1:1, 16:9', '9:16, 1:1, 16:9 sosyal medya içerikleri', 'محتوى بمقاسات 9:16 و1:1 و16:9')]),
-        ('03', 'can',
-         t('AI-assisted production', 'Yapay zekâ destekli prodüksiyon', 'إنتاج بمساعدة الذكاء الاصطناعي'),
+        ('03', 'can', t('AI-assisted production', 'Yapay zekâ destekli prodüksiyon', 'إنتاج بمساعدة الذكاء الاصطناعي'),
          t('Generative AI for concepts, backgrounds and variations, finished by a director.', 'Konsept, arka plan ve varyasyonlar için üretken yapay zekâ; son dokunuş yönetmenden.', 'ذكاء اصطناعي توليدي للأفكار والخلفيات والنسخ، بلمسة مخرج نهائية.'),
          [t('Concept frames in days', 'Günler içinde konsept kareler', 'إطارات مفاهيمية خلال أيام'), t('Scene and background generation', 'Sahne ve arka plan üretimi', 'توليد المشاهد والخلفيات'),
           t('Variations for testing', 'Test için varyasyonlar', 'نسخ متعددة للاختبار'), t('Hybrid AI + CGI + live action', 'Hibrit yapay zekâ + CGI + canlı çekim', 'مزيج من الذكاء الاصطناعي وCGI والتصوير الحي')]),
-        ('04', 'watch',
-         t('Live action & FPV drone', 'Canlı çekim ve FPV drone', 'تصوير حي وطائرة FPV'),
-         t('Cinema cameras, lighting and FPV one-takes, from the same director.', 'Sinema kameraları, ışık ve FPV tek plan çekimler; aynı yönetmenden.', 'كاميرات سينمائية وإضاءة ولقطات FPV متواصلة، من المخرج نفسه.'),
-         [t('Commercial shoots', 'Reklam çekimleri', 'تصوير إعلاني'), t('FPV one-take films', 'FPV tek plan filmler', 'أفلام FPV بلقطة واحدة'),
-          t('Hospitality and venues', 'Otel ve mekân filmleri', 'أفلام الفنادق والأماكن'), t('Editing and colour grading', 'Kurgu ve renk düzenleme', 'المونتاج وتصحيح الألوان')]),
-        ('05', 'cream',
-         t('Performance creative', 'Performans kreatifi', 'محتوى إعلاني عالي الأداء'),
-         t('Ads built for Meta and Google, planned by someone who runs the campaigns.', 'Meta ve Google için kurgulanmış reklamlar; kampanyaları yöneten biri tarafından planlanır.', 'إعلانات مصممة لـMeta وGoogle، يخطط لها شخص يدير الحملات بنفسه.'),
-         [t('Meta & Google Ads creative', 'Meta ve Google Ads kreatifleri', 'محتوى إعلانات Meta وGoogle'), t('Hooks and first-second motion', 'İlk saniyeyi yakalayan açılışlar', 'افتتاحيات تشد الانتباه من الثانية الأولى'),
-          t('A/B variations', 'A/B varyasyonları', 'نسخ A/B'), t('Reporting on what works', 'Neyin çalıştığına dair raporlama', 'تقارير عما ينجح')]),
-        ('06', 'drone',
-         t('Technical CGI', 'Teknik CGI', 'CGI تقني'),
+        ('04', 'drone', t('Technical CGI', 'Teknik CGI', 'CGI تقني'),
          t('Exploded views and assembly films that explain how a product is built.', 'Ürünün nasıl yapıldığını anlatan patlatılmış görünümler ve montaj filmleri.', 'مشاهد مفككة وأفلام تجميع تشرح كيف صُنع المنتج.'),
          [t('Exploded views', 'Patlatılmış görünümler', 'مشاهد مفككة'), t('Assembly animation', 'Montaj animasyonu', 'تحريك التجميع'),
           t('Cutaways and cross-sections', 'Kesit görünümler', 'مقاطع عرضية'), t('Built from your CAD files', 'CAD dosyalarınızdan modelleme', 'مبني من ملفات CAD الخاصة بك')]),
@@ -72,7 +479,7 @@ def page(L):
         <h3>{h}</h3>
         <p class="lead">{line}</p>
         <ul>{lis}</ul>
-        <a class="tlink" href="#contact">{t('Plan this with me', 'Bunu birlikte planlayalım', 'لنخطط لهذا معًا')} {arrow}</a>
+        <a class="tlink" href="#start">{t('Plan this with me', 'Bunu birlikte planlayalım', 'لنخطط لهذا معًا')} {arrow}</a>
       </div>
     </article>'''
 
@@ -123,184 +530,22 @@ def page(L):
              (t('Delivery', 'Teslim', 'التسليم'), t('Final masters in every size the campaign needs, plus the stills.', 'Kampanyanın ihtiyaç duyduğu her boyutta final dosyalar ve görseller.', 'النسخ النهائية بكل المقاسات التي تحتاجها الحملة، مع الصور.'))]
     steps_html = ''.join(f'<li><span class="num">{i+1:02d}</span><h3>{h}</h3><p>{p}</p></li>' for i, (h, p) in enumerate(steps))
 
-    clients = ['National Geographic', 'Bahçeşehir Koleji', 'Öztiryakiler', 'Gapsan Tekstil', 'Transfomax', 'Ferat Dalgıç Pompa']
-
-    return f'''<!DOCTYPE html>
-<html lang="{L}" dir="{'rtl' if rtl else 'ltr'}">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title}</title>
-<meta name="description" content="{desc}">
-<meta property="og:title" content="{title}">
-<meta property="og:description" content="{desc}">
-<meta property="og:image" content="{BASE}/assets/og.jpg">
-<meta property="og:url" content="{BASE}{LANGS[L]}">
-<meta name="twitter:card" content="summary_large_image">
-{hreflang}<link rel="alternate" hreflang="x-default" href="{BASE}/">
-<link rel="canonical" href="{BASE}{LANGS[L]}">
-<meta name="theme-color" content="#000000">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' text-anchor='middle' fill='%23fff'%3EBR%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500;600&display=swap{'&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500;600' if rtl else ''}" rel="stylesheet">
-<style>
-/* matte black studio: pure black ground, white serif display, one cool-blue accent for labels and links */
-:root{{--bg:#000;--bg2:#0b0b0c;--card:#0f0f10;--line:#1f1f22;--ink:#f4f4f2;--mute:#9b9b9b;--accent:#5b8dff;--serif:"Newsreader",Georgia,serif;--sans:"Inter",system-ui,sans-serif;color-scheme:dark}}
-html[lang=ar]{{--serif:"Noto Naskh Arabic","Newsreader",serif;--sans:"IBM Plex Sans Arabic","Inter",sans-serif}}
-*{{box-sizing:border-box;min-width:0}}
-html{{scroll-behavior:smooth;scroll-padding-top:80px}}
-body{{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased}}
-img,video{{max-width:100%;display:block}}
-a{{color:inherit}}
-.wrap{{max-width:1320px;margin:0 auto;padding-inline:max(4vw,20px)}}
-.band{{padding-block:clamp(72px,10vw,140px);border-top:1px solid var(--line)}}
-.eyebrow{{font:600 12px/1.3 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin:0 0 22px}}
-html[lang=ar] .eyebrow{{letter-spacing:0;font-size:14px}}
-h1,h2,h3{{font-family:var(--serif);font-weight:400;letter-spacing:-.015em;margin:0;text-wrap:balance}}
-html[lang=ar] h1,html[lang=ar] h2,html[lang=ar] h3{{letter-spacing:0;font-weight:500}}
-h2{{font-size:clamp(34px,4.6vw,64px);line-height:1.06}}
-h2 .sub{{display:block;color:#bdbdbd}}
-p{{margin:0}}
-.lead{{color:var(--mute);font-size:17px;max-width:60ch}}
-.num{{font:500 13px/1 var(--sans);letter-spacing:.12em;color:var(--accent)}}
-.tlink{{display:inline-flex;gap:10px;font:600 13px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--accent);text-decoration:none}}
-html[lang=ar] .tlink{{letter-spacing:0;font-size:15px}}
-.tlink:hover{{color:var(--ink)}}
-.box{{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border:1px solid rgba(255,255,255,.4);font:600 14px/1 var(--sans);text-decoration:none;white-space:nowrap;color:var(--ink)}}
-.box:hover{{background:var(--ink);color:#000;border-color:var(--ink)}}
-.box.solid{{background:var(--ink);color:#000;border-color:var(--ink)}}
-.box.solid:hover{{background:var(--accent);border-color:var(--accent);color:#fff}}
-/* header */
-header{{position:fixed;inset:0 0 auto;z-index:20;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}}
-.nav{{display:flex;align-items:center;gap:30px;height:80px}}
-.brand{{font:500 15px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;text-decoration:none;margin-inline-end:auto;white-space:nowrap}}
-.links{{display:flex;gap:28px;font-size:15px;font-weight:500}}
-.links a{{text-decoration:none;color:#d8d8d8;padding-block:6px;border-bottom:2px solid transparent}}
-.links a:hover{{color:#fff;border-color:var(--accent)}}
-.langs{{display:flex;gap:2px;font-size:12px;letter-spacing:.08em}}
-.langs a{{padding:8px 6px;color:var(--mute);text-decoration:none}}
-.langs a:hover{{color:var(--ink)}}
-.langs a.on{{color:var(--ink);border-bottom:2px solid var(--accent)}}
-.nav .box{{min-height:44px;font-size:13px}}
-/* hero */
-.hero{{position:relative;min-height:min(100svh,980px);display:flex;align-items:center;isolation:isolate;padding-top:80px}}
-.hero video,.hero .still{{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 50%;transform:scaleX(-1);z-index:-2;filter:saturate(.5) brightness(.75)}}
-html[lang=ar] .hero video{{transform:none}}
-.hero::before{{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#000 0%,rgba(0,0,0,.85) 34%,rgba(0,0,0,.2) 70%),linear-gradient(0deg,#000 0%,rgba(0,0,0,0) 30%)}}
-html[lang=ar] .hero::before{{background:linear-gradient(270deg,#000 0%,rgba(0,0,0,.85) 34%,rgba(0,0,0,.2) 70%),linear-gradient(0deg,#000 0%,rgba(0,0,0,0) 30%)}}
-.hero .wrap{{width:100%;padding-block:80px}}
-.hero h1{{font-size:clamp(52px,7vw,104px);line-height:1}}
-.hero h1 .sub{{display:block;font-size:.62em;line-height:1.12;color:#cfcfcf;margin-top:14px;max-width:13em}}
-.hero .lead{{margin:34px 0 40px;color:#e6e6e6;font-size:clamp(17px,1.4vw,20px);max-width:44ch}}
-/* clients */
-.clients{{border-top:1px solid var(--line);padding-block:34px}}
-.clients .wrap{{display:flex;flex-wrap:wrap;align-items:center;gap:18px 44px}}
-.clients small{{font:600 11px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--mute);margin-inline-end:12px}}
-.clients span{{font:400 19px/1 var(--serif);color:#cfcfcf}}
-/* services */
-.svcs{{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:60px}}
-.svc{{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);background:var(--bg)}}
-.svc:nth-child(even) .media{{order:2}}
-.svc .media{{aspect-ratio:16/10;background:var(--card);overflow:hidden}}
-.svc .media video{{width:100%;height:100%;object-fit:cover}}
-.svc .body{{padding:clamp(28px,4vw,56px);display:flex;flex-direction:column;gap:18px;justify-content:center}}
-.svc h3{{font-size:clamp(28px,2.8vw,40px);line-height:1.1}}
-.svc ul{{list-style:none;margin:6px 0 10px;padding:0;display:grid;gap:10px;color:#d4d4d4;font-size:15px}}
-.svc li{{padding-inline-start:20px;position:relative}}
-.svc li::before{{content:"";position:absolute;inset-inline-start:0;top:.72em;width:8px;height:1px;background:var(--accent)}}
-/* work */
-.work{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:56px}}
-.work figure{{margin:0}}
-.work video{{width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--card)}}
-.work figcaption{{display:flex;justify-content:space-between;gap:10px;margin-top:12px;font-size:13px;color:var(--mute)}}
-.work figcaption span:first-child{{color:var(--ink)}}
-/* master model */
-.one{{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,6vw,96px);align-items:start}}
-.flow{{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}}
-.flow li{{display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;padding:22px 0;border-bottom:1px solid var(--line)}}
-.flow b{{font:400 22px/1.2 var(--serif)}}
-.flow p{{grid-column:2;color:var(--mute);font-size:15px;margin-top:4px}}
-/* packages */
-.packs{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:56px}}
-.pack{{background:var(--bg);padding:36px 30px;display:flex;flex-direction:column;gap:18px}}
-.pack.hi{{background:var(--card)}}
-.pack h3{{font-size:28px}}
-.price{{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}}
-.price b{{display:block;font:400 44px/1.1 var(--serif);letter-spacing:0;text-transform:none;color:var(--ink);margin-top:6px}}
-.pack ul{{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:15px;color:#d4d4d4}}
-.pack li{{padding-inline-start:20px;position:relative}}
-.pack li::before{{content:"";position:absolute;inset-inline-start:0;top:.72em;width:8px;height:1px;background:var(--accent)}}
-.note{{margin-top:22px;font-size:14px;color:var(--mute)}}
-/* process */
-.steps{{list-style:none;margin:56px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}}
-.steps li{{border-top:1px solid var(--ink);padding-top:22px}}
-.steps h3{{font-size:26px;margin:16px 0 10px}}
-.steps p{{font-size:15px;color:var(--mute)}}
-/* start */
-.start{{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,6vw,96px)}}
-.qs{{list-style:none;margin:0;padding:0;counter-reset:q;border-top:1px solid var(--line)}}
-.qs li{{counter-increment:q;display:grid;grid-template-columns:56px minmax(0,1fr);padding:22px 0;border-bottom:1px solid var(--line);font:400 21px/1.35 var(--serif)}}
-.qs li::before{{content:counter(q,decimal-leading-zero);font:500 13px/2 var(--sans);letter-spacing:.12em;color:var(--accent)}}
-.ctas{{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}}
-/* studio */
-.studio{{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,6vw,96px);align-items:center}}
-.portrait{{aspect-ratio:4/5;overflow:hidden;background:var(--card)}}
-.portrait img{{width:100%;height:100%;object-fit:cover;filter:grayscale(.35)}}
-.studio p+p{{margin-top:16px}}
-.studio h2{{margin-bottom:24px}}
-.facts{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:40px;border-top:1px solid var(--line);padding-top:26px}}
-.facts b{{display:block;font:400 clamp(30px,3vw,44px)/1 var(--serif);white-space:nowrap}}
-.facts span{{font-size:13px;color:var(--mute)}}
-.contact{{display:grid;gap:0;margin-top:44px;max-width:760px}}
-.contact a{{display:flex;justify-content:space-between;gap:16px;padding:22px 0;border-top:1px solid var(--line);text-decoration:none;font-size:clamp(17px,1.8vw,22px)}}
-.contact a:last-child{{border-bottom:1px solid var(--line)}}
-.contact small{{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}}
-.contact a:hover{{color:var(--accent)}}
-.contact .v{{direction:ltr;unicode-bidi:isolate}}
-footer{{border-top:1px solid var(--line);padding:40px 0 48px;font-size:13px;color:var(--mute)}}
-footer .wrap{{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}}
-footer a{{text-decoration:none}} footer a:hover{{color:var(--ink)}}
-@media (max-width:980px){{.links{{display:none}}.svc,.one,.start,.studio{{grid-template-columns:minmax(0,1fr)}}.svc:nth-child(even) .media{{order:0}}.work{{grid-template-columns:repeat(2,minmax(0,1fr))}}.packs{{grid-template-columns:minmax(0,1fr)}}.steps{{grid-template-columns:repeat(2,minmax(0,1fr))}}.portrait{{max-width:420px}}}}
-@media (max-width:600px){{.nav{{gap:14px;height:68px}}.nav .box{{display:none}}.hero{{min-height:94svh;align-items:flex-end}}.hero video{{object-position:25% 50%}}.hero::before,html[lang=ar] .hero::before{{background:linear-gradient(0deg,#000 10%,rgba(0,0,0,.8) 50%,rgba(0,0,0,.3) 100%)}}.work{{grid-template-columns:minmax(0,1fr)}}.steps{{grid-template-columns:minmax(0,1fr)}}.facts{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
-@media (prefers-reduced-motion:reduce){{html{{scroll-behavior:auto}}}}
-</style>
-</head>
-<body>
-
-<header>
-  <div class="wrap nav">
-    <a class="brand" href="{LANGS[L]}">Bilal Rahat</a>
-    <nav class="links" aria-label="Main">
-      <a href="#work">{t('Work', 'İşler', 'الأعمال')}</a>
-      <a href="#services">{t('Services', 'Hizmetler', 'الخدمات')}</a>
-      <a href="#process">{t('Process', 'Süreç', 'طريقة العمل')}</a>
-      <a href="#studio">{t('Studio', 'Stüdyo', 'الاستوديو')}</a>
-    </nav>
-    <nav class="langs" aria-label="Language">{langnav}</nav>
-    <a class="box" href="#start">{t('Tell me about your project', 'Projenizi anlatın', 'حدّثني عن مشروعك')} {ext}</a>
-  </div>
-</header>
-
-<main>
+    return f'''
 <section class="hero">
-  {vid('amber', t('Amber perfume bottle rendered in Blender', "Blender'da render edilmiş amber parfüm şişesi", 'زجاجة عطر عنبرية مصنوعة في Blender'), eager=True)}
+  {media('amber', t('Amber perfume bottle rendered in Blender', "Blender'da render edilmiş amber parfüm şişesi", 'زجاجة عطر عنبرية مصنوعة في Blender'), eager=True)}
   <div class="wrap">
-    <p class="eyebrow">{t('What I make', 'Ne üretiyorum?', 'ماذا أصنع')}</p>
+    <p class="crumbs"><a href="{U('home')}">Bilal Rahat</a> / 3D CGI</p>
+    <p class="eyebrow">{t('3D product CGI', '3D ürün CGI', 'CGI ثلاثي الأبعاد للمنتجات')}</p>
     <h1>{t('Product films', 'Ürün filmleri', 'أفلام المنتجات')}<span class="sub">{t('for brands that want to look expensive.', 'pahalı görünmek isteyen markalar için.', 'لعلامات تريد أن تبدو فاخرة.')}</span></h1>
-    <p class="lead">{t('I direct product films, loops and campaign visuals with live action, photoreal CGI and AI, for brands across Europe, the US and the Gulf.', "Avrupa, ABD ve Körfez'deki markalar için canlı çekim, foto-gerçekçi CGI ve yapay zekâ ile ürün filmleri, döngü videolar ve kampanya görselleri yönetiyorum.", 'أخرج أفلام منتجات ولقطات متكررة وصور حملات بالتصوير الحي وCGI الواقعي والذكاء الاصطناعي، لعلامات في أوروبا والولايات المتحدة والخليج.')}</p>
-    <a class="tlink" href="#start">{t('Tell me about your project', 'Projenizi anlatın', 'حدّثني عن مشروعك')} {arrow}</a>
+    <p class="lead">{t('Photoreal product films, loops and launch visuals made in Blender, for brands across Europe, the US and the Gulf. No shoot, no studio, no shipping the product.', "Avrupa, ABD ve Körfez'deki markalar için Blender'da foto-gerçekçi ürün filmleri, döngüler ve lansman görselleri. Çekim yok, stüdyo yok, ürün kargolamak yok.", 'أفلام ولقطات وصور إطلاق واقعية للمنتجات في Blender، لعلامات في أوروبا والولايات المتحدة والخليج. بلا تصوير ولا استوديو ولا شحن للمنتج.')}</p>
+    <a class="tlink" href="#start">{t('Tell me about your product', 'Ürününüzü anlatın', 'حدّثني عن منتجك')} {arrow}</a>
   </div>
-</section>
-
-<section class="clients" aria-label="{t('Productions for', 'Çalıştığımız markalar', 'إنتاجات لصالح')}">
-  <div class="wrap"><small>{t('Productions for', 'Çalıştığımız markalar', 'إنتاجات لصالح')}</small>{''.join(f'<span>{c}</span>' for c in clients)}</div>
 </section>
 
 <section class="band" id="services">
   <div class="wrap">
     <p class="eyebrow">{t('Services', 'Hizmetler', 'الخدمات')}</p>
-    <h2>{t('One director.', 'Tek yönetmen.', 'مخرج واحد.')}<span class="sub">{t('From the first frame to the final grade.', 'İlk kareden son renk düzenlemesine kadar.', 'من اللقطة الأولى حتى التصحيح اللوني الأخير.')}</span></h2>
+    <h2>{t('Built in 3D.', '3D olarak üretilir.', 'مصنوع بالأبعاد الثلاثية.')}<span class="sub">{t('From the first frame to the final grade.', 'İlk kareden son renk düzenlemesine kadar.', 'من اللقطة الأولى حتى التصحيح اللوني الأخير.')}</span></h2>
     <div class="svcs">{svc_html}
     </div>
   </div>
@@ -355,8 +600,8 @@ footer a{{text-decoration:none}} footer a:hover{{color:var(--ink)}}
       <p class="eyebrow">{t('Your next project', 'Sıradaki projeniz', 'مشروعك القادم')}</p>
       <h2>{t('Find the right starting point.', 'Doğru başlangıç noktasını bulun.', 'اعثر على نقطة البداية الصحيحة.')}</h2>
       <div class="ctas">
-        <a class="box solid" href="mailto:studio@bilalrahat.com.tr">{t('Email the brief', 'Brief gönderin', 'أرسل الملخص')} {ext}</a>
-        <a class="box" href="https://wa.me/905306264363">WhatsApp {ext}</a>
+        <a class="box solid" href="mailto:{EMAIL}">{t('Email the brief', 'Brief gönderin', 'أرسل الملخص')} {ext}</a>
+        <a class="box" href="{WA}">WhatsApp {ext}</a>
       </div>
     </div>
     <div>
@@ -368,36 +613,55 @@ footer a{{text-decoration:none}} footer a:hover{{color:var(--ink)}}
       </ol>
     </div>
   </div>
-</section>
+</section>'''
 
-<section class="band" id="studio">
-  <div class="wrap studio">
-    <div class="portrait"><img src="{A}assets/bilal-rahat.jpg" alt="Bilal Rahat" loading="lazy"></div>
-    <div>
-      <p class="eyebrow">{t('Studio', 'Stüdyo', 'الاستوديو')}</p>
-      <h2>{t('A director, backed by a production company.', 'Arkasında bir prodüksiyon şirketi olan yönetmen.', 'مخرج تدعمه شركة إنتاج.')}</h2>
-      <p class="lead">{t("I'm Bilal Rahat. I founded Mozaik Film in 2009 and have spent the years since filming and producing for brands, from corporate campaigns to productions for National Geographic. Today I direct product films with live action, Blender CGI and AI, with the Mozaik team behind every project.", "Ben Bilal Rahat. 2009'da Mozaik Film'i kurdum; o günden bu yana kurumsal kampanyalardan National Geographic çekimlerine kadar markalar için film çekip prodüksiyon yapıyorum. Bugün canlı çekim, Blender CGI ve yapay zekâ ile ürün filmleri yönetiyorum; her projenin arkasında Mozaik ekibi var.", 'أنا بلال راحت. أسست موزاييك فيلم عام 2009، ومنذ ذلك الحين أصوّر وأنتج للعلامات التجارية، من الحملات المؤسسية إلى إنتاجات لصالح ناشيونال جيوغرافيك. اليوم أخرج أفلام المنتجات بالتصوير الحي وCGI في Blender والذكاء الاصطناعي، مع فريق موزاييك خلف كل مشروع.')}</p>
-      <p class="lead">{t('Based in Istanbul on GMT+3, the same working day as Europe and the Gulf. English, Turkish and Arabic.', 'İstanbul merkezli, GMT+3; Avrupa ve Körfez ile aynı iş günü. İngilizce, Türkçe ve Arapça.', 'مقري إسطنبول بتوقيت GMT+3، يوم العمل نفسه مع أوروبا والخليج. الإنجليزية والتركية والعربية.')}</p>
-      <div class="facts">
-        <div><b>2009</b><span>{t('Mozaik Film founded', "Mozaik Film'in kuruluşu", 'تأسيس موزاييك فيلم')}</span></div>
-        <div><b>500+</b><span>{t('Brand films', 'Marka filmi', 'فيلم لعلامات تجارية')}</span></div>
-        <div><b>10+</b><span>{t('Production team', 'Prodüksiyon ekibi', 'فريق الإنتاج')}</span></div>
-        <div><b>GMT+3</b><span>{t('Istanbul', 'İstanbul', 'إسطنبول')}</span></div>
-      </div>
-      <div class="contact" id="contact">
-        <a href="mailto:studio@bilalrahat.com.tr"><small>{t('Email', 'E-posta', 'البريد')}</small><span class="v">studio@bilalrahat.com.tr</span></a>
-        <a href="https://wa.me/905306264363"><small>WhatsApp</small><span class="v">+90 530 626 43 63</span></a>
-        <a href="https://www.linkedin.com/in/bilalrahat"><small>LinkedIn</small><span class="v">/in/bilalrahat</span></a>
-        <a href="https://www.instagram.com/bilalrahat_art/"><small>Instagram</small><span class="v">@bilalrahat_art</span></a>
-      </div>
-    </div>
+
+# ---------------------------------------------------------------------- page shell
+def shell(L, page, title, desc, body, NAV, t, ext):
+    rtl = L == 'ar'
+    hreflang = ''.join(f'<link rel="alternate" hreflang="{l}" href="{BASE}{url(l, page)}">\n' for l in LANGS)
+    langnav = ''.join(f'<a href="{url(l, page)}" hreflang="{l}"{" class=on aria-current=page" if l == L else ""}>{l.upper()}</a>' for l in LANGS)
+    links = ''.join(f'<a href="{url(L, p)}"{" class=on aria-current=page" if p == page else ""}>{NAV[p]}</a>' for p in PAGES if p != 'home')
+    return f'''<!DOCTYPE html>
+<html lang="{L}" dir="{'rtl' if rtl else 'ltr'}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<meta name="description" content="{desc}">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:image" content="{BASE}/assets/og.jpg">
+<meta property="og:url" content="{BASE}{url(L, page)}">
+<meta name="twitter:card" content="summary_large_image">
+{hreflang}<link rel="alternate" hreflang="x-default" href="{BASE}{url('en', page)}">
+<link rel="canonical" href="{BASE}{url(L, page)}">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' text-anchor='middle' fill='%23fff'%3EBR%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500;600&display=swap{'&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500;600' if rtl else ''}" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="{url(L, 'home')}">Bilal Rahat</a>
+    <nav class="links" aria-label="Main">{links}</nav>
+    <nav class="langs" aria-label="Language">{langnav}</nav>
+    <a class="box" href="#start">{t('Tell me about your project', 'Projenizi anlatın', 'حدّثني عن مشروعك')} {ext}</a>
+    <details class="menu"><summary>{t('Menu', 'Menü', 'القائمة')}</summary><nav aria-label="Mobile">{links}<div class="langs-m">{langnav}</div></nav></details>
   </div>
-</section>
+</header>
+
+<main>{body}
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Bilal Rahat · {t('Film, CGI & AI Director · Founder of Mozaik Film', 'Film, CGI ve Yapay Zekâ Yönetmeni · Mozaik Film Kurucusu', 'مخرج أفلام وCGI وذكاء اصطناعي · مؤسس موزاييك فيلم')}</span>
+    <span>© 2026 Bilal Rahat · {t('Director · Founder of Mozaik Film', 'Yönetmen · Mozaik Film Kurucusu', 'مخرج · مؤسس موزاييك فيلم')}</span>
+    <span><a href="mailto:{EMAIL}">{EMAIL}</a> · <a href="https://www.instagram.com/bilalrahatstudio/">@bilalrahatstudio</a> · <a href="https://www.instagram.com/mozaikfilm/">@mozaikfilm</a> · <a href="https://www.linkedin.com/in/bilalrahat">LinkedIn</a></span>
     <span>{langnav.replace('class=on aria-current=page', 'aria-current=page')}</span>
   </div>
 </footer>
@@ -411,14 +675,28 @@ footer a{{text-decoration:none}} footer a:hover{{color:var(--ink)}}
     else v.pause();
   }}), {{ rootMargin: '200px' }});
   vids.forEach(v => io.observe(v));
+  const chips = document.querySelectorAll('.chips button');
+  chips.forEach(b => b.addEventListener('click', () => {{
+    chips.forEach(c => c.setAttribute('aria-pressed', c === b));
+    const f = b.dataset.f;
+    document.querySelectorAll('#projs .proj').forEach(p => p.hidden = f !== 'all' && !p.dataset.d.split(' ').includes(f));
+  }}));
+  document.querySelectorAll('.menu nav a').forEach(a => a.addEventListener('click', () => a.closest('details').open = false));
 }}
 </script>
 </body>
 </html>
 '''
 
-for L, p in LANGS.items():
-    out = 'index.html' if L == 'en' else f'{L}/index.html'
-    os.makedirs(os.path.dirname(out) or '.', exist_ok=True)
-    open(out, 'w', encoding='utf-8').write(page(L))
-print('ok')
+
+if __name__ == '__main__':
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    os.makedirs('assets/work', exist_ok=True)
+    n = 0
+    for L in LANGS:
+        for p in PAGES:
+            out = url(L, p).lstrip('/') + 'index.html'
+            os.makedirs(os.path.dirname(out) or '.', exist_ok=True)
+            open(out, 'w', encoding='utf-8').write(build(L, p))
+            n += 1
+    print(f'ok: {n} pages')
