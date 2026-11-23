@@ -55,6 +55,11 @@ def page(L):
          t('Ads built for Meta and Google, planned by someone who runs the campaigns.', 'Meta ve Google için kurgulanmış reklamlar; kampanyaları yöneten biri tarafından planlanır.', 'إعلانات مصممة لـMeta وGoogle، يخطط لها شخص يدير الحملات بنفسه.'),
          [t('Meta & Google Ads creative', 'Meta ve Google Ads kreatifleri', 'محتوى إعلانات Meta وGoogle'), t('Hooks and first-second motion', 'İlk saniyeyi yakalayan açılışlar', 'افتتاحيات تشد الانتباه من الثانية الأولى'),
           t('A/B variations', 'A/B varyasyonları', 'نسخ A/B'), t('Reporting on what works', 'Neyin çalıştığına dair raporlama', 'تقارير عما ينجح')]),
+        ('06', 'drone',
+         t('Technical CGI', 'Teknik CGI', 'CGI تقني'),
+         t('Exploded views and assembly films that explain how a product is built.', 'Ürünün nasıl yapıldığını anlatan patlatılmış görünümler ve montaj filmleri.', 'مشاهد مفككة وأفلام تجميع تشرح كيف صُنع المنتج.'),
+         [t('Exploded views', 'Patlatılmış görünümler', 'مشاهد مفككة'), t('Assembly animation', 'Montaj animasyonu', 'تحريك التجميع'),
+          t('Cutaways and cross-sections', 'Kesit görünümler', 'مقاطع عرضية'), t('Built from your CAD files', 'CAD dosyalarınızdan modelleme', 'مبني من ملفات CAD الخاصة بك')]),
     ]
     svc_html = ''
     for n, v, h, line, items in services:
@@ -79,6 +84,7 @@ def page(L):
             ('glass', t('Tumbler', 'Kristal bardak', 'كأس'), t('Glassware', 'Cam ürünleri', 'الزجاجيات')),
             ('thermos', t('Thermos', 'Termos', 'ترمس'), t('Drinkware', 'Termos ve matara', 'أدوات الشرب')),
             ('vase', t('Ceramics', 'Seramik', 'خزفيات'), t('Home & decor', 'Ev ve dekorasyon', 'المنزل والديكور')),
+            ('drone', t('FPV drone, exploded', 'FPV drone, patlatılmış', 'طائرة FPV مفككة'), t('Technical CGI', 'Teknik CGI', 'CGI تقني')),
             ('basin', t('Stone basin', 'Taş lavabo', 'حوض حجري'), t('Bathroom', 'Banyo', 'الحمّامات'))]
     work_html = ''.join(f'''
       <figure>{vid(v, name)}<figcaption><span>{i+1:02d} · {name}</span><span>{cat}</span></figcaption></figure>'''
