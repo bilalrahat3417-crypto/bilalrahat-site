@@ -142,7 +142,19 @@ def build(L, page):
     def vid_card(v, big=False):
         client = L3(v['client'])
         kind, sector = t(*refs.KIND[v['kind']]), t(*refs.SECTOR[v['sector']])
-        thumb = v.get('thumb') or f"https://i.ytimg.com/vi/{v['v']}/hqdefault.jpg"
+        thumb = v.get('thumb')
+        if not thumb:
+            for d in ('covers', 'thumbs'):
+                if os.path.exists(f"assets/{d}/{v['v']}.jpg"):
+                    thumb = f"/assets/{d}/{v['v']}.jpg"
+                    break
+            else:
+                thumb = f"https://i.ytimg.com/vi/{v['v']}/hqdefault.jpg"
+        year = refs.YEAR.get(v['v'])
+        badge = f'<span class="yr">{t("Archive", "Arşiv", "أرشيف")} · {year}</span>' if year and year < 2024 else ''
+        if year and year >= 2024:
+            badge = f'<span class="yr">{year}</span>'
+
         vers = ''
         if v.get('versions'):
             vers = '<div class="vers">' + ''.join(
@@ -150,7 +162,7 @@ def build(L, page):
         note = f"<p>{t(*v['note'])}</p>" if big and v.get('note') else ''
         return f'''
       <article class="proj{' big' if big else ''}" data-d="{' '.join(v['discs'])}">
-        <button type="button" class="m play" data-yt="{v['v']}"{" data-short=1" if v.get("short") else ""} aria-label="{t('Play', 'Oynat', 'تشغيل')}: {client}"><img src="{thumb}" alt="{client} · {kind}" loading="lazy"><span class="pi" aria-hidden="true"></span></button>
+        <button type="button" class="m play" data-yt="{v['v']}"{" data-short=1" if v.get("short") else ""} aria-label="{t('Play', 'Oynat', 'تشغيل')}: {client}"><img src="{thumb}" alt="{client} · {kind}" loading="lazy">{badge}<span class="pi" aria-hidden="true"></span></button>
         <div class="meta"><span>{kind}</span><span>{sector}</span></div>
         <h3>{client}</h3>{note}{vers}
       </article>'''
@@ -295,8 +307,10 @@ def build(L, page):
            t('Six ways to work together.', 'Birlikte çalışmanın altı yolu.', 'ست طرق للعمل معًا.'),
            t('Each with its own page.', 'Her birinin kendi sayfası var.', 'لكلٍّ منها صفحته.'),
            f'<div class="discs">{cards}\n    </div>') + \
-        band('work', t('Recent references', 'Son referanslar', 'أحدث المراجع'),
-             t('Work across every discipline.', 'Her disiplinden işler.', 'أعمال في كل التخصصات.'), '',
+        band('work', t('From the archive', 'Arşivden seçmeler', 'من الأرشيف'),
+             t('Fifteen years of films.', '15 yılın filmlerinden.', 'خمسة عشر عامًا من الأفلام.'),
+             t('Each shot with the technology of its year.', 'Her biri çekildiği yılın teknolojisiyle.', 'كلٌّ منها بتقنية عامه.'),
+             f'<p class="archnote">{t("These are earlier productions, published between 2018 and 2022. Today the same work is shot in 4K and finished with FPV drone, CGI and modern colour grading.", "Bunlar 2018–2022 arasında yayınlanmış önceki prodüksiyonlarımız. Bugün aynı işleri 4K çekim, FPV drone, CGI ve modern renk düzenlemesiyle üretiyoruz.", "هذه إنتاجات سابقة نُشرت بين 2018 و2022. اليوم ننتج الأعمال نفسها بدقة 4K مع درون FPV وCGI وتصحيح ألوان حديث.")}</p>'
              f'<div class="projs">{"".join(vid_card(v, big=True) for v in home_pick)}\n    </div>'
              f'<p style="margin-top:40px"><a class="tlink" href="{U("references")}">{t("All references", "Tüm referanslar", "كل المراجع")} {arrow}</a></p>') + \
         studio_band(t, ext) + cta_band()
