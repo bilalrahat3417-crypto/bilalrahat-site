@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bilal Rahat · CGI & 3D Director</title>
+<meta name="description" content="Bilal Rahat is a CGI & 3D director and founder of Mozaik Film. Photoreal product films, loops and stills for brands in Europe, the US and the Gulf.">
+<meta property="og:title" content="Bilal Rahat · CGI & 3D Director">
+<meta property="og:description" content="Photoreal CGI product films for brands in Europe, the US and the Gulf.">
+<meta property="og:image" content="https://bilalrahat.com.tr/assets/og.jpg">
+<meta property="og:url" content="https://bilalrahat.com.tr/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0907">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0907'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' text-anchor='middle' fill='%23e3a352'%3EBR%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE  director-led product CGI studio, calm and premium (XO3D structure)
+   IDEA   a dark grading suite: black room, one warm light on the product
+   PICTURE full-bleed Blender render behind the headline, portrait in the studio band
+   COLOUR near-black #0b0907, ivory #f1e8dc, amber #e3a352 from the render
+   TYPE   Newsreader display + Inter text; Noto Naskh + IBM Plex Sans Arabic
+   LAYOUT headline over the render; work, packages, process, studio, contact bands */
+:root{--bg:#0b0907;--bg2:#14100c;--line:#2a221a;--ink:#f1e8dc;--mute:#a89c8d;--amber:#e3a352;--serif:"Newsreader",Georgia,serif;--sans:"Inter",system-ui,sans-serif;color-scheme:dark}
+html[lang=ar]{--serif:"Noto Naskh Arabic","Newsreader",serif;--sans:"IBM Plex Sans Arabic","Inter",sans-serif}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+html[lang=en] .ar,html[lang=ar] .en{display:none!important}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:max(5vw,18px)}
+.band{padding-block:clamp(64px,9vw,128px);border-top:1px solid var(--line)}
+.label{font:500 13px/1.3 var(--sans);color:var(--amber);margin:0 0 18px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.015em;margin:0;text-wrap:balance}
+html[lang=ar] h1,html[lang=ar] h2,html[lang=ar] h3{letter-spacing:0;font-weight:500}
+h2{font-size:clamp(32px,4.4vw,56px);line-height:1.08}
+p{margin:0}
+.lead{color:var(--mute);font-size:17px;max-width:62ch}
+/* nav */
+header{position:fixed;inset:0 0 auto;z-index:20;transition:background .3s}
+header.solid{background:rgba(11,9,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:28px;height:68px}
+.brand{font:500 19px/1 var(--serif);text-decoration:none;margin-inline-end:auto;white-space:nowrap}
+.links{display:flex;gap:24px;font-size:14px}
+.links a{text-decoration:none;color:var(--mute)}
+.links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 20px;border:1px solid rgba(241,232,220,.35);border-radius:999px;font:500 14px/1 var(--sans);text-decoration:none;white-space:nowrap;background:none;color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--ink)}
+.btn.solid{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.solid:hover{background:var(--amber);border-color:var(--amber)}
+.lang{min-height:36px;padding:0 14px;font-size:13px}
+/* hero */
+.hero{position:relative;min-height:min(100svh,940px);display:flex;align-items:flex-end;isolation:isolate}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:34% 50%;transform:scaleX(-1);z-index:-2}
+html[lang=ar] .hero img{transform:none}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(11,9,7,.94) 0%,rgba(11,9,7,.72) 38%,rgba(11,9,7,.05) 68%),linear-gradient(0deg,var(--bg) 0%,rgba(11,9,7,0) 34%)}
+html[lang=ar] .hero::before{background:linear-gradient(270deg,rgba(11,9,7,.94) 0%,rgba(11,9,7,.72) 38%,rgba(11,9,7,.05) 68%),linear-gradient(0deg,var(--bg) 0%,rgba(11,9,7,0) 34%)}
+.hero .wrap{width:100%;padding-block:140px 72px}
+.hero h1{font-size:clamp(42px,6.6vw,92px);line-height:1.02;max-width:11.5em}
+.hero .lead{margin-top:26px;color:#d6cabb}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.credit{margin-top:40px;font-size:13px;color:var(--mute)}
+/* work */
+.work{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:end;margin-top:48px}
+.work figure{margin:0}
+.work .shot{aspect-ratio:16/10;overflow:hidden;border-radius:6px;background:var(--bg2)}
+.work .shot img{width:100%;height:100%;object-fit:cover}
+.work figcaption{display:flex;justify-content:space-between;gap:16px;margin-top:14px;font-size:14px;color:var(--mute)}
+.work h3{font-size:30px;margin-bottom:14px}
+.work .meta{margin-top:24px;display:grid;gap:10px;font-size:14px}
+.work .meta div{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--line);padding-top:10px}
+.work .meta span:last-child{color:var(--ink);text-align:end}
+/* packages */
+.packs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:48px}
+.pack{background:var(--bg);padding:32px 28px;display:flex;flex-direction:column;gap:18px}
+.pack h3{font-size:28px}
+.price{font:400 15px/1.3 var(--sans);color:var(--mute)}
+.price b{display:block;font:400 40px/1.1 var(--serif);color:var(--ink);margin-top:4px}
+.pack ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:15px;color:#d6cabb}
+.pack li{padding-inline-start:18px;position:relative}
+.pack li::before{content:"";position:absolute;inset-inline-start:0;top:.7em;width:7px;height:1px;background:var(--amber)}
+.pack.hi{background:var(--bg2)}
+.note{margin-top:22px;font-size:14px;color:var(--mute)}
+/* one model */
+.one{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+.flow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.flow div{border:1px solid var(--line);border-radius:6px;padding:18px 18px 16px;background:var(--bg2)}
+.flow b{display:block;font:400 30px/1 var(--serif);color:var(--amber);margin-bottom:8px}
+.flow span{font-size:14px;color:var(--mute)}
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:48px;counter-reset:s}
+.step{border-top:1px solid var(--ink);padding-top:18px}
+.step h3{font-size:24px;margin-bottom:10px}
+.step h3::before{counter-increment:s;content:counter(s);font:500 13px/1 var(--sans);color:var(--amber);display:block;margin-bottom:14px}
+.step p{font-size:15px;color:var(--mute)}
+/* studio */
+.studio{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,5vw,80px);align-items:center}
+.portrait{border-radius:6px;overflow:hidden;aspect-ratio:4/5;background:var(--bg2)}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.studio h2{margin-bottom:22px}
+.studio p+p{margin-top:16px}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:36px;border-top:1px solid var(--line);padding-top:24px}
+.facts b{display:block;font:400 clamp(28px,3vw,40px)/1 var(--serif);white-space:nowrap}
+.facts span{font-size:13px;color:var(--mute)}
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:end}
+.contact h2{font-size:clamp(40px,6vw,84px)}
+.lines{display:grid;gap:0}
+.lines a{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;border-top:1px solid var(--line);text-decoration:none;font-size:clamp(17px,1.8vw,21px)}
+.lines a:last-child{border-bottom:1px solid var(--line)}
+.lines a small{font-size:13px;color:var(--mute)}
+.lines a:hover{color:var(--amber)}
+.lines .v{direction:ltr;unicode-bidi:isolate}
+footer{padding:36px 0 44px;font-size:13px;color:var(--mute)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+/* responsive */
+@media (max-width:900px){.links{display:none}.work,.one,.studio,.contact{grid-template-columns:minmax(0,1fr)}.packs{grid-template-columns:minmax(0,1fr)}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.studio .portrait{max-width:440px}}
+@media (max-width:600px){.hero{min-height:92svh}.hero img{object-position:20% 50%}.hero::before{background:linear-gradient(0deg,var(--bg) 8%,rgba(11,9,7,.82) 48%,rgba(11,9,7,.25) 100%)}html[lang=ar] .hero::before{background:linear-gradient(0deg,var(--bg) 8%,rgba(11,9,7,.82) 48%,rgba(11,9,7,.25) 100%)}.nav .btn.solid{display:none}.steps{grid-template-columns:minmax(0,1fr)}.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}header{transition:none}}
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top">Bilal Rahat</a>
+    <nav class="links" aria-label="Main">
+      <a href="#work"><span class="en">Work</span><span class="ar">الأعمال</span></a>
+      <a href="#services"><span class="en">Services</span><span class="ar">الخدمات</span></a>
+      <a href="#process"><span class="en">Process</span><span class="ar">طريقة العمل</span></a>
+      <a href="#studio"><span class="en">Studio</span><span class="ar">الاستوديو</span></a>
+    </nav>
+    <button class="btn lang" id="lang" type="button" aria-label="Switch language"><span class="en">العربية</span><span class="ar">English</span></button>
+    <a class="btn solid" href="#contact"><span class="en">Start a project</span><span class="ar">ابدأ مشروعك</span></a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <img src="assets/study-01-amber.jpg" srcset="assets/study-01-amber-800.jpg 800w, assets/study-01-amber.jpg 1600w" sizes="100vw" alt="Amber perfume bottle with a gold cap on a stone plinth, rendered in Blender">
+  <div class="wrap">
+    <h1><span class="en">Product CGI, directed frame by frame.</span><span class="ar">أفلام منتجات CGI، بإخراج دقيق لكل لقطة.</span></h1>
+    <p class="lead"><span class="en">Cinematic product films, loops and campaign stills for perfume, beauty, tech and automotive brands across Europe, the US and the Gulf.</span><span class="ar">أفلام منتجات سينمائية ولقطات متكررة وصور حملات لعلامات العطور والتجميل والتقنية والسيارات في أوروبا وأمريكا والخليج.</span></p>
+    <div class="cta">
+      <a class="btn solid" href="#contact"><span class="en">Tell me about your product</span><span class="ar">حدّثني عن منتجك</span></a>
+      <a class="btn" href="#services"><span class="en">See packages</span><span class="ar">اطّلع على الباقات</span></a>
+    </div>
+    <p class="credit"><span class="en">Bilal Rahat · CGI & 3D Director · Founder of Mozaik Film</span><span class="ar">بلال راحت · مخرج CGI وثلاثي الأبعاد · مؤسس موزاييك فيلم</span></p>
+  </div>
+</section>
+
+<section class="band" id="work">
+  <div class="wrap">
+    <p class="label"><span class="en">Selected work</span><span class="ar">أعمال مختارة</span></p>
+    <h2><span class="en">Glass, liquid and metal under one warm light.</span><span class="ar">زجاج وسائل ومعدن تحت ضوء دافئ واحد.</span></h2>
+    <div class="work">
+      <figure>
+        <div class="shot"><img src="assets/study-01-amber.jpg" alt="Amber perfume CGI study" loading="lazy"></div>
+        <figcaption><span><span class="en">Study 01 · Amber</span><span class="ar">دراسة 01 · عنبر</span></span><span><span class="en">Studio study</span><span class="ar">دراسة استوديو</span></span></figcaption>
+      </figure>
+      <div>
+        <h3><span class="en">Amber, a perfume study</span><span class="ar">عنبر، دراسة لعطر</span></h3>
+        <p class="lead"><span class="en">A self-initiated lighting study: thick refractive glass, an amber liquid and a brushed gold cap, lit like a fragrance campaign.</span><span class="ar">دراسة إضاءة ذاتية: زجاج سميك عاكس وسائل عنبري وغطاء ذهبي مصقول، بإضاءة تشبه حملات العطور.</span></p>
+        <div class="meta">
+          <div><span class="en">Software</span><span class="ar">البرنامج</span><span>Blender · Cycles</span></div>
+          <div><span class="en">Category</span><span class="ar">الفئة</span><span><span class="en">Fragrance</span><span class="ar">العطور</span></span></div>
+          <div><span class="en">More studies</span><span class="ar">المزيد من الدراسات</span><span><a href="https://www.instagram.com/bilalrahat_art/">@bilalrahat_art</a></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="services">
+  <div class="wrap">
+    <p class="label"><span class="en">Packages</span><span class="ar">الباقات</span></p>
+    <h2><span class="en">Clear scope. Fixed starting prices.</span><span class="ar">نطاق واضح. أسعار بداية ثابتة.</span></h2>
+    <div class="packs">
+      <article class="pack">
+        <h3><span class="en">Product Loop</span><span class="ar">لقطة منتج متكررة</span></h3>
+        <p class="price"><span class="en">from</span><span class="ar">ابتداءً من</span><b>$600</b></p>
+        <ul>
+          <li><span class="en">6–10 second seamless loop</span><span class="ar">لقطة متكررة من 6 إلى 10 ثوانٍ</span></li>
+          <li><span class="en">One product, one scene</span><span class="ar">منتج واحد ومشهد واحد</span></li>
+          <li><span class="en">9:16, 1:1 and 16:9 delivery</span><span class="ar">تسليم بمقاسات 9:16 و1:1 و16:9</span></li>
+          <li><span class="en">Two rounds of revisions</span><span class="ar">جولتان من التعديلات</span></li>
+          <li><span class="en">5–7 working days</span><span class="ar">من 5 إلى 7 أيام عمل</span></li>
+        </ul>
+      </article>
+      <article class="pack hi">
+        <h3><span class="en">Hero Product Film</span><span class="ar">فيلم المنتج الرئيسي</span></h3>
+        <p class="price"><span class="en">from</span><span class="ar">ابتداءً من</span><b>$1,200</b></p>
+        <ul>
+          <li><span class="en">15–20 second film</span><span class="ar">فيلم من 15 إلى 20 ثانية</span></li>
+          <li><span class="en">Storyboard and styleframes</span><span class="ar">لوحة قصصية وإطارات تصميم</span></li>
+          <li><span class="en">Sound design</span><span class="ar">تصميم صوتي</span></li>
+          <li><span class="en">All social formats</span><span class="ar">جميع مقاسات منصات التواصل</span></li>
+          <li><span class="en">10–14 working days</span><span class="ar">من 10 إلى 14 يوم عمل</span></li>
+        </ul>
+      </article>
+      <article class="pack">
+        <h3><span class="en">Campaign Pack</span><span class="ar">باقة الحملة</span></h3>
+        <p class="price"><span class="en">from</span><span class="ar">ابتداءً من</span><b>$2,500</b></p>
+        <ul>
+          <li><span class="en">30 second hero film + 3 cut-downs</span><span class="ar">فيلم رئيسي 30 ثانية + 3 نسخ قصيرة</span></li>
+          <li><span class="en">10 high-resolution stills</span><span class="ar">10 صور عالية الدقة</span></li>
+          <li><span class="en">Looping assets for web and ads</span><span class="ar">لقطات متكررة للموقع والإعلانات</span></li>
+          <li><span class="en">FOOH or launch concept</span><span class="ar">فكرة FOOH أو إطلاق</span></li>
+          <li><span class="en">Priority schedule</span><span class="ar">جدولة بأولوية</span></li>
+        </ul>
+      </article>
+    </div>
+    <p class="note"><span class="en">Quoted in USD or EUR. 50% to start, 50% on delivery, by bank transfer (Wise) or Payoneer.</span><span class="ar">الأسعار بالدولار أو اليورو. 50% عند البدء و50% عند التسليم، عبر تحويل بنكي (Wise) أو Payoneer.</span></p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap one">
+    <div>
+      <p class="label"><span class="en">One model, every format</span><span class="ar">نموذج واحد لكل المقاسات</span></p>
+      <h2><span class="en">Build the product once. Use it everywhere.</span><span class="ar">نبني المنتج مرة واحدة، ونستخدمه في كل مكان.</span></h2>
+      <p class="lead" style="margin-top:20px"><span class="en">Your product is modelled once at full detail. From that single asset come the films, loops, stills and cut-downs for every channel, so a new colourway or a new market is days of work, not a new shoot.</span><span class="ar">يُصمَّم منتجك مرة واحدة بكامل التفاصيل. ومن هذا النموذج الواحد تخرج الأفلام واللقطات المتكررة والصور والنسخ القصيرة لكل قناة، فيصبح اللون الجديد أو السوق الجديد عمل أيام، لا تصويراً جديداً.</span></p>
+    </div>
+    <div class="flow">
+      <div><b><span class="en">Films</span><span class="ar">أفلام</span></b><span><span class="en">Hero spots for launch and paid social</span><span class="ar">أفلام رئيسية للإطلاق والإعلانات المدفوعة</span></span></div>
+      <div><b><span class="en">Loops</span><span class="ar">لقطات متكررة</span></b><span><span class="en">Seamless motion for web, e-commerce and stories</span><span class="ar">حركة متواصلة للمواقع والمتاجر والقصص</span></span></div>
+      <div><b><span class="en">Stills</span><span class="ar">صور</span></b><span><span class="en">Packshots and key visuals without a photoshoot</span><span class="ar">صور المنتج والصور الرئيسية دون جلسة تصوير</span></span></div>
+      <div><b><span class="en">Cut-downs</span><span class="ar">نسخ قصيرة</span></b><span><span class="en">6, 10 and 15 second versions for every placement</span><span class="ar">نسخ 6 و10 و15 ثانية لكل منصة</span></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="process">
+  <div class="wrap">
+    <p class="label"><span class="en">Process</span><span class="ar">طريقة العمل</span></p>
+    <h2><span class="en">From your product to finished film in four steps.</span><span class="ar">من منتجك إلى فيلم جاهز في أربع خطوات.</span></h2>
+    <div class="steps">
+      <div class="step"><h3><span class="en">Brief</span><span class="ar">الموجز</span></h3><p><span class="en">Send the product, photos or CAD files, where the film will run and your deadline.</span><span class="ar">أرسل المنتج أو صوره أو ملفات CAD، وأين سيُعرض الفيلم، وموعدك النهائي.</span></p></div>
+      <div class="step"><h3><span class="en">Styleframe</span><span class="ar">الإطار التصميمي</span></h3><p><span class="en">You approve the look, light and mood on still frames before any animation starts.</span><span class="ar">توافق على الشكل والإضاءة والأجواء من خلال إطارات ثابتة قبل بدء التحريك.</span></p></div>
+      <div class="step"><h3><span class="en">Animation</span><span class="ar">التحريك</span></h3><p><span class="en">Camera, motion and sound, shared as previews so you can steer at every stage.</span><span class="ar">الكاميرا والحركة والصوت، مع معاينات في كل مرحلة لتوجيه العمل.</span></p></div>
+      <div class="step"><h3><span class="en">Delivery</span><span class="ar">التسليم</span></h3><p><span class="en">Final masters in every size the campaign needs, plus the stills.</span><span class="ar">النسخ النهائية بكل المقاسات التي تحتاجها الحملة، مع الصور.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="studio">
+  <div class="wrap studio">
+    <div class="portrait"><img src="assets/bilal-rahat.jpg" alt="Portrait of Bilal Rahat" loading="lazy"></div>
+    <div>
+      <p class="label"><span class="en">Studio</span><span class="ar">الاستوديو</span></p>
+      <h2><span class="en">A director, backed by a production company.</span><span class="ar">مخرج، تدعمه شركة إنتاج.</span></h2>
+      <p class="lead"><span class="en">I'm Bilal Rahat. I founded Mozaik Film in 2009 and have spent the years since filming and producing for brands, from corporate campaigns to productions for National Geographic. Today I direct product CGI in Blender, with the Mozaik team behind every project.</span><span class="ar">أنا بلال راحت. أسست موزاييك فيلم عام 2009، وعملت منذ ذلك الحين في التصوير والإنتاج للعلامات التجارية، من الحملات المؤسسية إلى إنتاجات لصالح ناشيونال جيوغرافيك. اليوم أُخرج أفلام المنتجات بتقنية CGI باستخدام Blender، وفريق موزاييك خلف كل مشروع.</span></p>
+      <p class="lead"><span class="en">When a project also needs live action, drone or a full crew, it is already in house. Based in Istanbul on GMT+3, the same working day as Europe and the Gulf.</span><span class="ar">وعندما يحتاج المشروع أيضاً إلى تصوير حي أو درون أو فريق كامل، فكل ذلك متوفر لدينا. مقرّنا إسطنبول بتوقيت GMT+3، أي نفس يوم العمل مع أوروبا والخليج.</span></p>
+      <div class="facts">
+        <div><b>2009</b><span><span class="en">Mozaik Film founded</span><span class="ar">تأسيس موزاييك فيلم</span></span></div>
+        <div><b>500+</b><span><span class="en">Brands served</span><span class="ar">علامة تجارية خدمناها</span></span></div>
+        <div><b>10+</b><span><span class="en">Production team</span><span class="ar">فريق الإنتاج</span></span></div>
+        <div><b>GMT+3</b><span><span class="en">Istanbul</span><span class="ar">إسطنبول</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="contact">
+  <div class="wrap contact">
+    <div>
+      <p class="label"><span class="en">Contact</span><span class="ar">تواصل</span></p>
+      <h2><span class="en">Tell me about your product.</span><span class="ar">حدّثني عن منتجك.</span></h2>
+      <p class="lead" style="margin-top:20px"><span class="en">Send a photo or link, where it will run and your deadline. I reply within one working day.</span><span class="ar">أرسل صورة أو رابطاً، وأين سيُعرض، وموعدك النهائي. أرد خلال يوم عمل واحد.</span></p>
+    </div>
+    <div class="lines">
+      <a href="mailto:studio@bilalrahat.com.tr"><span class="v">studio@bilalrahat.com.tr</span><small><span class="en">Email</span><span class="ar">البريد</span></small></a>
+      <a href="https://wa.me/905306264363"><span class="v">+90 530 626 43 63</span><small><span class="en">WhatsApp</span><span class="ar">واتساب</span></small></a>
+      <a href="https://www.instagram.com/bilalrahat_art/"><span class="v">@bilalrahat_art</span><small>Instagram</small></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Bilal Rahat</span>
+    <span><span class="en">CGI & 3D Director · Founder of Mozaik Film</span><span class="ar">مخرج CGI وثلاثي الأبعاد · مؤسس موزاييك فيلم</span></span>
+  </div>
+</footer>
+
+<script>
+{
+  const root = document.documentElement;
+  const setLang = (l) => {
+    root.lang = l;
+    root.dir = l === 'ar' ? 'rtl' : 'ltr';
+    try { localStorage.setItem('lang', l); } catch (e) {}
+  };
+  let saved = null;
+  try { saved = localStorage.getItem('lang'); } catch (e) {}
+  const q = new URLSearchParams(location.search).get('lang');
+  const first = q || saved || ((navigator.language || '').toLowerCase().startsWith('ar') ? 'ar' : 'en');
+  setLang(first === 'ar' ? 'ar' : 'en');
+  document.getElementById('lang').addEventListener('click', () => setLang(root.lang === 'ar' ? 'en' : 'ar'));
+  const head = document.querySelector('header');
+  const onScroll = () => head.classList.toggle('solid', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+</script>
+</body>
+</html>
