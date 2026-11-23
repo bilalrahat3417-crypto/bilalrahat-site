@@ -10,6 +10,7 @@
 # Real footage: drop assets/work/<slug>.mp4 (+ .jpg poster) or assets/work/<slug>.jpg
 # and re-run `python3 site.py`; the typographic tile is replaced automatically.
 import os
+import refs
 
 BASE = 'https://bilalrahat.com.tr'
 LANGS = ['en', 'tr', 'ar']
@@ -73,7 +74,7 @@ def build(L, page):
                     'Cam, sıvı, metal, taş ve seramik; her biri bir kampanya gibi ışıklandırıldı. Döngüler, görseller ve patlatılmış görünümlü teknik film.',
                     'زجاج وسائل ومعدن وحجر وخزف، كلٌّ منها بإضاءة حملة. لقطات متكررة وصور وفيلم تقني بمشهد مفكك.'),
              media='amber', link='cgi'),
-        dict(slug='erik-nissan', discs=['film', 'digital'], client='Erik Otomotiv · Nissan',
+        dict(slug='erik-nissan', ig='erikotomotivnissan', discs=['film', 'digital'], client='Erik Otomotiv · Nissan',
              sector=t('Automotive', 'Otomotiv', 'السيارات'),
              title=t('TV spot and Reels campaigns', 'TV reklamı ve Reels kampanyaları', 'إعلان تلفزيوني وحملات Reels'),
              text=t('A Kurban Bayramı film cut for TV and Reels, plus Reels campaigns for Juke, Townstar, Qashqai and X-Trail, scripted scene by scene.',
@@ -85,25 +86,25 @@ def build(L, page):
              text=t('A two-phase campaign: stand sales to exhibitors first, then public attendance, with second-by-second scripts and music direction.',
                     'İki aşamalı kampanya: önce katılımcılara stant satışı, ardından halkın katılımı; saniye saniye senaryolar ve müzik yönü.',
                     'حملة على مرحلتين: بيع الأجنحة للعارضين أولًا، ثم جذب الجمهور، مع نصوص ثانية بثانية وتوجيه موسيقي.')),
-        dict(slug='sembol', discs=['drone', 'film'], client='Mutfacto × Sembol Ocakbaşı',
+        dict(slug='sembol', ig='mutfacto', discs=['drone', 'film'], client='Mutfacto × Sembol Ocakbaşı',
              sector=t('Industrial kitchens', 'Endüstriyel mutfak', 'المطابخ الصناعية'),
              title=t('Drone fly-through of a restaurant kitchen', 'Restoran mutfağında drone uçuşu', 'جولة بالدرون داخل مطبخ مطعم'),
              text=t('One continuous flight through the industrial kitchen Mutfacto built for Sembol Ocakbaşı, from the dining room to the grill.',
                     "Mutfacto'nun Sembol Ocakbaşı için kurduğu endüstriyel mutfakta, salondan ocağa kesintisiz tek uçuş.",
                     'رحلة متواصلة واحدة داخل المطبخ الصناعي الذي أنشأته Mutfacto لمطعم Sembol، من الصالة حتى الشواية.')),
-        dict(slug='turbo-atom', discs=['film'], client='Mutfacto × Turbo Atom',
+        dict(slug='turbo-atom', ig='mutfacto', discs=['film'], client='Mutfacto × Turbo Atom',
              sector=t('Industrial kitchens', 'Endüstriyel mutfak', 'المطابخ الصناعية'),
              title=t('Presenter-led customer story', 'Sunuculu müşteri hikâyesi', 'قصة عميل يقدّمها مذيع'),
              text=t('A testimonial film with a presenter intro, interview and product visuals, made for social media on the supplier\'s behalf.',
                     'Tedarikçi adına sosyal medya için çekilen; sunucu girişi, röportaj ve ürün görselleri içeren referans filmi.',
                     'فيلم شهادة عميل بمقدمة مذيع ومقابلة وصور للمنتجات، أُنتج لوسائل التواصل نيابةً عن المورّد.')),
-        dict(slug='maharet', discs=['film', 'drone', 'cgi', 'digital'], client='Maharet Ocakbaşı',
+        dict(slug='maharet', ig='maharetrestaurant', discs=['film', 'drone', 'cgi', 'digital'], client='Maharet Ocakbaşı',
              sector=t('Restaurant', 'Restoran', 'مطعم'),
              title=t('Reels series, 3D logo and Meta ads', 'Reels serisi, 3D logo ve Meta reklamları', 'سلسلة Reels وشعار ثلاثي الأبعاد وإعلانات Meta'),
              text=t('Fast natural-sound Reels with drone openers and speed ramps, a looping brushed-metal 3D logo, and the restaurant\'s Meta ad campaigns.',
                     'Drone açılışlı, hız rampalı, doğal sesli hızlı Reels; fırçalanmış metal 3D logo döngüsü ve restoranın Meta reklam kampanyaları.',
                     'مقاطع Reels سريعة بالصوت الطبيعي وافتتاحيات بالدرون، وشعار معدني ثلاثي الأبعاد متكرر، وحملات Meta الإعلانية للمطعم.')),
-        dict(slug='minik-dehalar', discs=['film', 'digital'], client='Minik Dehalar',
+        dict(slug='minik-dehalar', ig='minikdehalar.kres', discs=['film', 'digital'], client='Minik Dehalar',
              sector=t('Education', 'Eğitim', 'التعليم'),
              title=t('Reels series, ads and print for a preschool', 'Bir anaokulu için Reels, reklam ve basılı işler', 'Reels وإعلانات ومطبوعات لروضة أطفال'),
              text=t('A seven-part Reels series mixing real class footage with illustration, WhatsApp-objective Meta ads and printed brochures.',
@@ -121,37 +122,45 @@ def build(L, page):
              text=t('A minimal, editorial direction replacing generic posts: a 14-piece calendar with a shot plan for every photo and video.',
                     'Sıradan paylaşımların yerine minimal, editoryal bir yön: her fotoğraf ve video için çekim planı olan 14 içerikli takvim.',
                     'توجه بسيط وتحريري بدل المنشورات العامة: تقويم من 14 محتوى مع خطة تصوير لكل صورة وفيديو.')),
-        dict(slug='natgeo', discs=['film', 'drone'], client='National Geographic',
-             sector=t('Documentary', 'Belgesel', 'وثائقي'),
-             title=t('Location production in Southeast Turkey', "Güneydoğu Türkiye'de yerinde prodüksiyon", 'إنتاج ميداني في جنوب شرق تركيا'),
-             text=t('Filming and production support on location for National Geographic.',
-                    'National Geographic için yerinde çekim ve prodüksiyon desteği.',
-                    'تصوير ودعم إنتاجي في الموقع لصالح ناشيونال جيوغرافيك.')),
-        dict(slug='mozaik-series', discs=['film', 'digital'], client='Mozaik Film',
+        dict(slug='mozaik-series', ig='mozaikfilm', discs=['film', 'digital'], client='Mozaik Film',
              sector=t('Own brand', 'Kendi markamız', 'علامتنا'),
              title=t('Motion-collage ad series', 'Hareketli kolaj reklam serisi', 'سلسلة إعلانات بأسلوب الكولاج المتحرك'),
              text=t('Short narrated films in a torn-paper collage style explaining to local businesses why planned content and paid ads matter.',
                     'Yırtık kâğıt kolaj tarzında, yerel işletmelere planlı içeriğin ve sponsorlu reklamın neden önemli olduğunu anlatan kısa seslendirmeli filmler.',
                     'أفلام قصيرة بتعليق صوتي وأسلوب كولاج الورق الممزق، تشرح للشركات المحلية أهمية المحتوى المخطط والإعلانات المدفوعة.')),
     ]
-    wall = [('National Geographic', t('Documentary', 'Belgesel', 'وثائقي')),
-            ('Bahçeşehir Koleji', t('Education', 'Eğitim', 'التعليم')),
-            ('Öztiryakiler', t('Industrial kitchens', 'Endüstriyel mutfak', 'المطابخ الصناعية')),
-            ('Gapsan Tekstil', t('Textile', 'Tekstil', 'النسيج')),
-            ('Transfomax', t('Energy', 'Enerji', 'الطاقة')),
-            ('Ferat Dalgıç Pompa', t('Industry', 'Sanayi', 'الصناعة')),
-            ('Nissan · Erik Otomotiv', t('Automotive', 'Otomotiv', 'السيارات')),
-            ('Mutfacto', t('Industrial kitchens', 'Endüstriyel mutfak', 'المطابخ الصناعية')),
-            ('Maharet Ocakbaşı', t('Restaurant', 'Restoran', 'مطعم')),
-            ('Minik Dehalar', t('Education', 'Eğitim', 'التعليم')),
-            ('Zarifzade Baklava', t('Food retail', 'Gıda perakende', 'تجزئة الأغذية')),
-            ('Home Art Bistro', t('Café & interiors', 'Kafe ve iç mimari', 'مقهى وتصميم داخلي'))]
+    wall = ['National Geographic', 'New York Times', 'Şanlıurfa Büyükşehir Belediyesi', 'Haliliye Belediyesi', 'Transfomax',
+            'Ferat Dalgıç Pompa', 'İmbo Boru', 'Korkmaz Süt', 'Canoğlu Grup', 'Yetimoğlu Grup', 'Rima Grup', 'Gapsan Tekstil',
+            'Bahçeşehir Koleji', 'TED Koleji', 'Çamlıca Koleji', 'Endülüs Koleji', 'Nissan · Erik Otomotiv', 'Pirelli · Badıllı',
+            'Ceramo Seramik', 'Öztiryakiler', 'Mutfacto', 'Miroğlu Künefe', 'Taşsaray', 'Tatvera', 'Maharet', 'Minik Dehalar',
+            'Zarifzade Baklava', 'Esomed', 'Saudi Halsa', 'Durrah App', 'IYGO Lojistik', 'Maxima Paradise Resort']
+
+    def L3(x):
+        return t(*x) if isinstance(x, tuple) else x
+
+    def vid_card(v, big=False):
+        client = L3(v['client'])
+        kind, sector = t(*refs.KIND[v['kind']]), t(*refs.SECTOR[v['sector']])
+        thumb = v.get('thumb') or f"https://i.ytimg.com/vi/{v['v']}/hqdefault.jpg"
+        vers = ''
+        if v.get('versions'):
+            vers = '<div class="vers">' + ''.join(
+                f'<button type="button" data-yt="{i}"{" data-short=1" if v.get("short") else ""}>{lab}</button>' for lab, i in v['versions']) + '</div>'
+        note = f"<p>{t(*v['note'])}</p>" if big and v.get('note') else ''
+        return f'''
+      <article class="proj{' big' if big else ''}" data-d="{' '.join(v['discs'])}">
+        <button type="button" class="m play" data-yt="{v['v']}"{" data-short=1" if v.get("short") else ""} aria-label="{t('Play', 'Oynat', 'تشغيل')}: {client}"><img src="{thumb}" alt="{client} · {kind}" loading="lazy"><span class="pi" aria-hidden="true"></span></button>
+        <div class="meta"><span>{kind}</span><span>{sector}</span></div>
+        <h3>{client}</h3>{note}{vers}
+      </article>'''
 
     def proj_card(p):
         m = media(p['slug'] if p.get('media') is None else p['media'], f"{p['client']} · {p['title']}",
                   fallback=(p['sector'], p['client']))
         tags = ''.join(f'<span>{DISC[d]}</span>' for d in p['discs'])
         link = f'<a class="tlink" href="{U(p["link"])}">{t("See the work", "İşi gör", "شاهد العمل")} {arrow}</a>' if p.get('link') else ''
+        if p.get('ig'):
+            link += f'<a class="tlink" href="https://www.instagram.com/{p["ig"]}/" target="_blank" rel="noopener">Instagram @{p["ig"]} {ext}</a>'
         return f'''
       <article class="proj" data-d="{' '.join(p['discs'])}">
         <div class="m">{m}</div>
@@ -162,8 +171,13 @@ def build(L, page):
       </article>'''
 
     def projs_for(d, limit=6):
-        sel = [p for p in projects if d in p['discs']][:limit]
-        return ''.join(proj_card(p) for p in sel)
+        vids = [v for v in refs.VIDEOS if d in v['discs']]
+        vids.sort(key=lambda v: not v.get('feat'))
+        out = ''.join(vid_card(v, big=bool(v.get('feat'))) for v in vids[:limit])
+        n = limit - len(vids[:limit])
+        if n > 0:
+            out += ''.join(proj_card(p) for p in [p for p in projects if d in p['discs']][:n])
+        return out
 
     # ------------------------------------------------------------------ shared pieces
     def block_html(blocks):
@@ -260,7 +274,8 @@ def build(L, page):
             m = media(slug, h, fallback=(t('Mozaik Film', 'Mozaik Film', 'موزاييك فيلم'), f'{i+1:02d}'))
             cards += f'''
       <a class="disc" href="{U(p)}"><div class="m">{m}</div><div class="b"><span class="num">{i+1:02d}</span><h3>{h}</h3><p>{line}</p><span class="tlink">{t('Open', 'Aç', 'افتح')} {arrow}</span></div></a>'''
-        clients = ['National Geographic', 'Nissan', 'Bahçeşehir Koleji', 'Öztiryakiler', 'Gapsan Tekstil', 'Transfomax', 'Ferat Dalgıç Pompa']
+        home_pick = [v for v in refs.VIDEOS if v['v'] in ('y8e8dVpC8Y8', 'CaEpDxcQTCc', 'gI_szqyD9NU', 'JT1DtpHhIiQ', '1r3RrJj6mlE', 'uEO5Zouc2eI')]
+        clients = ['National Geographic', 'New York Times', 'Nissan', 'Bahçeşehir Koleji', 'Öztiryakiler', 'Gapsan Tekstil', 'Transfomax', 'Ferat Dalgıç Pompa']
         body = f'''
 <section class="hero">
   {media('amber', t('Amber perfume bottle rendered in Blender', "Blender'da render edilmiş amber parfüm şişesi", 'زجاجة عطر عنبرية مصنوعة في Blender'), eager=True)}
@@ -281,7 +296,7 @@ def build(L, page):
            f'<div class="discs">{cards}\n    </div>') + \
         band('work', t('Recent references', 'Son referanslar', 'أحدث المراجع'),
              t('Work across every discipline.', 'Her disiplinden işler.', 'أعمال في كل التخصصات.'), '',
-             f'<div class="projs">{"".join(proj_card(p) for p in projects[:6])}\n    </div>'
+             f'<div class="projs">{"".join(vid_card(v, big=True) for v in home_pick)}\n    </div>'
              f'<p style="margin-top:40px"><a class="tlink" href="{U("references")}">{t("All references", "Tüm referanslar", "كل المراجع")} {arrow}</a></p>') + \
         studio_band(t, ext) + cta_band()
 
@@ -403,19 +418,47 @@ def build(L, page):
                  'ملف مراجع بلال راحت وموزاييك فيلم: إعلانات وCGI ودرون وتصوير وأعمال رقمية.')
         chips = f'<button type="button" data-f="all" aria-pressed="true">{t("All", "Tümü", "الكل")}</button>' + \
             ''.join(f'<button type="button" data-f="{k}" aria-pressed="false">{v}</button>' for k, v in DISC.items())
-        wall_html = ''.join(f'<div><b>{n}</b><span>{s}</span></div>' for n, s in wall)
+        wall_html = ''.join(f'<div><b>{n}</b></div>' for n in wall)
+        feat = [v for v in refs.VIDEOS if v.get('feat')]
+        rest = [v for v in refs.VIDEOS if not v.get('feat')]
+        acc_html = ''.join(f'<a href="https://www.instagram.com/{h}/" target="_blank" rel="noopener"><b>{n}</b><span>@{h} {ext}</span></a>' for n, h in refs.ACCOUNTS)
+        recent = [p for p in projects if p['slug'] != 'cgi-studies']
         body = page_hero(NAV['references'], t('References', 'Referanslar', 'المراجع'),
                          t('Brands we have filmed, built and run.', 'Çektiğimiz, kurduğumuz ve yönettiğimiz markalar.', 'علامات صوّرناها وبنيناها وأدرناها.'),
-                         t('500+ brand films since 2009, for companies in Turkey, Germany, Austria, Saudi Arabia and Dubai. A selection, by discipline.',
-                           "2009'dan beri Türkiye, Almanya, Avusturya, Suudi Arabistan ve Dubai'deki firmalar için 500'den fazla marka filmi. Disipline göre bir seçki.",
-                           'أكثر من 500 فيلم لعلامات تجارية منذ 2009، لشركات في تركيا وألمانيا والنمسا والسعودية ودبي. مختارات حسب التخصص.')) + f'''
+                         t('500+ brand films since 2009, for companies in Turkey, Germany, Austria, Saudi Arabia and Dubai. Press play on any of them.',
+                           "2009'dan beri Türkiye, Almanya, Avusturya, Suudi Arabistan ve Dubai'deki firmalar için 500'den fazla marka filmi. Hepsini buradan izleyebilirsiniz.",
+                           'أكثر من 500 فيلم لعلامات تجارية منذ 2009، لشركات في تركيا وألمانيا والنمسا والسعودية ودبي. شاهد أيًّا منها هنا.')) + f'''
 <section class="band" id="work" style="border-top:0">
   <div class="wrap">
-    <p class="eyebrow">{t('Portfolio', 'Portfolyo', 'الملف')}</p>
-    <h2>{t('Selected projects.', 'Seçili projeler.', 'مشاريع مختارة.')}</h2>
-    <div class="chips" role="group" aria-label="{t('Filter by discipline', 'Disipline göre filtrele', 'تصفية حسب التخصص')}">{chips}</div>
-    <div class="projs" id="projs">{''.join(proj_card(p) for p in projects)}
+    <p class="eyebrow">{t('Featured', 'Öne çıkanlar', 'مختارات')}</p>
+    <h2>{t('Selected films.', 'Seçili filmler.', 'أفلام مختارة.')}<span class="sub">{t('Several delivered in up to four languages.', 'Bazıları dört dile kadar teslim edildi.', 'بعضها سُلّم بما يصل إلى أربع لغات.')}</span></h2>
+    <div class="projs">{''.join(vid_card(v, big=True) for v in feat)}
     </div>
+  </div>
+</section>
+<section class="band" id="archive">
+  <div class="wrap">
+    <p class="eyebrow">{t('Archive', 'Arşiv', 'الأرشيف')}</p>
+    <h2>{t('More films.', 'Daha fazla film.', 'المزيد من الأفلام.')}</h2>
+    <div class="chips" role="group" aria-label="{t('Filter by discipline', 'Disipline göre filtrele', 'تصفية حسب التخصص')}">{chips}</div>
+    <div class="projs" id="projs">{''.join(vid_card(v) for v in rest)}
+    </div>
+    <p style="margin-top:40px"><a class="tlink" href="https://www.youtube.com/@mozaikfilm/videos" target="_blank" rel="noopener">{t('All 230+ films on YouTube', "YouTube'da 230'dan fazla film", 'أكثر من 230 فيلمًا على يوتيوب')} {ext}</a></p>
+  </div>
+</section>
+<section class="band" id="recent">
+  <div class="wrap">
+    <p class="eyebrow">2026</p>
+    <h2>{t('Current work.', 'Güncel işler.', 'أعمال حالية.')}<span class="sub">{t('Campaigns, Reels and ads running now.', 'Şu an yayında olan kampanyalar, Reels ve reklamlar.', 'حملات وReels وإعلانات قيد العرض الآن.')}</span></h2>
+    <div class="projs">{''.join(proj_card(p) for p in recent)}
+    </div>
+  </div>
+</section>
+<section class="band" id="social">
+  <div class="wrap">
+    <p class="eyebrow">{t('Social media management', 'Sosyal medya yönetimi', 'إدارة وسائل التواصل')}</p>
+    <h2>{t('Accounts we run.', 'Yönettiğimiz hesaplar.', 'حسابات نديرها.')}</h2>
+    <div class="accs">{acc_html}</div>
   </div>
 </section>''' + band('clients', t('Clients', 'Müşteriler', 'العملاء'), t('Who we have worked for.', 'Kimlerle çalıştık.', 'لمن عملنا.'), '',
                      f'<div class="wall">{wall_html}</div>') + cta_band()
@@ -666,6 +709,8 @@ def shell(L, page, title, desc, body, NAV, t, ext):
   </div>
 </footer>
 
+<dialog class="lb" id="lb" aria-label="Video"><button type="button" class="x">{t('Close', 'Kapat', 'إغلاق')} ✕</button><div class="fr"></div></dialog>
+
 <script>
 {{
   const vids = document.querySelectorAll('video[data-src]');
@@ -681,6 +726,16 @@ def shell(L, page, title, desc, body, NAV, t, ext):
     const f = b.dataset.f;
     document.querySelectorAll('#projs .proj').forEach(p => p.hidden = f !== 'all' && !p.dataset.d.split(' ').includes(f));
   }}));
+  const lb = document.getElementById('lb'), fr = lb.querySelector('.fr');
+  document.addEventListener('click', e => {{
+    const b = e.target.closest('[data-yt]');
+    if (!b) return;
+    lb.classList.toggle('short', !!b.dataset.short);
+    fr.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + b.dataset.yt + '?autoplay=1&rel=0" allow="autoplay; fullscreen; encrypted-media" allowfullscreen title="Video"></iframe>';
+    lb.showModal();
+  }});
+  lb.addEventListener('close', () => fr.innerHTML = '');
+  lb.addEventListener('click', e => {{ if (e.target === lb || e.target.closest('.x')) lb.close(); }});
   document.querySelectorAll('.menu nav a').forEach(a => a.addEventListener('click', () => a.closest('details').open = false));
 }}
 </script>

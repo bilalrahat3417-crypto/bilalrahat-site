@@ -193,6 +193,8 @@
   </div>
 </footer>
 
+<dialog class="lb" id="lb" aria-label="Video"><button type="button" class="x">Close ✕</button><div class="fr"></div></dialog>
+
 <script>
 {
   const vids = document.querySelectorAll('video[data-src]');
@@ -208,6 +210,16 @@
     const f = b.dataset.f;
     document.querySelectorAll('#projs .proj').forEach(p => p.hidden = f !== 'all' && !p.dataset.d.split(' ').includes(f));
   }));
+  const lb = document.getElementById('lb'), fr = lb.querySelector('.fr');
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-yt]');
+    if (!b) return;
+    lb.classList.toggle('short', !!b.dataset.short);
+    fr.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + b.dataset.yt + '?autoplay=1&rel=0" allow="autoplay; fullscreen; encrypted-media" allowfullscreen title="Video"></iframe>';
+    lb.showModal();
+  });
+  lb.addEventListener('close', () => fr.innerHTML = '');
+  lb.addEventListener('click', e => { if (e.target === lb || e.target.closest('.x')) lb.close(); });
   document.querySelectorAll('.menu nav a').forEach(a => a.addEventListener('click', () => a.closest('details').open = false));
 }
 </script>

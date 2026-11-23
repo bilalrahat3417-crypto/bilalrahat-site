@@ -56,12 +56,35 @@
   <div class="wrap">
     <p class="eyebrow">Selected references</p>
     <h2>Recent photography.</h2><div class="projs">
-      <article class="proj" data-d="digital photo">
-        <div class="m"><div class="tile" role="img" aria-label="Home Art Bistro · Content strategy with photo and video scripts"><i>Café & interiors</i><b>Home Art Bistro</b></div></div>
-        <div class="meta"><span>Home Art Bistro</span><span>Café & interiors</span></div>
-        <h3>Content strategy with photo and video scripts</h3>
-        <p>A minimal, editorial direction replacing generic posts: a 14-piece calendar with a shot plan for every photo and video.</p>
-        <div class="meta"><span>Web & ads</span><span>Photography</span></div>
+      <article class="proj big" data-d="film photo digital">
+        <button type="button" class="m play" data-yt="JT1DtpHhIiQ" aria-label="Play: Taşsaray Restaurant"><img src="https://i.ytimg.com/vi/JT1DtpHhIiQ/hqdefault.jpg" alt="Taşsaray Restaurant · Social media film" loading="lazy"><span class="pi" aria-hidden="true"></span></button>
+        <div class="meta"><span>Social media film</span><span>Restaurants</span></div>
+        <h3>Taşsaray Restaurant</h3><p>Food films for a restaurant; the lahmacun film alone passed 39,000 views.</p><div class="vers"><button type="button" data-yt="JT1DtpHhIiQ">Lahmacun</button><button type="button" data-yt="hmR9MaEvqGk">Kebap</button><button type="button" data-yt="W_rxlu9D2GI">İskender</button></div>
+      </article>
+      <article class="proj big" data-d="film photo digital">
+        <button type="button" class="m play" data-yt="a79fNtnx72c" aria-label="Play: Miroğlu Künefe"><img src="https://i.ytimg.com/vi/a79fNtnx72c/hqdefault.jpg" alt="Miroğlu Künefe · Social media film" loading="lazy"><span class="pi" aria-hidden="true"></span></button>
+        <div class="meta"><span>Social media film</span><span>Restaurants</span></div>
+        <h3>Miroğlu Künefe</h3><p>Dessert films shot for social media, with 22,000 and 12,000 views on the top two.</p><div class="vers"><button type="button" data-yt="a79fNtnx72c">Burma kadayıf</button><button type="button" data-yt="mQYzGa7JnO4">Billuriye</button><button type="button" data-yt="hsD5OamiZkw">Cevizli şıllık</button></div>
+      </article>
+      <article class="proj" data-d="film photo digital">
+        <button type="button" class="m play" data-yt="g_9RAz1UxJI" aria-label="Play: Tatvera"><img src="https://i.ytimg.com/vi/g_9RAz1UxJI/hqdefault.jpg" alt="Tatvera · Social media film" loading="lazy"><span class="pi" aria-hidden="true"></span></button>
+        <div class="meta"><span>Social media film</span><span>Restaurants</span></div>
+        <h3>Tatvera</h3>
+      </article>
+      <article class="proj" data-d="film photo digital">
+        <button type="button" class="m play" data-yt="hby8VzeGgPU" aria-label="Play: Livva Restaurant"><img src="https://i.ytimg.com/vi/hby8VzeGgPU/hqdefault.jpg" alt="Livva Restaurant · Social media film" loading="lazy"><span class="pi" aria-hidden="true"></span></button>
+        <div class="meta"><span>Social media film</span><span>Restaurants</span></div>
+        <h3>Livva Restaurant</h3>
+      </article>
+      <article class="proj" data-d="film photo digital">
+        <button type="button" class="m play" data-yt="-hKMimfQWDQ" aria-label="Play: Cevahir Han"><img src="https://i.ytimg.com/vi/-hKMimfQWDQ/hqdefault.jpg" alt="Cevahir Han · Social media film" loading="lazy"><span class="pi" aria-hidden="true"></span></button>
+        <div class="meta"><span>Social media film</span><span>Restaurants</span></div>
+        <h3>Cevahir Han</h3>
+      </article>
+      <article class="proj" data-d="film photo digital">
+        <button type="button" class="m play" data-yt="ZUo3f-sUCsA" aria-label="Play: Tambu Baklava"><img src="https://i.ytimg.com/vi/ZUo3f-sUCsA/hqdefault.jpg" alt="Tambu Baklava · Social media film" loading="lazy"><span class="pi" aria-hidden="true"></span></button>
+        <div class="meta"><span>Social media film</span><span>Restaurants</span></div>
+        <h3>Tambu Baklava</h3>
       </article>
     </div><p style="margin-top:40px"><a class="tlink" href="/references/">All references →</a></p>
   </div>
@@ -95,6 +118,8 @@
   </div>
 </footer>
 
+<dialog class="lb" id="lb" aria-label="Video"><button type="button" class="x">Close ✕</button><div class="fr"></div></dialog>
+
 <script>
 {
   const vids = document.querySelectorAll('video[data-src]');
@@ -110,6 +135,16 @@
     const f = b.dataset.f;
     document.querySelectorAll('#projs .proj').forEach(p => p.hidden = f !== 'all' && !p.dataset.d.split(' ').includes(f));
   }));
+  const lb = document.getElementById('lb'), fr = lb.querySelector('.fr');
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-yt]');
+    if (!b) return;
+    lb.classList.toggle('short', !!b.dataset.short);
+    fr.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + b.dataset.yt + '?autoplay=1&rel=0" allow="autoplay; fullscreen; encrypted-media" allowfullscreen title="Video"></iframe>';
+    lb.showModal();
+  });
+  lb.addEventListener('close', () => fr.innerHTML = '');
+  lb.addEventListener('click', e => { if (e.target === lb || e.target.closest('.x')) lb.close(); });
   document.querySelectorAll('.menu nav a').forEach(a => a.addEventListener('click', () => a.closest('details').open = false));
 }
 </script>
