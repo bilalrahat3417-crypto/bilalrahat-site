@@ -10,6 +10,7 @@
 # Real footage: drop assets/work/<slug>.mp4 (+ .jpg poster) or assets/work/<slug>.jpg
 # and re-run `python3 site.py`; the typographic tile is replaced automatically.
 import os
+import json
 import refs
 
 BASE = 'https://bilalrahat.com.tr'
@@ -659,6 +660,60 @@ def cgi_body(t, arrow, ext, U):
 </section>'''
 
 
+# ---------------------------------------------------------------------- structured data (Google)
+SAME_AS = [
+    'https://www.instagram.com/bilalrahatstudio/',
+    'https://www.instagram.com/mozaikfilm/',
+    'https://www.youtube.com/@mozaikfilm',
+    'https://www.linkedin.com/in/bilalrahat',
+]
+
+
+def jsonld(L, page, desc):
+    org = {
+        '@type': 'Organization', '@id': BASE + '/#mozaik', 'name': 'Mozaik Film',
+        'foundingDate': '2009', 'founder': {'@id': BASE + '/#bilal'},
+        'url': BASE + '/', 'email': EMAIL,
+        'sameAs': ['https://www.instagram.com/mozaikfilm/', 'https://www.youtube.com/@mozaikfilm'],
+        'address': [
+            {'@type': 'PostalAddress', 'addressLocality': 'Şanlıurfa', 'addressCountry': 'TR'},
+            {'@type': 'PostalAddress', 'addressLocality': 'İstanbul', 'addressCountry': 'TR'},
+        ],
+    }
+    person = {
+        '@type': 'Person', '@id': BASE + '/#bilal', 'name': 'Bilal Rahat',
+        'jobTitle': 'Film, CGI & AI Director', 'url': BASE + '/',
+        'image': BASE + '/assets/bilal-rahat.jpg', 'email': EMAIL,
+        'worksFor': {'@id': BASE + '/#mozaik'}, 'founder': {'@id': BASE + '/#mozaik'},
+        'knowsLanguage': ['tr', 'en', 'ar'], 'sameAs': SAME_AS,
+    }
+    site = {'@type': 'WebSite', '@id': BASE + '/#site', 'url': BASE + '/', 'name': 'Bilal Rahat',
+            'inLanguage': LANGS, 'publisher': {'@id': BASE + '/#bilal'}}
+    webpage = {'@type': 'WebPage', 'url': BASE + url(L, page), 'inLanguage': L,
+               'description': desc, 'isPartOf': {'@id': BASE + '/#site'}, 'about': {'@id': BASE + '/#bilal'}}
+    graph = [person, org, site, webpage]
+    data = json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False)
+    return '<script type="application/ld+json">' + data.replace('</', '<\\/') + '</script>\n'
+
+
+def write_seo_files():
+    open('robots.txt', 'w', encoding='utf-8').write(
+        f'User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n')
+    import datetime
+    today = datetime.date.today().isoformat()
+    rows = []
+    for p in PAGES:
+        for L in LANGS:
+            alts = ''.join(f'\n    <xhtml:link rel="alternate" hreflang="{l}" href="{BASE}{url(l, p)}"/>' for l in LANGS)
+            alts += f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{BASE}{url("en", p)}"/>'
+            pr = '1.0' if p == 'home' else '0.8'
+            rows.append(f'  <url>\n    <loc>{BASE}{url(L, p)}</loc>\n    <lastmod>{today}</lastmod>\n    <priority>{pr}</priority>{alts}\n  </url>')
+    open('sitemap.xml', 'w', encoding='utf-8').write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+        + '\n'.join(rows) + '\n</urlset>\n')
+
+
 # ---------------------------------------------------------------------- page shell
 def shell(L, page, title, desc, body, NAV, t, ext):
     import hashlib
@@ -682,7 +737,8 @@ def shell(L, page, title, desc, body, NAV, t, ext):
 {hreflang}<link rel="alternate" hreflang="x-default" href="{BASE}{url('en', page)}">
 <link rel="canonical" href="{BASE}{url(L, page)}">
 <meta name="theme-color" content="#000000">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' text-anchor='middle' fill='%23fff'%3EBR%3C/text%3E%3C/svg%3E">
+<meta name="robots" content="index, follow, max-image-preview:large">
+{jsonld(L, page, desc)}<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' text-anchor='middle' fill='%23fff'%3EBR%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500;600&display=swap{'&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500;600' if rtl else ''}" rel="stylesheet">
@@ -756,4 +812,5 @@ if __name__ == '__main__':
             os.makedirs(os.path.dirname(out) or '.', exist_ok=True)
             open(out, 'w', encoding='utf-8').write(build(L, p))
             n += 1
-    print(f'ok: {n} pages')
+    write_seo_files()
+    print(f'ok: {n} pages + robots.txt + sitemap.xml')
