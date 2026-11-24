@@ -541,7 +541,8 @@ def cgi_body(t, arrow, ext, U):
       </div>
     </article>'''
 
-    work = [('amber', t('Amber', 'Amber', 'عنبر'), t('Fragrance', 'Parfüm', 'العطور')),
+    work = [('pavilion', t('Pavilion, FPV', 'Köşk, FPV', 'جناح، FPV'), t('Spaces & FPV', 'Mekân ve FPV', 'المساحات وFPV')),
+            ('amber', t('Amber', 'Amber', 'عنبر'), t('Fragrance', 'Parfüm', 'العطور')),
             ('serum', t('Serum', 'Serum', 'سيروم'), t('Skincare', 'Cilt bakımı', 'العناية بالبشرة')),
             ('can', t('Cold can', 'Soğuk kutu', 'علبة باردة'), t('Beverage', 'İçecek', 'المشروبات')),
             ('watch', t('Steel watch', 'Çelik saat', 'ساعة فولاذية'), t('Watches', 'Saat', 'الساعات')),
