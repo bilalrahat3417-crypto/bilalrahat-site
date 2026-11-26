@@ -108,6 +108,9 @@ footer img{height:34px;background:#fff;border-radius:8px;padding:5px 8px}
 @media(max-width:860px){nav{display:none}nav.on{display:flex;position:absolute;top:70px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--bg);border-bottom:1px solid var(--line);padding:8px max(4vw,16px)}nav.on a{padding:12px 0}.menu{display:inline-flex}.hero,.doc,.contact{grid-template-columns:minmax(0,1fr)}.grid3{grid-template-columns:minmax(0,1fr)}.portrait{max-width:320px}}
 @media(max-width:520px){.facts{grid-template-columns:minmax(0,1fr)}.hours{position:static;border-radius:0;box-shadow:none}.photo{aspect-ratio:auto}.photo img{aspect-ratio:4/3}}
 @media(prefers-reduced-motion:no-preference){.m{animation:pop .25s ease-out}@keyframes pop{from{opacity:0;transform:translateY(6px)}}}
+.why{margin:40px 0 8px}.why h2{font:800 clamp(24px,3vw,32px)/1.2 'Plus Jakarta Sans',Inter,sans-serif;margin:0 0 8px;letter-spacing:-.01em}.why>p{color:var(--mute);margin:0 0 20px;max-width:62ch;line-height:1.6}
+.wg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}.wg div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;line-height:1.55}.wg b{display:block;font-size:17px;margin-bottom:6px}.wg span{color:var(--mute);font-size:15px}
+.wg em{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--tq);color:#fff;font-style:normal;font-weight:700;font-size:14px;margin-bottom:10px}
 </style>
 </head>
 <body>
@@ -131,6 +134,15 @@ footer img{height:34px;background:#fff;border-radius:8px;padding:5px 8px}
 <div class="phone"><div class="pscr"><div class="psn"><span class="sm"></span><b class="pn"></b></div><img src="fircalar.jpg" alt=""><div class="pbody"><small class="pd"></small><b>Muayene, tedavi ve kontrolleriniz için.</b><span class="sbtn">WhatsApp'tan randevu</span><span class="sbtn2">Ara</span><span class="ph1 tiny"></span></div></div></div>
 </div>
 <div class="incl"><div><b>Mobil uyumlu</b><span>Telefonda ve bilgisayarda düzgün görünür.</span></div><div><b>WhatsApp randevu butonu</b><span>Hastanız tek dokunuşla yazar.</span></div><div><b>Yönetmeliğe uygun</b><span>Kasım 2025 tanıtım yönetmeliğine göre hazırlanır.</span></div><div><b>Google'da bulunur</b><span>Bilgileriniz güncel ve erişilebilir kalır.</span></div></div>
+<div class="why"><h2>Neden bir web sitesi?</h2><p>Bugün bir hasta yeni bir diş hekimi ararken çoğu zaman önce Google'a bakıyor. Haritalar'daki yüksek puanınız sizi bulduruyor; web sitesi ise güveni tamamlıyor ve kararı kolaylaştırıyor.</p>
+<div class="wg">
+<div><em>1</em><b>Güven veren bir adres</b><span>Haritalar'daki "Web sitesi" bağlantısı boş kalınca muayenehane eksik görünür. Kendi alan adınız olan bir site, kurumsal ve kalıcı bir izlenim bırakır.</span></div>
+<div><em>2</em><b>Yeni yönetmelikle en güvenli tanıtım</b><span>Kasım 2025 yönetmeliği reklamı ve kampanyayı sınırladı. Hekim bilgilerinizi, uzmanlığınızı ve iletişim bilgilerinizi tarafsız biçimde anlatan bir web sitesi ise izin verilen ve en sağlam tanıtım kanalı.</span></div>
+<div><em>3</em><b>Bilgiler tek yerde, sizin kontrolünüzde</b><span>Çalışma saatleri, adres, ulaşım ve tedavi alanları tek sayfada. Instagram ya da başka bir platformun kurallarına bağlı kalmadan bilgilerinizi siz yönetirsiniz.</span></div>
+<div><em>4</em><b>Daha az telefon, kaçmayan randevu</b><span>Hasta WhatsApp butonuyla tek dokunuşla yazar. Chatbotlu pakette mesai dışında gelen talepler de karşılanır, sabah sizi bekler.</span></div>
+<div><em>5</em><b>Aramalarda görünürlük</b><span>"<span class="pdist">Üsküdar</span> diş hekimi" gibi aramalarda sitesi olan muayenehanelerin öne çıkma şansı artar; Google sizi daha iyi tanır.</span></div>
+<div><em>6</em><b>Uğraşsız bakım</b><span>Saatleriniz değişti, yeni bir hekim katıldı: bir mesajınızla güncelleriz. Barındırma ve teknik bakım aylık aidata dahil.</span></div>
+</div></div>
 <div class="pk">
 <div class="pkc"><small>Klasik site</small><b>10.000 TL</b><span>Hekim bilgisi, tedavi alanları, saatler, konum, WhatsApp butonu</span></div>
 <div class="pkc hi"><small>Chatbotlu site</small><b>15.000 TL</b><span>Klasik sitenin tamamı + WhatsApp'tan 7/24 otomatik randevu yanıtı</span><button class="btn" data-chat type="button">Chatbotu deneyin</button></div>
@@ -240,7 +252,7 @@ const set=(sel,v)=>ps.querySelectorAll(sel).forEach(e=>e.textContent=v);
 document.getElementById('pTitle').textContent=C.name+' için hazırladığımız örnek web sitesi';
 document.getElementById('pDistrict').textContent=C.district+' · İstanbul';
 document.getElementById('pDomain').textContent='www.'+C.key.slice(2).replace(/-/g,'')+'.com.tr';
-set('.pn',C.name);set('.pd',C.district.toLocaleUpperCase('tr-TR')+' · İSTANBUL');set('.pa',C.address);set('.ph1',C.h1);set('.ph2',C.h2||'');set('.pp',C.phone||'Ara');
+set('.pn',C.name);set(".pdist",C.district);set('.pd',C.district.toLocaleUpperCase('tr-TR')+' · İSTANBUL');set('.pa',C.address);set('.ph1',C.h1);set('.ph2',C.h2||'');set('.pp',C.phone||'Ara');
 document.title=C.name+' · Örnek tasarım';window.scrollTo(0,0)}
 window.addEventListener('hashchange',route);if(!C)route();
 document.addEventListener('click',e=>{const t=e.target.closest('[data-post],[data-back],[data-chat],[data-call]');if(!t)return;
