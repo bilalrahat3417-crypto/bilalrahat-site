@@ -41,7 +41,7 @@ def main(src, panel):
         key = c['key']; slug = key[2:]
         t = T.get(c.get('theme'), T['turkuaz'])
         firca = c.get('foto') == 'firca'
-        v = {'name': c['name'], 'districtCaps': up(c['district']), 'address': c['address'],
+        v = {'name': c['name'], 'districtCaps': up(c['district']), 'cityCaps': up(c.get('city') or 'İstanbul'), 'address': c['address'],
              'hours1': c['h1'], 'hours2': c.get('h2', ''), 'phone': c.get('phone') or 'Ara',
              'headline': c.get('headline') or 'Muayene, tedavi ve kontrolleriniz için.',
              'domain': c.get('domain') or slug.replace('-', '') + '.com.tr'}
@@ -84,6 +84,7 @@ def main(src, panel):
     idx = {c['key']: i for i, c in enumerate(cur)}
     for c in H:
         e = {k: c.get(k, '') for k in ('key', 'name', 'district', 'address', 'h1', 'h2', 'phone', 'theme', 'kind')}
+        if c.get('city'): e['city'] = c['city']
         if c['key'] in idx: cur[idx[c['key']]] = e
         else: cur.append(e)
     open(cj, 'w', encoding='utf-8').write('window.CLINICS=' + json.dumps(cur, ensure_ascii=False) + ';\n')

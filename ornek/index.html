@@ -176,7 +176,7 @@ footer img{height:34px;background:#fff;border-radius:8px;padding:5px 8px}
 <div class="fact"><small>Lisans</small><b>Diş Hekimliği Fakültesi</b></div>
 <div class="fact"><small>Uzmanlık</small><b>Diplomadaki uzmanlık dalı</b></div>
 <div class="fact"><small>Eğitimler</small><b>Uzmanlık alanıyla ilgili kurslar</b></div>
-<div class="fact"><small>Üyelik</small><b>İstanbul Diş Hekimleri Odası</b></div>
+<div class="fact"><small>Üyelik</small><b class="poda">İstanbul Diş Hekimleri Odası</b></div>
 </div>
 </div>
 </div></section>
@@ -252,9 +252,9 @@ if(C){const ps=document.getElementById('personal');ps.hidden=false;
 const th=TH[C.theme]||TH.turkuaz;document.documentElement.style.setProperty('--tq',th[0]);if(!matchMedia('(prefers-color-scheme: dark)').matches||document.documentElement.dataset.theme==='light')document.documentElement.style.setProperty('--tq2',th[1]);
 const set=(sel,v)=>ps.querySelectorAll(sel).forEach(e=>e.textContent=v);
 document.getElementById('pTitle').textContent=C.name+' için hazırladığımız örnek web sitesi';
-document.getElementById('pDistrict').textContent=C.district+' · İstanbul';
+const CITY=C.city||'İstanbul';document.getElementById('pDistrict').textContent=C.district+' · '+CITY;
 document.getElementById('pDomain').textContent='www.'+C.key.slice(2).replace(/-/g,'')+'.com.tr';
-set('.pn',C.name);set(".pdist",C.district);set('.pd',C.district.toLocaleUpperCase('tr-TR')+' · İSTANBUL');set('.pa',C.address);set('.ph1',C.h1);set('.ph2',C.h2||'');set('.pp',C.phone||'Ara');
+set('.pn',C.name);set(".pdist",C.district);set('.pd',C.district.toLocaleUpperCase('tr-TR')+' · '+CITY.toLocaleUpperCase('tr-TR'));set('.poda',CITY+' Diş Hekimleri Odası');set('.pa',C.address);set('.ph1',C.h1);set('.ph2',C.h2||'');set('.pp',C.phone||'Ara');
 document.title=C.name+' · Örnek tasarım';window.scrollTo(0,0)}
 window.addEventListener('hashchange',route);if(!C)route();
 document.addEventListener('click',e=>{const t=e.target.closest('[data-post],[data-back],[data-chat],[data-call]');if(!t)return;
