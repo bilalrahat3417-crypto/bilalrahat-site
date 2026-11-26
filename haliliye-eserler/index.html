@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Haliliye Belediyesi · Hizmetteki Eserler</title><meta name="robots" content="noindex,nofollow"><style>
+:root{--navy:#1B1B22;--acc:#6A33A6;--ok:#2E7D4F;--no:#B42318;--bg:#F3F4F6;--line:#E5E7EB;--ink:#1F2937;--grey:#6B7280}
+*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI","Open Sans",system-ui,-apple-system,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.5}
+header{background:var(--navy);color:#fff;padding:22px 20px 26px}header .in,main,footer .in{max-width:920px;margin:0 auto}
+header img{height:44px;display:block;margin-bottom:18px}header h1{margin:0 0 6px;font-size:26px;line-height:1.25;text-wrap:balance}header p{margin:0;color:#CBD5E1;max-width:62ch}
+.serit{height:5px;background:linear-gradient(90deg,#6A33A6 0 11%,#F0E040 11% 22%,#9030B0 22% 33%,#40C0C0 33% 44%,#40A060 44% 55%,#F07020 55% 66%,#3090C0 66% 77%,#E05080 77% 88%,#90D030 88%)}
+main{padding:8px 16px 150px}
+.ozet{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:10px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px}
+.ozet b{font-variant-numeric:tabular-nums}.cip{padding:4px 10px;border-radius:999px;background:var(--bg)}.cip.e{color:var(--ok)}.cip.h{color:var(--no)}
+.ozet button{margin-left:auto}
+h2{font-size:19px;margin:34px 0 12px;display:flex;align-items:center;gap:10px;color:var(--navy)}h2 span{background:var(--acc);color:#fff;border-radius:6px;font-size:13px;padding:2px 9px}
+article{display:grid;grid-template-columns:56px 1fr 170px;gap:0;background:var(--bg);border-radius:10px;margin:0 0 10px;overflow:hidden;border:2px solid transparent}
+article.evet{border-color:var(--ok);background:#EDF6F0}article.hayir{border-color:#E7B5B0;background:#FBF1F0;opacity:.8}
+.kod{background:var(--navy);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.govde{padding:12px 14px}.tek{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);font-weight:700}
+h3{margin:2px 0 4px;font-size:16.5px;color:var(--navy)}.govde p{margin:0 0 3px;font-size:14px}.mesaj{color:var(--grey)}
+.karar{display:flex;flex-direction:column;justify-content:center;gap:8px;padding:12px}
+.karar label{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:9px 11px;font-weight:700;font-size:14px;cursor:pointer;min-height:42px}
+.karar input{width:18px;height:18px;margin:0}.evet input{accent-color:var(--ok)}.hayir input{accent-color:var(--no)}
+.karar label:has(input:checked).evet{border-color:var(--ok);color:var(--ok)}.karar label:has(input:checked).hayir{border-color:var(--no);color:var(--no)}
+.karar label:focus-within{outline:3px solid #BFA6E0;outline-offset:1px}
+.ek{background:var(--bg);border-radius:10px;padding:16px}.ek .satir{display:flex;gap:8px;margin-bottom:8px}
+input[type=text],textarea{width:100%;font:inherit;padding:11px 12px;border:1.5px solid #D1D5DB;border-radius:8px;background:#fff;color:var(--ink)}
+input[type=text]:focus,textarea:focus{outline:3px solid #BFA6E0;border-color:var(--acc)}
+label.alan{display:block;font-size:12px;font-weight:700;color:var(--grey);letter-spacing:.05em;text-transform:uppercase;margin:12px 0 4px}
+button{font:inherit;font-weight:700;border:0;border-radius:8px;padding:11px 16px;cursor:pointer;min-height:44px}
+.b1{background:var(--ok);color:#fff}.b2{background:var(--navy);color:#fff}.b3{background:#fff;border:1.5px solid #D1D5DB;color:var(--navy)}
+button:focus-visible{outline:3px solid #BFA6E0;outline-offset:2px}
+.gonder{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 16px;box-shadow:0 -6px 20px rgba(0,0,0,.06)}
+.gonder .in{max-width:920px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}.gonder .dur{font-size:13px;color:var(--grey);margin-right:auto}
+footer{background:var(--navy);color:#94A3B8;font-size:13px;padding:18px 20px 110px}
+@media (max-width:640px){article{grid-template-columns:44px 1fr}.karar{grid-column:1/-1;flex-direction:row;padding:0 10px 12px}.karar label{flex:1}header h1{font-size:21px}}
+@media print{.gonder,.ozet button{display:none}article{break-inside:avoid}}
+
+header .ust{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#94A3B8;margin-bottom:6px}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}nav a{color:#fff;text-decoration:none;background:#26262F;border-radius:8px;padding:8px 12px;font-size:13.5px;display:flex;gap:8px;align-items:center}
+nav a b{background:#6A33A6;border-radius:5px;padding:1px 7px;font-size:12px}nav a:hover,nav a:focus-visible{background:#34343f;outline:2px solid #BFA6E0}
+.bac{margin:-6px 0 12px;color:var(--grey);font-size:14px}
+article.gorselli{grid-template-columns:56px 108px 1fr 170px}article img{width:108px;height:100%;min-height:150px;object-fit:cover;display:block}
+details{margin-top:6px}summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--acc);padding:4px 0}summary:focus-visible{outline:3px solid #BFA6E0}
+dl{margin:6px 0 2px;display:grid;grid-template-columns:110px 1fr;gap:3px 10px;font-size:13.5px}dt{color:var(--grey);font-weight:700;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;padding-top:2px}dd{margin:0}
+.kucuk{font-size:12px;color:var(--grey);margin-top:22px}section{scroll-margin-top:60px}
+@media (max-width:640px){article.gorselli{grid-template-columns:44px 84px 1fr}article img{width:84px}dl{grid-template-columns:1fr}}
+
+.fiyat{font-weight:800;color:var(--navy);font-size:15px;text-align:center;background:#fff;border-radius:8px;padding:7px 6px;border:1.5px dashed #C9CED6}
+.fiyat small{display:block;font-weight:600;font-size:10.5px;color:var(--grey);letter-spacing:.05em;text-transform:uppercase}
+.fedit{width:100%;font:inherit;font-weight:700;padding:9px 10px;border:2px solid var(--acc);border-radius:8px}
+.edbar{background:#F3EDFA;border-left:5px solid var(--acc);padding:12px 14px;margin:12px 0;border-radius:6px;font-size:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.edbar[hidden]{display:none}.cip.t{background:#F3EDFA;color:var(--acc)}
+.karar input.fedit{border:2px solid var(--acc);font-weight:700;padding:9px 10px}
+
+.govde dl{margin:9px 0 2px;padding-top:9px;border-top:1px solid #DDE1E6}
+
+.kt{display:block}.kt span,.mzl{display:block;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);margin:2px 0 3px}
+.karar .kt input{padding:8px 10px;font-weight:700}.mzl{color:var(--acc)}
+.fiyat{border:2px solid var(--acc);border-style:solid}.fiyat small{color:var(--acc)}
+body.duz .kt{display:none}
+.karar label.kt{display:block;border:0;background:none;padding:0;min-height:0;cursor:default;font-weight:400}.karar label.kt input{width:100%}body.duz .karar label.kt{display:none}
+
+.ic{display:none}body.duz .ic{display:block;color:var(--acc)}
+</style></head><body>
+<header><div class="in"><img src="data:image/png;base64,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" alt="Mozaik Creative Content Agency">
+<p class="ust">Haliliye Belediyesi için hazırlanmıştır · 26.11.2026</p>
+<h1>Hizmetteki Eserler</h1>
+<p>Önceki yıllarda tamamlanan ve bugün hizmet veren tesisler için ayrı bir film serisi. Bu işler yeni gibi sunulmaz; “hizmette” başlığıyla, bugün nasıl kullanıldıklarını gösterir. 33 film ve içerik fikri. Her birinin konusu, mesajı ve künyesi aşağıda. Beğendiklerinize <b>“Yapalım”</b>, istemediklerinize <b>“Yapmayalım”</b> deyin; fiyat için kendi teklifinizi yazabilirsiniz. En altta kendi projelerinizi ekleyin.</p>
+<nav aria-label="Bölümler"><a href="#b0"><b>33</b>Hizmetteki eserler</a></nav></div></header><div class="serit"></div>
+<main>
+<div class="ozet" aria-live="polite"><span class="cip e">Yapalım: <b id="ne">0</b></span><span class="cip h">Yapmayalım: <b id="nh">0</b></span><span class="cip">Karar bekleyen: <b id="nb">33</b></span><span class="cip t" id="topw" hidden>Seçilenlerin birim fiyat toplamı: <b id="top">0</b> TL + KDV</span></div>
+<div class="edbar" id="edbar" hidden><b>Fiyat giriş sayfası (yalnızca sizin için).</b> Her kartın sağındaki mor çerçeveli “Mozaik teklifi” alanına fiyatınızı yazın (örnek: 12.500 TL). Bitince fiyatlı sayfayı indirip sitenize yükleyin; karşı taraf fiyatınızı görür, yanına kendi teklifini yazar. <b>Yazdıklarınız bu tarayıcıda saklanır; bu sayfayı yeniden açıp istediğiniz zaman değiştirebilirsiniz.</b> <button type="button" class="b1" id="indir">Fiyatlı sayfayı indir</button></div>
+<section id="b0"><h2><span>33</span>Hizmetteki eserler</h2><p class="bac">Ayrı plan: geçmiş dönemde tamamlanan işler. Yeni gibi sunulmaz; “hizmette” başlığıyla, bugün nasıl kullanıldığını gösteren ayrı bir seri.</p><article data-kod="E1a" data-birim="" data-ad="Havadan Karşıyaka">
+<div class="kod">E1a</div>
+<div class="govde"><div class="tek">Drone · 45 sn</div><h3>Havadan Karşıyaka</h3>
+<p>Pazar ve spor kompleksinin bütününü tek planda gösteren havadan tanıtım.</p><p class="mesaj"><b>Mesaj:</b> Karşıyaka&#x27;da pazar ve spor yıllardır aynı çatı altında.</p>
+<dl><dt>Anlatım dili</dt><dd>Görsel anlatım; kısa ekran yazılarıyla desteklenir.</dd><dt>Ses</dt><dd>Müzik ve ekran yazısı. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Drone, yedek bataryalar, ND filtre seti.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E1a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E1a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E1b" data-birim="" data-ad="Sabah Pazar, Akşam Maç">
+<div class="kod">E1b</div>
+<div class="govde"><div class="tek">Klasik çekim · 60 sn</div><h3>Sabah Pazar, Akşam Maç</h3>
+<p>Aynı tesiste bir gün: sabah pazar alışverişi, akşam spor salonu.</p><p class="mesaj"><b>Mesaj:</b> Tek tesis, günün her saatinde mahalleye hizmet ediyor.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E1b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E1b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E2a" data-birim="" data-ad="Sancaktar Anlatıyor">
+<div class="kod">E2a</div>
+<div class="govde"><div class="tek">Röportaj · 45 sn</div><h3>Sancaktar Anlatıyor</h3>
+<p>Mahalle sakinleri tesisi bugün nasıl kullandıklarını anlatır.</p><p class="mesaj"><b>Mesaj:</b> Hizmet, mahallenin kendi sesiyle anlatılır.</p>
+<dl><dt>Anlatım dili</dt><dd>Birinci ağızdan, samimi; sorular ekranda yazıyla verilir.</dd><dt>Ses</dt><dd>Röportaj sesi ve altyazı, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>İki kamera, yaka ve boom mikrofon, ışık seti.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E2a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E2a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E2b" data-birim="" data-ad="Havadan Sancaktar">
+<div class="kod">E2b</div>
+<div class="govde"><div class="tek">Drone · 30 sn</div><h3>Havadan Sancaktar</h3>
+<p>Tesisin ve çevresinin havadan kısa tanıtımı.</p><p class="mesaj"><b>Mesaj:</b> Tesis her gün mahallenin hizmetinde.</p>
+<dl><dt>Anlatım dili</dt><dd>Görsel anlatım; kısa ekran yazılarıyla desteklenir.</dd><dt>Ses</dt><dd>Müzik ve ekran yazısı. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Drone, yedek bataryalar, ND filtre seti.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E2b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E2b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E3a" data-birim="" data-ad="Pazarın Bir Günü">
+<div class="kod">E3a</div>
+<div class="govde"><div class="tek">Hızlandırılmış çekim · 20 sn</div><h3>Pazarın Bir Günü</h3>
+<p>Tezgâhların kurulmasından toplanmasına hızlandırılmış çekim.</p><p class="mesaj"><b>Mesaj:</b> Düzenli, kapalı ve rahat pazar.</p>
+<dl><dt>Anlatım dili</dt><dd>Sözsüz; zaman ve tarih bilgisi ekranda akar.</dd><dt>Ses</dt><dd>Müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sabit zaman aralıklı kamera, drone, tripod.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E3a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E3a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E3b" data-birim="" data-ad="Esnafın Gözünden">
+<div class="kod">E3b</div>
+<div class="govde"><div class="tek">Klasik çekim · 45 sn</div><h3>Esnafın Gözünden</h3>
+<p>Pazar esnafı kapalı pazarın işine etkisini anlatır.</p><p class="mesaj"><b>Mesaj:</b> Esnaf da vatandaş da kazanıyor.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E3b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E3b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E4a" data-birim="" data-ad="118 Dönüm Yeşil">
+<div class="kod">E4a</div>
+<div class="govde"><div class="tek">Drone · 60–90 sn</div><h3>118 Dönüm Yeşil</h3>
+<p>Bahçenin tamamını gösteren sinematik havadan film.</p><p class="mesaj"><b>Mesaj:</b> Haliliye&#x27;nin ortasında nefes alınacak bir vadi.</p>
+<dl><dt>Anlatım dili</dt><dd>Görsel anlatım; kısa ekran yazılarıyla desteklenir.</dd><dt>Ses</dt><dd>Müzik ve ekran yazısı. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Drone, yedek bataryalar, ND filtre seti.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E4a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E4a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E4b" data-birim="" data-ad="Dört Mevsim">
+<div class="kod">E4b</div>
+<div class="govde"><div class="tek">Hızlandırılmış çekim · 30 sn</div><h3>Dört Mevsim</h3>
+<p>Aynı noktadan dört mevsim çekim; yıl sonunda tek film.</p><p class="mesaj"><b>Mesaj:</b> Bahçe her mevsim yaşıyor.</p>
+<dl><dt>Anlatım dili</dt><dd>Sözsüz; zaman ve tarih bilgisi ekranda akar.</dd><dt>Ses</dt><dd>Müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sabit zaman aralıklı kamera, drone, tripod.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E4b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E4b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E4c" data-birim="" data-ad="Bahçede Pazar Günü">
+<div class="kod">E4c</div>
+<div class="govde"><div class="tek">Klasik çekim · 45 sn</div><h3>Bahçede Pazar Günü</h3>
+<p>Ailelerin, çocukların ve yürüyüşçülerin bir pazar günü.</p><p class="mesaj"><b>Mesaj:</b> Bu bahçe herkesin.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E4c" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E4c" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E5a" data-birim="" data-ad="Minik Sürücüler">
+<div class="kod">E5a</div>
+<div class="govde"><div class="tek">Klasik çekim · 45 sn</div><h3>Minik Sürücüler</h3>
+<p>Bir sınıfın parkta geçirdiği eğitim günü.</p><p class="mesaj"><b>Mesaj:</b> Güvenli trafik çocuklukta öğrenilir.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E5a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E5a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E5b" data-birim="" data-ad="Trafikte Beş Kural">
+<div class="kod">E5b</div>
+<div class="govde"><div class="tek">Çekim + grafik · 20 sn × 5 film</div><h3>Trafikte Beş Kural</h3>
+<p>Çocukların anlattığı beş bölümlük kısa kural serisi; ekranda grafiklerle.</p><p class="mesaj"><b>Mesaj:</b> Kuralları çocuklar öğretiyor.</p>
+<dl><dt>Anlatım dili</dt><dd>Bilgilendirici ve net; rakamlar ekranda grafikle verilir.</dd><dt>Ses</dt><dd>Seslendirme ve müzik.</dd><dt>Ekipman</dt><dd>Kamera, gimbal; hareketli grafik.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E5b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E5b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E6a" data-birim="" data-ad="Altı Park, Altı Hikâye">
+<div class="kod">E6a</div>
+<div class="govde"><div class="tek">Drone · 20 sn × 6 film</div><h3>Altı Park, Altı Hikâye</h3>
+<p>Her temalı park için havadan kısa tanıtım; altı filmlik seri.</p><p class="mesaj"><b>Mesaj:</b> Her parkın bir kimliği, bir hikâyesi var.</p>
+<dl><dt>Anlatım dili</dt><dd>Görsel anlatım; kısa ekran yazılarıyla desteklenir.</dd><dt>Ses</dt><dd>Müzik ve ekran yazısı. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Drone, yedek bataryalar, ND filtre seti.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E6a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E6a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E6b" data-birim="" data-ad="Parkların Haritası">
+<div class="kod">E6b</div>
+<div class="govde"><div class="tek">3D modelleme · 30 sn</div><h3>Parkların Haritası</h3>
+<p>36 parkı ve temalı parkları gösteren üç boyutlu harita animasyonu.</p><p class="mesaj"><b>Mesaj:</b> Her mahallede bir yeşil alan var.</p>
+<dl><dt>Anlatım dili</dt><dd>Açıklayıcı ve sade; etiketlerle adım adım anlatır.</dd><dt>Ses</dt><dd>Profesyonel seslendirme ve müzik.</dd><dt>Ekipman</dt><dd>Proje çizimleri üzerinden 3D modelleme ve render; referans çekimi.</dd><dt>Teslim</dt><dd>4K render; yatay 16:9 ve dikey 9:16 iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E6b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E6b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E7a" data-birim="" data-ad="21 Saha Haritada">
+<div class="kod">E7a</div>
+<div class="govde"><div class="tek">Drone + harita · 30 sn</div><h3>21 Saha Haritada</h3>
+<p>Semt sahaları harita üzerinde tek tek, havadan görüntülerle.</p><p class="mesaj"><b>Mesaj:</b> Her mahallede spor yapılacak bir saha var.</p>
+<dl><dt>Anlatım dili</dt><dd>Bilgilendirici; harita ve etiketlerle yön gösterir.</dd><dt>Ses</dt><dd>Müzik ve ekran yazısı. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Drone, yedek bataryalar; harita animasyonu.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E7a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E7a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E7b" data-birim="" data-ad="Köyde Oyun Saati">
+<div class="kod">E7b</div>
+<div class="govde"><div class="tek">Klasik çekim · 30 sn</div><h3>Köyde Oyun Saati</h3>
+<p>Kırsal mahalledeki oyun grubunda çocukların bir öğleden sonrası.</p><p class="mesaj"><b>Mesaj:</b> Kırsaldaki çocuğun da oyun alanı var.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E7b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E7b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E8a" data-birim="" data-ad="Ustalar">
+<div class="kod">E8a</div>
+<div class="govde"><div class="tek">Klasik çekim · 45 sn × 3 film</div><h3>Ustalar</h3>
+<p>Her zanaat için bir usta: tespih, bakır, culha. Üç filmlik seri.</p><p class="mesaj"><b>Mesaj:</b> Zanaatlar Haliliye&#x27;de yaşatılıyor.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E8a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E8a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E8b" data-birim="" data-ad="Elin Hafızası">
+<div class="kod">E8b</div>
+<div class="govde"><div class="tek">Ağır çekim · 30 sn</div><h3>Elin Hafızası</h3>
+<p>Ustaların ellerini yakın plan ve ağır çekimle izleyen sözsüz film.</p><p class="mesaj"><b>Mesaj:</b> Ustalık elden ele geçer.</p>
+<dl><dt>Anlatım dili</dt><dd>Sözsüz ve etkileyici; ayrıntı ve hareket öne çıkar.</dd><dt>Ses</dt><dd>Müzik ve ses tasarımı. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Yüksek hızlı kamera, tele lens, ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E8b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E8b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E9a" data-birim="" data-ad="Müzede Tur">
+<div class="kod">E9a</div>
+<div class="govde"><div class="tek">Tek plan çekim · 60 sn</div><h3>Müzede Tur</h3>
+<p>Girişten çıkışa kesintisiz müze gezintisi.</p><p class="mesaj"><b>Mesaj:</b> Urfa&#x27;nın sesi bu müzede yaşıyor.</p>
+<dl><dt>Anlatım dili</dt><dd>Kesintisiz ve akıcı; izleyici mekânda yürüyormuş gibi.</dd><dt>Ses</dt><dd>Doğal ortam sesi ve müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal veya FPV drone.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E9a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E9a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E9b" data-birim="" data-ad="Bir Ziyaretçi, Bir Anı">
+<div class="kod">E9b</div>
+<div class="govde"><div class="tek">Röportaj · 30 sn</div><h3>Bir Ziyaretçi, Bir Anı</h3>
+<p>Ziyaretçiler müzede kendilerini etkileyen ânı anlatır.</p><p class="mesaj"><b>Mesaj:</b> Müze, şehrin ortak hafızası.</p>
+<dl><dt>Anlatım dili</dt><dd>Birinci ağızdan, samimi; sorular ekranda yazıyla verilir.</dd><dt>Ses</dt><dd>Röportaj sesi ve altyazı, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>İki kamera, yaka ve boom mikrofon, ışık seti.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E9b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E9b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E10a" data-birim="" data-ad="Otel Tanıtım Filmi">
+<div class="kod">E10a</div>
+<div class="govde"><div class="tek">Drone + çekim · 60 sn</div><h3>Otel Tanıtım Filmi</h3>
+<p>Dış cephe, odalar ve ortak alanlarla kısa tanıtım filmi.</p><p class="mesaj"><b>Mesaj:</b> Haliliye&#x27;de konaklamanın adresi.</p>
+<dl><dt>Anlatım dili</dt><dd>Sinematik ve akıcı; tek plan hissi veren kesintisiz anlatım.</dd><dt>Ses</dt><dd>Kısa seslendirme ve müzik.</dd><dt>Ekipman</dt><dd>Drone, FPV drone, sinema kamerası, gimbal.</dd><dt>Teslim</dt><dd>4K; yatay 16:9 ana film ve dikey 9:16 kısa kesitler. Altyazılı ve altyazısız sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E10a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E10a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E10b" data-birim="" data-ad="Bir Gece Haliliye&#x27;de">
+<div class="kod">E10b</div>
+<div class="govde"><div class="tek">Klasik çekim · 45 sn</div><h3>Bir Gece Haliliye&#x27;de</h3>
+<p>Bir konuğun gözünden varıştan kahvaltıya otel deneyimi.</p><p class="mesaj"><b>Mesaj:</b> Misafir, Urfa misafirperverliğiyle ağırlanır.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E10b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E10b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E11a" data-birim="" data-ad="Raftan Sofraya">
+<div class="kod">E11a</div>
+<div class="govde"><div class="tek">Klasik çekim · 45 sn</div><h3>Raftan Sofraya</h3>
+<p>Sosyal marketin işleyişi: raflar, alışveriş, teslim. Yararlananların yüzü gösterilmez.</p><p class="mesaj"><b>Mesaj:</b> Yardım, onur kırmadan ulaşır.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E11a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E11a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E11b" data-birim="" data-ad="Sıfır Atık Nasıl Çalışır?">
+<div class="kod">E11b</div>
+<div class="govde"><div class="tek">Çekim + grafik · 30 sn</div><h3>Sıfır Atık Nasıl Çalışır?</h3>
+<p>Atığını getiren vatandaşın markette alışveriş yapmasını adım adım anlatır.</p><p class="mesaj"><b>Mesaj:</b> Atığın değeri var; çevre de vatandaş da kazanır.</p>
+<dl><dt>Anlatım dili</dt><dd>Bilgilendirici ve net; rakamlar ekranda grafikle verilir.</dd><dt>Ses</dt><dd>Seslendirme ve müzik.</dd><dt>Ekipman</dt><dd>Kamera, gimbal; hareketli grafik.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E11b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E11b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E12a" data-birim="" data-ad="Kapıyı Çalan El">
+<div class="kod">E12a</div>
+<div class="govde"><div class="tek">Belgesel · 2–3 dk</div><h3>Kapıyı Çalan El</h3>
+<p>Evde bakım ekibinin bir günü; hane sakinlerinin izniyle.</p><p class="mesaj"><b>Mesaj:</b> Kimse yalnız değil.</p>
+<dl><dt>Anlatım dili</dt><dd>Belgesel dili; sakin, gözlemci, ayrıntıya yakın.</dd><dt>Ses</dt><dd>Anlatıcı seslendirme, doğal ses ve müzik.</dd><dt>Ekipman</dt><dd>Sinema kamerası, makro lens, gimbal, ses kayıt seti, ışık.</dd><dt>Teslim</dt><dd>4K; yatay 16:9 ana film ve dikey 9:16 kısa kesitler. Altyazılı ve altyazısız sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E12a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E12a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E12b" data-birim="" data-ad="Gönül Çorbası">
+<div class="kod">E12b</div>
+<div class="govde"><div class="tek">Klasik çekim · 30 sn</div><h3>Gönül Çorbası</h3>
+<p>Sabahın erken saatinde çorba dağıtımı.</p><p class="mesaj"><b>Mesaj:</b> Güne sıcak bir çorbayla başlanır.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E12b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E12b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E13a" data-birim="" data-ad="Hoş Geldin Bebek">
+<div class="kod">E13a</div>
+<div class="govde"><div class="tek">Klasik çekim · 30 sn</div><h3>Hoş Geldin Bebek</h3>
+<p>Bir ailenin ziyaret günü; ailenin izniyle. Düzenli seri.</p><p class="mesaj"><b>Mesaj:</b> Belediye, hayatın ilk gününden itibaren yanınızda.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E13a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E13a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E14a" data-birim="" data-ad="Antrenman">
+<div class="kod">E14a</div>
+<div class="govde"><div class="tek">Ağır çekim · 20 sn × 5 film</div><h3>Antrenman</h3>
+<p>Her branştan ağır çekim kısa tanıtım; beş filmlik seri.</p><p class="mesaj"><b>Mesaj:</b> Geleceğin sporcuları Haliliye&#x27;de yetişiyor.</p>
+<dl><dt>Anlatım dili</dt><dd>Sözsüz ve etkileyici; ayrıntı ve hareket öne çıkar.</dd><dt>Ses</dt><dd>Müzik ve ses tasarımı. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Yüksek hızlı kamera, tele lens, ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E14a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E14a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E14b" data-birim="" data-ad="Engelsiz Havuz">
+<div class="kod">E14b</div>
+<div class="govde"><div class="tek">Klasik çekim · 45 sn</div><h3>Engelsiz Havuz</h3>
+<p>Engelli havuzunda bir seans; katılımcıların ve ailelerin izniyle.</p><p class="mesaj"><b>Mesaj:</b> Spor herkes için.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E14b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E14b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E15a" data-birim="" data-ad="Fabrikadan Sokağa">
+<div class="kod">E15a</div>
+<div class="govde"><div class="tek">Drone + çekim · 60 sn</div><h3>Fabrikadan Sokağa</h3>
+<p>Belediyenin fabrikalarında üretilen malzemenin sokağa ulaşması.</p><p class="mesaj"><b>Mesaj:</b> Haliliye kendi ihtiyacını kendi üretiyor.</p>
+<dl><dt>Anlatım dili</dt><dd>Sinematik ve akıcı; tek plan hissi veren kesintisiz anlatım.</dd><dt>Ses</dt><dd>Kısa seslendirme ve müzik.</dd><dt>Ekipman</dt><dd>Drone, FPV drone, sinema kamerası, gimbal.</dd><dt>Teslim</dt><dd>4K; yatay 16:9 ana film ve dikey 9:16 kısa kesitler. Altyazılı ve altyazısız sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E15a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E15a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E15b" data-birim="" data-ad="Bakım Atölyesi">
+<div class="kod">E15b</div>
+<div class="govde"><div class="tek">Klasik çekim · 30 sn</div><h3>Bakım Atölyesi</h3>
+<p>Belediye araçlarının bakım ve onarımı; ustaların anlatımıyla.</p><p class="mesaj"><b>Mesaj:</b> Araçlar her gün hizmete hazır.</p>
+<dl><dt>Anlatım dili</dt><dd>Sıcak ve gündelik; kişiler kendi sözleriyle anlatır, resmî dil kullanılmaz.</dd><dt>Ses</dt><dd>Doğal ses ve kısa konuşmalar, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Sinema kamerası, gimbal, yaka mikrofonu, taşınabilir ışık.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E15b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E15b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E16a" data-birim="" data-ad="Köy Yolu: Önce ve Bugün">
+<div class="kod">E16a</div>
+<div class="govde"><div class="tek">Drone · 20 sn</div><h3>Köy Yolu: Önce ve Bugün</h3>
+<p>Sathi kaplama yapılan köy yolunun arşiv görüntüsü ile bugünkü hâli.</p><p class="mesaj"><b>Mesaj:</b> Hizmet en uzak mahalleye de ulaştı.</p>
+<dl><dt>Anlatım dili</dt><dd>Görsel anlatım; kısa ekran yazılarıyla desteklenir.</dd><dt>Ses</dt><dd>Müzik ve ekran yazısı. Seslendirme yok.</dd><dt>Ekipman</dt><dd>Drone, yedek bataryalar, ND filtre seti.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E16a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E16a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E16b" data-birim="" data-ad="Muhtar Anlatıyor">
+<div class="kod">E16b</div>
+<div class="govde"><div class="tek">Röportaj · 45 sn</div><h3>Muhtar Anlatıyor</h3>
+<p>Muhtarlar mahallelerindeki tesislerin bugün nasıl kullanıldığını anlatır; düzenli seri.</p><p class="mesaj"><b>Mesaj:</b> Mahallenin sözcüsü konuşuyor.</p>
+<dl><dt>Anlatım dili</dt><dd>Birinci ağızdan, samimi; sorular ekranda yazıyla verilir.</dd><dt>Ses</dt><dd>Röportaj sesi ve altyazı, hafif müzik. Seslendirme yok.</dd><dt>Ekipman</dt><dd>İki kamera, yaka ve boom mikrofon, ışık seti.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E16b" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E16b" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article><article data-kod="E17a" data-birim="" data-ad="Rakamlarla Haliliye">
+<div class="kod">E17a</div>
+<div class="govde"><div class="tek">Çekim + grafik · 45 sn</div><h3>Rakamlarla Haliliye</h3>
+<p>Yol ve parke çalışmalarının rakamları sahadan görüntüler üzerinde grafikle verilir.</p><p class="mesaj"><b>Mesaj:</b> Yapılan iş rakamlarla ortada.</p>
+<dl><dt>Anlatım dili</dt><dd>Bilgilendirici ve net; rakamlar ekranda grafikle verilir.</dd><dt>Ses</dt><dd>Seslendirme ve müzik.</dd><dt>Ekipman</dt><dd>Kamera, gimbal; hareketli grafik.</dd><dt>Teslim</dt><dd>4K çekim; dikey 9:16 teslim. Altyazılı ve altyazısız iki sürüm.</dd></dl></div>
+<div class="karar"><label class="evet"><input type="radio" name="E17a" value="evet"><span>Yapalım</span></label>
+<label class="hayir"><input type="radio" name="E17a" value="hayir"><span>Yapmayalım</span></label><div class="fiyat" hidden></div><label class="kt"><span>Sizin teklifiniz</span><input type="text" class="ktin" inputmode="decimal" placeholder="Karşı teklif"></label></div></article></section>
+<section id="ekb"><h2><span>+</span>Sizin eklemek istedikleriniz</h2>
+<div class="ek"><p style="margin:0 0 10px;font-size:14px">Listede olmayan, çekilmesini istediğiniz proje, tesis, etkinlik ya da konuları yazın.</p>
+<div id="ekler"></div><button type="button" class="b3" id="ekle">Proje ekle</button>
+<label class="alan" for="ad">Ad soyad / görev</label><input type="text" id="ad" autocomplete="name">
+<label class="alan" for="not">Eklemek istediğiniz not</label><textarea id="not" rows="3"></textarea></div></section>
+<p class="kucuk">Görseller konsept amaçlıdır; yapay zekâyla oluşturulmuştur.</p>
+</main>
+<div class="gonder"><div class="in"><span class="dur" id="dur"></span>
+<button type="button" class="b3" id="kopya">Özeti kopyala</button><button type="button" class="b2" onclick="window.print()">Yazdır</button>
+<button type="button" class="b1" id="wa">WhatsApp ile gönder</button></div></div>
+<footer><div class="in">Mozaik Film · Mozaik Creative Content Agency · Allwise Digital — Tel: 0 530 626 43 63 · www.mozaikfilm.com</div></footer>
+<script id="fiyatlar" type="application/json">{}</script>
+<script>
+const TEL="905306264363",KEY="haliliye-eserler-v1";
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let st={};try{st=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+st.k=st.k||{};st.ek=st.ek||[""];
+function kaydet(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+let say=function(){const a=$$("article");let e=0,h=0;a.forEach(x=>{const v=st.k[x.dataset.kod];x.classList.toggle("evet",v==="evet");x.classList.toggle("hayir",v==="hayir");if(v==="evet")e++;if(v==="hayir")h++});
+$("#ne").textContent=e;$("#nh").textContent=h;$("#nb").textContent=a.length-e-h}
+$$("article input[type=radio]").forEach(r=>{if(st.k[r.name]===r.value)r.checked=true;
+r.addEventListener("click",()=>{if(st.k[r.name]===r.value){r.checked=false;delete st.k[r.name]}else st.k[r.name]=r.value;kaydet();say()})});
+function ekCiz(){const w=$("#ekler");w.innerHTML="";st.ek.forEach((v,i)=>{const d=document.createElement("div");d.className="satir";
+const inp=document.createElement("input");inp.type="text";inp.value=v;inp.placeholder=(i+1)+". proje ya da konu";inp.setAttribute("aria-label",(i+1)+". proje ya da konu");
+inp.addEventListener("input",()=>{st.ek[i]=inp.value;kaydet()});d.appendChild(inp);w.appendChild(d)})}
+$("#ekle").addEventListener("click",()=>{st.ek.push("");kaydet();ekCiz();$("#ekler").lastChild.querySelector("input").focus()});
+["ad","not"].forEach(id=>{$("#"+id).value=st[id]||"";$("#"+id).addEventListener("input",e=>{st[id]=e.target.value;kaydet()})});
+let ozet=function(){const e=[],h=[];$$("article").forEach(x=>{const v=st.k[x.dataset.kod],t=x.dataset.kod+" "+x.dataset.ad;if(v==="evet")e.push(t);if(v==="hayir")h.push(t)});
+const ek=st.ek.map(x=>x.trim()).filter(Boolean);let m="Haliliye Belediyesi - Hizmetteki Eserler dönüşü\n";
+if(st.ad)m+="Gönderen: "+st.ad+"\n";m+="\nYAPALIM ("+e.length+"):\n"+(e.join("\n")||"-")+"\n\nYAPMAYALIM ("+h.length+"):\n"+(h.map(x=>x.split(" ")[0]).join(", ")||"-");
+if(ek.length)m+="\n\nEKLEMEK İSTEDİKLERİMİZ:\n"+ek.map((x,i)=>(i+1)+". "+x).join("\n");if(st.not)m+="\n\nNot: "+st.not;return m}
+$("#wa").addEventListener("click",()=>{window.open("https://wa.me/"+TEL+"?text="+encodeURIComponent(ozet()),"_blank","noopener")});
+$("#kopya").addEventListener("click",async()=>{try{await navigator.clipboard.writeText(ozet());$("#dur").textContent="Özet kopyalandı."}catch(e){$("#dur").textContent="Kopyalanamadı; Yazdır seçeneğini kullanabilirsiniz."}});
+
+// ---- fiyatlar: sayfaya gömülü; "#duzenle" ile açılırsa düzenlenir
+let FY={};try{FY=JSON.parse($("#fiyatlar").textContent||"{}")}catch(e){}
+const DUZ=location.hash==="#duzenle"||window.DUZENLE===true;
+if(DUZ){try{FY=Object.assign({},FY,JSON.parse(localStorage.getItem(KEY+"-fiyat")||"{}"))}catch(e){}}
+function kdv(v){return /kdv/i.test(v)?v:v+" + KDV"}
+function sayi(t){const m=(t||"").replace(/\./g,"").replace(",",".").match(/\d+(\.\d+)?/);return m?parseFloat(m[0]):0}
+function fiyatCiz(){$$("article").forEach(x=>{const k=x.dataset.kod,f=x.querySelector(".fiyat"),v=FY[k]||"";
+ if(DUZ){f.hidden=true;if(!x.querySelector(".fedit")){const l=document.createElement("span");l.className="mzl";l.textContent="Mozaik teklifi"+(x.dataset.birim?" · "+x.dataset.birim:"")+" (+ KDV eklenir)";x.querySelector(".karar").appendChild(l);const i=document.createElement("input");i.type="text";i.className="fedit";i.placeholder="Örn. 12.500 TL";i.value=v;i.setAttribute("aria-label",k+" fiyatı");
+  i.addEventListener("input",()=>{FY[k]=i.value.trim();if(!FY[k])delete FY[k];try{localStorage.setItem(KEY+"-fiyat",JSON.stringify(FY))}catch(e){}});x.querySelector(".karar").appendChild(i)}}
+ else if(v){f.hidden=false;f.innerHTML="<small>Mozaik teklifi"+(x.dataset.birim?" · "+x.dataset.birim:"")+"</small>";f.appendChild(document.createTextNode(kdv(v)))}})}
+function toplam(){if(DUZ||!Object.keys(FY).length)return;let t=0;$$("article").forEach(x=>{if(st.k[x.dataset.kod]==="evet")t+=sayi(FY[x.dataset.kod])});
+ $("#topw").hidden=false;$("#top").textContent=t.toLocaleString("tr-TR")}
+const say0=say;say=function(){say0();toplam()};
+if(DUZ){$("#edbar").hidden=false;$("#indir").addEventListener("click",()=>{const c=document.documentElement.cloneNode(true);
+ c.querySelectorAll(".fedit,.mzl,.ic").forEach(n=>n.remove());c.querySelector("body").classList.remove("duz");c.querySelectorAll(".ktin").forEach(n=>n.removeAttribute("value"));c.querySelectorAll("article").forEach(a=>a.classList.remove("evet","hayir"));
+ c.querySelector("#ekler").innerHTML="";const fl=c.querySelector("#duzflag");if(fl)fl.remove();c.querySelector("#edbar").hidden=true;c.querySelector("#fiyatlar").textContent=JSON.stringify(FY);
+ c.querySelectorAll("input[type=radio]").forEach(r=>r.removeAttribute("checked"));
+ const b=new Blob(["<!DOCTYPE html>\n"+c.outerHTML],{type:"text/html"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="index.html";a.click();
+ $("#dur").textContent="index.html indirildi; sitenize yükleyin."})}
+const ozet0=ozet;ozet=function(){let m=ozet0();if(!Object.keys(FY).length)return m;let t=0;const s=[];$$("article").forEach(x=>{const k=x.dataset.kod;if(st.k[k]==="evet"&&FY[k]){s.push(k+": "+kdv(FY[k])+(x.dataset.birim?" ("+x.dataset.birim.toLowerCase()+")":""));t+=sayi(FY[k])}});
+ return m+(s.length?"\n\nFİYATLAR:\n"+s.join("\n")+"\nBirim fiyat toplamı: "+t.toLocaleString("tr-TR")+" TL + KDV":"")};
+st.t=st.t||{};if(DUZ)document.body.classList.add("duz");
+$$("article").forEach(x=>{const k=x.dataset.kod,i=x.querySelector(".ktin");if(!i)return;i.setAttribute("aria-label",k+" için sizin teklifiniz");if(!DUZ)i.value=st.t[k]||"";
+ i.addEventListener("input",()=>{st.t[k]=i.value.trim();if(!st.t[k])delete st.t[k];kaydet()})});
+const ozet1=ozet;ozet=function(){let m=ozet1();const s=Object.keys(st.t||{}).map(k=>k+": "+st.t[k]+(FY[k]?" (Mozaik teklifi: "+kdv(FY[k])+")":""));return m+(s.length?"\n\nKARŞI TEKLİFLERİMİZ:\n"+s.join("\n"):"")};
+fiyatCiz();ekCiz();say();
+</script></body></html>
